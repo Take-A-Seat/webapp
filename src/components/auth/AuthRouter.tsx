@@ -13,11 +13,11 @@ const AuthRouter = () => {
                     exact
                     path={LOGIN_ROUTE}
                 />
-                {/*<Route*/}
-                {/*    component={lazy(() => import("./register/RegisterComponent"))}*/}
-                {/*    exact*/}
-                {/*    path={REGISTER_ROUTE}*/}
-                {/*/>*/}
+                <Route
+                    component={lazy(() => import("./register/RegisterComponent"))}
+                    exact
+                    path={REGISTER_ROUTE}
+                />
             </Switch>
         );
     } else {

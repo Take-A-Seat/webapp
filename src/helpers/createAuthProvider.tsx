@@ -9,10 +9,12 @@ const createAuthProvider = () => {
     const login: typeof tokenProvider.setToken = (newToken) => {
         tokenProvider.setToken(newToken);
     };
+
     const logout = (callback: () => void) => {
         tokenProvider.setToken({token: '', expirationDate: '', refreshToken: ''});
         callback();
     };
+
     const authFetch = async (input: RequestInfo, init?: RequestInit): Promise<Response> => {
         const token = await tokenProvider.getToken();
         if (!token) {

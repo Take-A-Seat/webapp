@@ -43,6 +43,7 @@ const initialValues = {
     email: "",
     password: "",
 };
+
 const validationSchema = Yup.object().shape({
     email: Yup.string().email("Email invalid").required("Câmp obligatoriu"),
     password: Yup.string().required("Câmp obligatoriu"),

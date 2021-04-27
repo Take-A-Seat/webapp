@@ -81,58 +81,58 @@ export const logInAction = (
         });
 };
 
-// interface registerProps {
-//     dispatch: Dispatch,
-//     values: RegisterInitialValuesProps,
-//     history: History,
-//     isInvite: boolean,
-//     inviteId: string
-// }
+interface registerProps {
+    dispatch: Dispatch,
+    values: any,
+    history: History,
+    isInvite: boolean,
+    inviteId: string
+}
 
-// export const REGISTER_ACCOUNT = 'register_account';
-// export const REGISTER_ACCOUNT_SUCCESS = 'register_account_success';
-// export const REGISTER_ACCOUNT_FAIL = 'register_account_fail';
-// export const registerAction = ({
-//                                    dispatch,
-//                                    values,
-//                                    history,
-//                                    isInvite,
-//                                    inviteId
-//                                }: registerProps) => {
-//     dispatch({type: REGISTER_ACCOUNT, payload: {}});
-//     // @ts-ignore
-//     unauthenticatedFetch('/users/', {
-//         method: 'POST',
-//         body: JSON.stringify(values)
-//     })
-//         .then(response => {
-//             if (response.ok) {
-//                 return response.json()
-//             } else {
-//                 response.text().then(error => {
-//                     dispatch({
-//                         type: REGISTER_ACCOUNT_FAIL,
-//                         payload: error
-//                     });
-//                 });
-//                 throw new Error("")
-//             }
-//         })
-//         .then(data => {
-//             dispatch({
-//                 type: REGISTER_ACCOUNT_SUCCESS,
-//                 payload: data
-//             });
-//             if (isInvite) {
-//                 history.push(`/auth/login?inviteId=${inviteId}&userId=${data.userId}`);
-//             } else {
-//                 history.push('/auth/login');
-//             }
-//         })
-//         .catch(error => {
-//             console.log(error)
-//         })
-// };
+export const REGISTER_ACCOUNT = 'register_account';
+export const REGISTER_ACCOUNT_SUCCESS = 'register_account_success';
+export const REGISTER_ACCOUNT_FAIL = 'register_account_fail';
+export const registerAction = ({
+                                   dispatch,
+                                   values,
+                                   history,
+                                   isInvite,
+                                   inviteId
+                               }: registerProps) => {
+    dispatch({type: REGISTER_ACCOUNT, payload: {}});
+    // @ts-ignore
+    unauthenticatedFetch('/users/', {
+        method: 'POST',
+        body: JSON.stringify(values)
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json()
+            } else {
+                response.text().then(error => {
+                    dispatch({
+                        type: REGISTER_ACCOUNT_FAIL,
+                        payload: error
+                    });
+                });
+                throw new Error("")
+            }
+        })
+        .then(data => {
+            dispatch({
+                type: REGISTER_ACCOUNT_SUCCESS,
+                payload: data
+            });
+            if (isInvite) {
+                history.push(`/auth/login?inviteId=${inviteId}&userId=${data.userId}`);
+            } else {
+                history.push('/auth/login');
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
+};
 
 export const LOGOUT = 'logout';
 export const logoutAction = ({dispatch, history}: { dispatch: Dispatch, history: History }) => {
