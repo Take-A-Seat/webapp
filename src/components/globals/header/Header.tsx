@@ -3,8 +3,10 @@ import "./style"
 import {History} from "history";
 import {DropdownElement} from "../dropdown/Dropdown";
 import {withRouter} from "react-router-dom";
+import {HeaderWrapper, LogoWrapper} from "./style";
+import Logo from "../../../assets/logoRegular.png"
 
-const Header=({history}:{history:History})=>{
+const Header = ({history}: { history: History }) => {
     const dropdownElements: DropdownElement[] = [{
         text: "Cont",
         icon: "launch",
@@ -18,10 +20,17 @@ const Header=({history}:{history:History})=>{
             history.push("/associations/invites")
         }
     }];
-    return(
-        <>
-        Mare header
-        </>
+    return (
+        <HeaderWrapper>
+            DashBoar
+            <LogoWrapper onClick={() => {
+                history.push("/")
+            }}>
+                <img src={Logo} alt={"Logo"}/>
+            </LogoWrapper>
+
+            Settings
+        </HeaderWrapper>
     )
 }
 
