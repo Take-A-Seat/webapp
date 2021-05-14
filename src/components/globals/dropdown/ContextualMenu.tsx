@@ -9,7 +9,7 @@ type ContextualMenuProps = {
     dropdownElements: DropdownElement[];
     history: History;
     icon: string;
-    alignToRight?:boolean;
+    alignToRight?: boolean;
 }
 
 const ContextualMenu = ({

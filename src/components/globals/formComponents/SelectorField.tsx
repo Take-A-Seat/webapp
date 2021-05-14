@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {FieldError, FieldLabel, FieldText, FieldWrapper} from "./style";
 import {FieldProps} from "formik";
 import Select, {ActionMeta, ValueType} from 'react-select';

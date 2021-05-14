@@ -33,13 +33,7 @@ const createTokenProvider = () => {
             return null;
         }
 
-        let separatorFormat = ""
-        if (_token.expirationDate.search("CET") != -1) {
-            separatorFormat = "CET"
-        } else {
-            separatorFormat = "CEST"
-        }
-        if (isExpired(moment(_token.expirationDate.split(separatorFormat)[0]))) {
+        if (isExpired(moment(_token.expirationDate.split("UTC")[0]))) {
             const updateToken = await fetch(`${API_URL}/auth/refresh_token`, {
                 method: "POST",
                 headers: {

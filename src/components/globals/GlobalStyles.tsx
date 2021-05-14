@@ -1,14 +1,15 @@
 import styled from "styled-components"
 import {
-    BIG_FONT_SIZE,
-    BLUE_COLOR, DARK_GREY2_COLOR,
-    DARK_GREY_COLOR,
-    LIGHT_GRAY,
-    LIGHT_GRAYISH_BLUE_COLOR,
-    NORMAL_FONT_SIZE,
-    ORANGE_COLOR,
-    VERY_DARK_GREY_COLOR,
-    WHITE_COLOR
+  BIG_FONT_SIZE,
+  BLUE_COLOR,
+  DARK_GREY2_COLOR,
+  DARK_GREY_COLOR,
+  LIGHT_GRAY,
+  LIGHT_GRAYISH_BLUE_COLOR,
+  NORMAL_FONT_SIZE,
+  ORANGE_COLOR,
+  VERY_DARK_GREY_COLOR,
+  WHITE_COLOR
 } from "../../constants/styleConstants";
 
 export const VerticalDelimitator = styled.div`
@@ -74,56 +75,56 @@ export const Button = styled.div<any>`
 
   ${({customMarginBottom}) => customMarginBottom && `
         margin-bottom:${customMarginBottom};
-    `} 
-    ${({secondaryButton}) => secondaryButton && `
+    `}
+  ${({secondaryButton}) => secondaryButton && `
         color:${ORANGE_COLOR};
         background:rgba(255,255,255,0);
-    `} 
-    ${({alignedRight}) => alignedRight && `
+    `}
+  ${({alignedRight}) => alignedRight && `
         margin-left:auto;
-    `} 
-    ${({alignedLeft}) => alignedLeft && `
+    `}
+  ${({alignedLeft}) => alignedLeft && `
         margin-right:auto;
-    `} 
-    ${({lastElement}) => lastElement && `
+    `}
+  ${({lastElement}) => lastElement && `
         margin-right:0;
-    `} 
-    ${({blueButton}) => blueButton && `
+    `}
+  ${({blueButton}) => blueButton && `
         background:${BLUE_COLOR};
         border:1px solid ${BLUE_COLOR};
         color:${WHITE_COLOR};
-    `} 
-    ${({authButton}) => authButton && `
+    `}
+  ${({authButton}) => authButton && `
         width:fit-content;
         padding:15px 70px;
         margin-bottom:20px;
-    `} 
-    ${({alignedRight}) => alignedRight && `
+    `}
+  ${({alignedRight}) => alignedRight && `
         margin-left:auto;
-    `} 
-    ${({noBorder}) => noBorder && `
+    `}
+  ${({noBorder}) => noBorder && `
         border:0;
         box-shadow: none;
-    `} 
-    ${({marginTop}) => marginTop && `
+    `}
+  ${({marginTop}) => marginTop && `
         margin-top:25px;
     `}
-    ${({customMarginLeft}) => customMarginLeft && `
+  ${({customMarginLeft}) => customMarginLeft && `
         margin-left:${customMarginLeft};
     `}
-    ${({customWidth}) => customWidth && `
+  ${({customWidth}) => customWidth && `
       width:${customWidth};
     `}
 `;
 
 export const ActionButton = styled(Button)`
-    margin-right: auto;
-    margin-left: auto;
-    ${({green}) => green && `
+  margin-right: auto;
+  margin-left: auto;
+  ${({green}) => green && `
         background: #009900;
         border: #009900;
     `}
-     ${({red}) => red && `
+  ${({red}) => red && `
         background: #eb0000;
         border: #eb0000;
     `}
@@ -158,7 +159,7 @@ export const SubmitButton = styled.button<any>`
     `} ${({lastElement}) => lastElement && `
         margin-right:0;
     `}
-    ${({alignedRight}) => alignedRight && `
+  ${({alignedRight}) => alignedRight && `
         margin-left:auto;
     `}
 `;
@@ -256,7 +257,7 @@ export const DetailsCardElement = styled.div<any>`
   `} ${({customHeight}) => customHeight && `
         height:${customHeight};
     `}
-    ${({customPadding}) => customPadding && `
+  ${({customPadding}) => customPadding && `
         padding:${customPadding};
     `}
 `;
@@ -289,7 +290,7 @@ export const DetailsCardElementText = styled.div<any>`
 `;
 
 export const Text = styled.p`
-    font-size:14px;
-    font-weight:normal;
-    color:${DARK_GREY2_COLOR};
+  font-size: 14px;
+  font-weight: normal;
+  color: ${DARK_GREY2_COLOR};
 `;

@@ -1,5 +1,5 @@
 import React from "react"
-import {Field, FieldArrayRenderProps} from "formik";
+import {FieldArrayRenderProps} from "formik";
 import {FieldLabel, FieldsWrapper} from "./style";
 import SwitchField from "./SwitchField";
 import _ from "lodash";

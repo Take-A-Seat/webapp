@@ -1,5 +1,4 @@
 import {Dispatch} from "../../constants/globalTypes";
-import {setLocalStorage} from "../../services/auth";
 import {History} from 'history'
 import {authFetch, login, logout, unauthenticatedFetch} from "../../helpers/createAuthProvider";
 
@@ -142,5 +141,26 @@ export const logoutAction = ({dispatch, history}: { dispatch: Dispatch, history:
     });
 
 };
+
+export const GET_LOGGED_USER = "get_logged_user";
+export const GET_LOGGED_USER_SUCCESS = "get_logged_user_success";
+export const GET_LOGGED_USER_FAIL = "get_logged_user_fail";
+
+export const getLoggedUser = ({dispatch}: { dispatch: Dispatch }) => {
+    dispatch({type: GET_LOGGED_USER, payload: {}})
+    authFetch("/auth/isAuthenticated", {method: "GET"})
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(error => {
+                    dispatch({payload: JSON.parse(error), type: GET_LOGGED_USER_FAIL})
+                })
+            }
+            return response.json()
+        }).then(data => {
+        return dispatch({type: GET_LOGGED_USER_SUCCESS, payload: data})
+    }).catch(error => {
+        console.log(error)
+    })
+}
 
 

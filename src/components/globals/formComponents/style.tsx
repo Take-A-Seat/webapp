@@ -1,9 +1,10 @@
 import styled from 'styled-components'
-import {Button, Input} from 'reactstrap';
+import {Button} from 'reactstrap';
 import {
   BIG_FONT_SIZE,
   BORDER_INPUT,
-  BORDER_SWITCH, INPUT_PLACEHOLDER,
+  BORDER_SWITCH,
+  INPUT_PLACEHOLDER,
   NORMAL_FONT_SIZE,
   ORANGE_COLOR,
   RED_COLOR,

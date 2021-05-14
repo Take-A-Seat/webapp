@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useReducer} from 'react';
 import {Action, Dispatch, ReactChildrenType} from "../../constants/globalTypes";
 import {
+    GET_LOGGED_USER, GET_LOGGED_USER_FAIL, GET_LOGGED_USER_SUCCESS,
     LOG_IN,
     LOG_IN_FAIL,
     LOG_IN_SUCCESS,
@@ -11,7 +12,14 @@ type State = {
     error: {
         message: string
     },
-    isAuthenticated: boolean
+    isAuthenticated: boolean,
+    loggedUser:{
+        Email:string,
+        UserId:string,
+        firstName:string,
+        lastName:string,
+        role:string
+    }
 }
 
 const LoginStateContext = createContext<State | undefined>(undefined);
@@ -22,11 +30,40 @@ const initialState: State = {
     error: {
         message: ""
     },
-    isAuthenticated: false
+    isAuthenticated: false,
+    loggedUser:{
+        Email:"",
+        UserId:"",
+        firstName:"",
+        lastName:"",
+        role:""
+    }
+
 };
 
 const loginReducer = (state: State, action: Action) => {
     switch (action.type) {
+        case GET_LOGGED_USER:{
+            return {
+                ...state,
+                loading: true,
+                loggedUser:action.payload
+            }
+        }
+        case GET_LOGGED_USER_SUCCESS:{
+            return {
+                ...state,
+                loading: false,
+                loggedUser: action.payload
+            }
+        }
+        case GET_LOGGED_USER_FAIL:{
+            return {
+                ...state,
+                loading: false,
+                error:action.payload
+            }
+        }
         case LOG_IN: {
             return {
                 ...state,

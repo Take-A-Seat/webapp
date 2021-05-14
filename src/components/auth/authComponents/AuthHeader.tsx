@@ -1,5 +1,5 @@
 import React from "react"
-import {AuthHeaderLink, AuthHeaderLinksWrapper, AuthHeaderLogoWrapper, AuthHeaderWrapper} from "./styles";
+import {AuthHeaderLink, AuthHeaderLinksWrapper, AuthHeaderWrapper} from "./styles";
 import {Button} from "../../globals/GlobalStyles";
 import MaterialIcon from "../../globals/MaterialIcons";
 

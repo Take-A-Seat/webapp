@@ -1,12 +1,22 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./style"
 import {History} from "history";
 import {DropdownElement} from "../dropdown/Dropdown";
 import {withRouter} from "react-router-dom";
 import {HeaderAccountSection, HeaderElement, HeaderElementText, HeaderLinks, HeaderWrapper, LogoWrapper} from "./style";
 import Logo from "../../../assets/Asset 5 (1).svg"
+import {useLoginDispatch, useLoginState} from "../../auth/AuthContext";
+import {getLoggedUser} from "../../auth/AuthActions";
 
 const Header = ({history}: { history: History }) => {
+    const authState = useLoginState();
+    const {loggedUser, isAuthenticated} = authState;
+    const authDispatch = useLoginDispatch();
+
+    useEffect(() => {
+        getLoggedUser({dispatch: authDispatch})
+    }, [isAuthenticated])
+
     const dropdownElements: DropdownElement[] = [{
         text: "Cont",
         icon: "launch",
@@ -47,13 +57,13 @@ const Header = ({history}: { history: History }) => {
         <HeaderWrapper>
 
             <LogoWrapper onClick={() => {
-                history.push("/")
+                history.push("/dashboard")
             }}>
                 <img src={Logo} alt={"Logo"}/>
             </LogoWrapper>
 
             <HeaderLinks>
-                {linkElements.map((item,index) => {
+                {linkElements.map((item, index) => {
                     return <HeaderElement to={item.link} key={index}>
                         <HeaderElementText>
                             {item.name}
@@ -63,8 +73,7 @@ const Header = ({history}: { history: History }) => {
             </HeaderLinks>
 
             <HeaderAccountSection>
-                Email
-                @
+                {loggedUser && loggedUser.Email ? loggedUser.Email : ""}
             </HeaderAccountSection>
         </HeaderWrapper>
     )

@@ -53,13 +53,13 @@ export const groupsSelectorField = (
                             customWidth={"45%"}
                             withoutMarginBottom
                             onChange={(selectedOption: { value: string, label: string }) => {
-                                let findId=false;
-                                form.values[fieldName].map((item:any)=>{
-                                    if(item.id == selectedOption.value){
-                                        findId=true;
+                                let findId = false;
+                                form.values[fieldName].map((item: any) => {
+                                    if (item.id == selectedOption.value) {
+                                        findId = true;
                                     }
                                 })
-                                if(!findId){
+                                if (!findId) {
                                     push({
                                         id: selectedOption.value
                                     })

@@ -12,7 +12,7 @@ type FormButtonsProps = {
     previousButtonText?: string;
     submitText?: string;
     alignedRight?: boolean;
-    isSubmitting?:boolean;
+    isSubmitting?: boolean;
 }
 
 const FormButtons = ({
