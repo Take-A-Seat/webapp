@@ -1,6 +1,8 @@
 //colors
 export const ORANGE_COLOR = "#FB6340";
 export const VERY_DARK_GREY_COLOR = "#4A4A4A";
+export const COLOR_INPUT_BACKGROUND = "#353535";
+export const TEXT_COLOR_INPUT="#fff"
 export const DARK_GREY_COLOR = "#808080";
 export const LIGHT_GRAYISH_BLUE_COLOR = "#E9ECEF";
 export const WHITE_COLOR = "#FFFFFF";
@@ -10,8 +12,8 @@ export const LIGHT_GREY_COLOR = "#DDDDDD";
 export const BLACK_COLOR = "#000000";
 export const DARK_GREY2_COLOR = "#888888";
 export const LIGHT_GRAY = "#E9ECEF";
-export const BORDER_INPUT = "#CAD1D7";
-export const INPUT_PLACEHOLDER = "#e4ebf0";
+export const BORDER_INPUT = "#050404";
+export const INPUT_PLACEHOLDER = "#3f3d3d";
 export const BORDER_SWITCH = "#C7CDD4"
 export const ORANGE_POINT_SWITCH = "#FB6340";
 export const BLUE_COLOR = "#5E72E4";

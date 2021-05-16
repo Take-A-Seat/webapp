@@ -1,21 +1,72 @@
 import styled from 'styled-components'
+
 import {Button} from 'reactstrap';
 import {
   BIG_FONT_SIZE,
   BORDER_INPUT,
-  BORDER_SWITCH,
+  BORDER_SWITCH, COLOR_INPUT_BACKGROUND, DARK_GREY_COLOR,
   INPUT_PLACEHOLDER,
+  LIGHT_GRAY,
   NORMAL_FONT_SIZE,
   ORANGE_COLOR,
-  RED_COLOR,
+  RED_COLOR, TEXT_COLOR_INPUT,
   VERY_DARK_GREY_COLOR,
   WHITE_COLOR
 } from "../../../constants/styleConstants";
 
+export const SectionSettings = styled.div<any>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 45px;
+  ${({column}) => column && `
+   flex-direction:column;
+  `}
+  
+  ${({firstSection})=> firstSection && `
+  margin-top:5px;
+  `}
+`
+
+export const TextSection = styled.span<any>`
+  text-align: left;
+  line-height: 1.25;
+  align-self: flex-start;
+  font-weight: 600;
+  font-size: 40px;
+  color: #fff;
+  font-family: "Cera", "Open Sans", sans-serif;;
+  ${({description}) => description && `
+  font-size: 20px;
+  font-weight: 500;
+  padding: 5px 0;
+  line-height: 1.6;
+  `}
+`
+
+export const HorizontalDelimiter = styled.div<any>`
+  width: 100%;
+  height: 1px;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  background-color: ${LIGHT_GRAY};
+  ${({sideBar}) => sideBar && `
+    margin-top:35px;
+    margin-bottom:35px;
+    `}
+`;
+
+
 export const FormWrapper = styled.form<any>`
-  width: 35%;
+  width: 100%;
+  max-width: 900px;
+  padding:15px;
   height: 100%;
   display: flex;
+  ${({center}) => center && `
+      justify-content:center;
+  `}
   ${({isSwitch}) => isSwitch && `
        width:20%;
        margin-left:6%;
@@ -55,13 +106,6 @@ export const CounterField = styled.div`
   flex-direction: column;
 `;
 
-export const PageName = styled.h1`
-  font-size: 20px;
-  font-weight: bold;
-  color: #32325d;
-  margin-bottom: 20px;
-`;
-
 
 export const FieldWrapper = styled.div<any>`
   width: 100%;
@@ -70,6 +114,10 @@ export const FieldWrapper = styled.div<any>`
   margin-bottom: 15px;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+
+  
   ${({fitContentWidth}) => fitContentWidth && `
         width:fit-content;
         margin-right:15px;
@@ -108,14 +156,13 @@ export const FieldWrapper = styled.div<any>`
 
 export const PageContent = styled.div<any>`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   ${({wrap}) => wrap && `
         flex-wrap:wrap;
     `}
-  ${({column}) => column && `
-        flex-direction:column;
+  ${({row}) => row && `
+        flex-direction:row;
     `}
-
 `
 
 
@@ -134,9 +181,21 @@ export const FieldText = styled.div<any>`
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  ${({flexColumn}) => flexColumn && `
-            flex-direction:column;
-        `}
+  padding-top: 12px;
+  padding-bottom: 12px;
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`
+
+export const FieldTextTitleSection = styled.div<any>`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-right: 30px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 `
 
 export const FieldLabel = styled.p<any>`
@@ -146,12 +205,31 @@ export const FieldLabel = styled.p<any>`
   text-align: left;
   margin: 0;
   align-items: center;
+ padding-right: 30px;
   ${({error}) => error && `
         color:${RED_COLOR};
     `}
   ${({marginBottom}) => marginBottom && `
     margin-bottom:${marginBottom};
     `}
+
+  ${({title}) => title && `
+    font-size:13px;
+    font-weight:700;
+    text-transform:uppercase;
+     letter-spacing: 0.5px;
+     color:${WHITE_COLOR};
+  `}
+  ${({description}) => description && `
+     font-size:16px;
+     line-height: 28px;
+     font-weight:500;
+     letter-spacing: 0.5px;
+     white-space: pre-line;
+     color:${DARK_GREY_COLOR};
+     
+  `}
+
 `;
 
 export const FieldError = styled.p<any>`
@@ -223,20 +301,25 @@ export const InputsWrapper = styled.div`
   align-items: center;
 `;
 export const CustomStyledInput = styled.input<any>`
-  color: ${VERY_DARK_GREY_COLOR} !important;
+  color: ${TEXT_COLOR_INPUT} !important;
+  background-color: ${COLOR_INPUT_BACKGROUND};
   font-size: 14px;
   line-height: 1.6;
   text-align: left;
-  height: 44px;
-  width: 60%;
+  height: 20px;
+  width: auto;
+  min-width: 100px;
+  max-width: 180px;
   border: 1px solid ${BORDER_INPUT};
+  font-family: "Open Sans",sans-serif;
   border-radius: 4px;
   padding: 15px;
   margin-left: auto;
   font-weight: bold;
-
+  cursor:pointer;
   ::placeholder,
   ::-webkit-input-placeholder {
+    transition: 0.3s ease;
     color: ${INPUT_PLACEHOLDER};
     font-style: italic;
   }
@@ -276,6 +359,10 @@ export const CustomStyledInput = styled.input<any>`
         background-color: hsl(0,0%,95%);
         border-color: hsl(0,0%,90%);
     `}
+
+  @media only screen and (max-width: 600px) {
+  margin-left: 0;
+}
 `;
 
 

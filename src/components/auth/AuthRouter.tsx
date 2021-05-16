@@ -4,7 +4,6 @@ import {LOGIN_ROUTE, REGISTER_ROUTE,} from "../../router/clientRoutes";
 import {isAuthenticated} from "../../services/auth";
 
 const AuthRouter = () => {
-    console.log(!isAuthenticated(),"daaa")
     if (!isAuthenticated()) {
         return (
             <Switch>

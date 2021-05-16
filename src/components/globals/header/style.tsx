@@ -12,9 +12,6 @@ export const HeaderWrapper = styled.div`
   box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.1);
   z-index: 10000;
   position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
 `;
 
 export const LogoWrapper = styled.div`

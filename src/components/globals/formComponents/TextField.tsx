@@ -1,5 +1,5 @@
 import React from 'react'
-import {CustomStyledInput, FieldError, FieldLabel, FieldText, FieldWrapper} from "./style";
+import {CustomStyledInput, FieldError, FieldLabel, FieldText, FieldTextTitleSection, FieldWrapper} from "./style";
 import {FieldProps} from "formik";
 
 interface TextFieldProps extends FieldProps {
@@ -11,6 +11,7 @@ interface TextFieldProps extends FieldProps {
     disabled?: boolean;
     customInputWidth?: string;
     onBlur?: () => void;
+    description?: string;
 }
 
 const TextField = ({
@@ -22,6 +23,7 @@ const TextField = ({
                        withoutMarginBottom,
                        smallFields,
                        biggerInput,
+                       description,
                        customInputWidth,
                        disabled,
                        onBlur,
@@ -38,11 +40,17 @@ const TextField = ({
             smallFields={smallFields}
         >
             <FieldText>
-                <FieldLabel
-                    error={error}
-                >
-                    {labelText}
-                </FieldLabel>
+                <FieldTextTitleSection>
+                    <FieldLabel
+                        title
+                        error={error}
+                    >
+                        {labelText}
+                    </FieldLabel>
+                    {description&& <FieldLabel description>
+                        {description}
+                    </FieldLabel>}
+                </FieldTextTitleSection>
                 <CustomStyledInput
                     {...field}
                     {...props}

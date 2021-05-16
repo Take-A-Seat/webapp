@@ -95,6 +95,7 @@ export const AuthMainPageWrapper = styled.div`
 
 export const AuthFormContainer = styled.div`
     width:35vw;
+  min-width: 350px;
     height:fit-content;
     padding:50px 40px;
     background:${BLUE_WHITE_COLOR};
@@ -115,6 +116,7 @@ export const AuthFormContainerTitle = styled.div`
 
 export const AuthFieldWrapper = styled.div`
     width:100%;
+    min-width: 200px;
     height:fit-content;
     display:flex;
     flex-direction:column;

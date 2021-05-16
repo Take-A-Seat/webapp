@@ -32,10 +32,16 @@ export const HorizontalDelimiter = styled.div<any>`
 
 export const PageWrapper = styled.div<any>`
   height: fit-content;
-  width: calc(100% - 225px);
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 35px 50px 100px 25px;
+  padding: 45px 50px 150px 50px;
+  ${({centerPage})=> centerPage && `
+  justify-content:center;
+  align-items:center;
+  margin:0 auto;
+  `}
+  
   ${({big}) => big && `
     flex:1;
   `}

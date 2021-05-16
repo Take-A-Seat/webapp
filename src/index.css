@@ -1,40 +1,46 @@
 body {
-  margin: 0;
-  font-family: "Roboto",
-  sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  width: 100%;
-  height: fit-content;
-  background:#222222;
+    margin: 0;
+    font-family: "Roboto",
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    width: 100%;
+    height: fit-content;
+    background: #222222;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-  monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 .App {
-  /* display: flex;
-  flex-direction: row; */
-  height: 100%;
+    /* display: flex;
+    flex-direction: row; */
+    height: 100%;
 
 
 }
 
 html {
-  height: 100%;
+    height: 100%;
 }
 
 #root {
-  height: 100%;
+    height: 100%;
 }
+
 *, *::before, *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 @font-face {
-  font-family: 'HP Simplified';
-  src: local('HP Simplified'), url("../src/fonts/hp-simplified-265.ttf") format('truetype');
+    font-family: 'HP Simplified';
+    src: local('HP Simplified'), url("../src/fonts/hp-simplified-265.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: 'Cera Regular';
+    src: local('Cera Regular'), url("../src/fonts/cera-basic.otf") format('truetype');
 }
