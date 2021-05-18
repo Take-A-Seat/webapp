@@ -46,6 +46,7 @@ export const AuthHeaderLogoWrapper = styled.div<any>`
         width:auto;
     }
     ${({bigger}) => bigger && `height:75px;`}
+    ${({small}) => small && `height:35px;`}
 `;
 export const AuthHeaderLinksWrapper = styled.div`
     flex:1;

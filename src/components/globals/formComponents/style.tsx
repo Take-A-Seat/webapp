@@ -180,7 +180,6 @@ export const FieldText = styled.div<any>`
   flex-direction: row;
   width: 100%;
   align-items: center;
-  justify-content: space-between;
   padding-top: 12px;
   padding-bottom: 12px;
   @media only screen and (max-width: 600px) {
@@ -193,7 +192,8 @@ export const FieldTextTitleSection = styled.div<any>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-right: 30px;
+  width: 60%;
+  padding-right: 15px;
   padding-top: 15px;
   padding-bottom: 15px;
 `
@@ -314,7 +314,7 @@ export const CustomStyledInput = styled.input<any>`
   font-family: "Open Sans",sans-serif;
   border-radius: 4px;
   padding: 15px;
-  margin-left: auto;
+  margin-left: 30px;
   font-weight: bold;
   cursor:pointer;
   ::placeholder,
@@ -524,13 +524,14 @@ export const FormFlex = styled.div<any>`
     `}
 `;
 export const DropzoneWrapper = styled.div`
-  width: 100%;
-  height: 100px;
+  width: 184px;
+  height: 184px;
   display: flex;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: black;
-  background-color: #fff;
+  color: ${DARK_GREY_COLOR};
+  background-color: transparent;
+  font-weight: 700;
   background-clip: padding-box;
   border: 2px dashed #cad1d7;
   border-radius: 0.375rem;
@@ -543,12 +544,32 @@ export const DropzoneWrapper = styled.div`
 `;
 
 export const InsertedFilesWrapper = styled.div`
-  width: 100%;
-  height: fit-content;
+  position: relative;
+  width: 184px;
+  height: 184px;
   display: flex;
-  flex-direction: column;
-  margin-top: 15px;
+  align-items: center;
 `;
+
+export const PreviewPhoto = styled.img<any>`
+ width: 184px;
+  height: auto;
+  
+`
+
+export const RemoveFileButton = styled.div`
+position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 999;
+  color: #fff;
+  cursor: pointer;
+  background-color:#406BB2 ;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 
 export const FilesText = styled.p<any>`
   color: black;

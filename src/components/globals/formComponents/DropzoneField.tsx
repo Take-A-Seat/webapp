@@ -1,85 +1,103 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {FieldProps} from "formik";
 import {
     DropzoneWrapper,
     FieldError,
     FieldLabel,
+    FieldTextTitleSection,
     FieldWrapper,
     FilesText,
-    FileWrapper,
-    InsertedFilesWrapper
+    InsertedFilesWrapper, PreviewPhoto, RemoveFileButton
 } from "./style";
 // @ts-ignore
 import {useDropzone} from "react-dropzone";
 import _ from "lodash";
+import {AuthHeaderLogoWrapper} from "../../auth/authComponents/styles";
+import MaterialIcon from "../MaterialIcons";
 
 interface DropZoneFieldProps extends FieldProps {
-    labelText: string;
+    title: string;
     dropzoneText: string;
     addNewFile: (file: File) => void;
-    files: File[];
-    removeFile: (index: number) => void;
-};
+    files: File;
+    removeFile: () => void;
+    accept?: string;
+    icon: string;
+    description?: string;
+}
 
 const DropZoneField = (
     {
-        labelText,
+        title,
         field,
         form,
         dropzoneText,
         addNewFile,
         files,
-        removeFile
+        removeFile,
+        accept,
+        icon,
+        description
     }:
         DropZoneFieldProps
-) => {
-    const onDrop = useCallback((acceptedFiles) => {
-        acceptedFiles.forEach((file: File) => {
-            addNewFile(file);
-        })
-    }, []);
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
-    const error = form.touched[field.name] && form.errors[field.name];
-    return (
-        <FieldWrapper column>
-            <FieldLabel
-                error={!!error}
-            >
-                {labelText}
-            </FieldLabel>
-            <DropzoneWrapper
-                {...getRootProps()}
-            >
-                <input {...getInputProps()}/>
-                {dropzoneText}
-            </DropzoneWrapper>
-            {
-                !_.isEmpty(files) &&
-                <InsertedFilesWrapper>
-                    <FilesText big>
-                        Fisiere introduse:
-                    </FilesText>
-                    {
-                        files.map((file, index) =>
-                            <FileWrapper>
-                                <FilesText>{file.name}</FilesText>
-                                <FilesText
-                                    close
-                                    onClick={() => removeFile(index)}
-                                >
-                                    &#10005;
-                                </FilesText>
-                            </FileWrapper>
-                        )
-                    }
-                </InsertedFilesWrapper>
+    ) => {
+        const [preview, setPreview] = useState<string>();
+        useEffect(() => {
+            console.log(files)
+            if (files && !_.isEmpty(files)) {
+                const render = new FileReader();
+                render.onload = () => {
+                    setPreview(render.result as string)
+                }
+                render.readAsDataURL(files)
+            } else {
+                setPreview("");
             }
-            {
-                error &&
-                <FieldError>{error}</FieldError>
-            }
-        </FieldWrapper>
-    )
-};
+        }, [files])
+        const onDrop = useCallback((acceptedFiles) => {
+            acceptedFiles.forEach((file: File) => {
+                addNewFile(file);
+            })
+        }, []);
+        const {getRootProps, getInputProps} = useDropzone({onDrop});
+        const error = form.touched[field.name] && form.errors[field.name];
+
+        return (
+            <FieldWrapper>
+                <FieldTextTitleSection>
+                    <FieldLabel
+                        title
+                        error={error}
+                    >
+                        {title}
+                    </FieldLabel>
+                    {description && <FieldLabel description>
+                        {description}
+                    </FieldLabel>}
+                </FieldTextTitleSection>
+
+                {files && !_.isEmpty(files) ? <InsertedFilesWrapper>
+                    <RemoveFileButton onClick={() => {
+                        removeFile()
+                    }}>
+                        <MaterialIcon iconName={"close"}/>
+                    </RemoveFileButton>
+
+                    <PreviewPhoto src={preview} alt={files.name}/>
+                </InsertedFilesWrapper> : <DropzoneWrapper
+                    {...getRootProps()}
+                >
+                    <input {...getInputProps()} accept={accept}/>
+                    <MaterialIcon iconName={icon}/>
+                    {dropzoneText}
+                </DropzoneWrapper>}
+                {
+                    error &&
+                    <FieldError>{error}</FieldError>
+                }
+            </FieldWrapper>
+        )
+    }
+;
 
 export default DropZoneField

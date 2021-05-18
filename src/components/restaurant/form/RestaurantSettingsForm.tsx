@@ -3,6 +3,8 @@ import React from "react";
 import * as Yup from "yup";
 import {FormWrapper, PageContent, SectionSettings, TextSection} from "../../globals/formComponents/style";
 import TextField from "../../globals/formComponents/TextField";
+import DropZoneField from "../../globals/formComponents/DropzoneField";
+import {Button} from "../../globals/GlobalStyles";
 
 export type RestaurantSettingsFormValuesTypes = {
     name: string;
@@ -17,13 +19,23 @@ export type RestaurantSettingsFormValuesTypes = {
     facebook: string;
     instagram: string;
     twitter: string;
+    logo:any,
 }
 type RestaurantSettingsFormProps = {
     initialValues: RestaurantSettingsFormValuesTypes;
     onSubmit: (values: RestaurantSettingsFormValuesTypes) => void;
+    addNewFile: (file: File) => void;
+    file: File;
+    removeFile: () => void;
 }
 
-export const RestaurantFormSettings = ({initialValues, onSubmit}: RestaurantSettingsFormProps) => {
+export const RestaurantFormSettings = ({
+                                           initialValues,
+                                           onSubmit,
+                                           addNewFile,
+                                           file,
+                                           removeFile
+                                       }: RestaurantSettingsFormProps) => {
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Camp obligatoriu").min(3, "Minim 3")
     })
@@ -37,54 +49,57 @@ export const RestaurantFormSettings = ({initialValues, onSubmit}: RestaurantSett
             ({values, handleSubmit}) => {
                 return (
                     <FormWrapper onSubmit={handleSubmit} center>
-                        <PageContent>
-                            <SectionSettings column firstSection>
-                                <TextSection>
-                                    Design
-                                </TextSection>
-                                <TextSection description>
-                                    Take a seat uses your logo in all emails to guests.
-                                    Avatars are used to personalize your messages.
-                                </TextSection>
-                                <Field name={"logo"} type={"text"} component={TextField} labelText={"Logo"}
-                                       description={`Upload a .png with a transparent background or a .jpg with a white background.  Your logo should be perfectly sharp. \n\n Make sure the colors contrast with a white background.`}/>
+                        <SectionSettings column firstSection>
+                            <TextSection>
+                                Design
+                            </TextSection>
+                            <TextSection description>
+                                Take a seat uses your logo in all emails to guests.
+                                Avatars are used to personalize your messages.
+                            </TextSection>
+                            <Field name={"logo"} component={DropZoneField} type="file" title={"Logo"} accept={"image/*"}
+                                   icon={"attach_file"}
+                                   addNewFile={addNewFile} removeFile={() => removeFile()} files={file}
+                                   dropzoneText={"Select or drop image"}
+                                   description={`Upload a .png with a transparent background or a .jpg with a white background.  Your logo should be perfectly sharp. \n\n Make sure the colors contrast with a white background.`}/>
 
-                            </SectionSettings>
-                            <SectionSettings column>
-                                <TextSection>
-                                    Contact details
+                        </SectionSettings>
+                        <SectionSettings column>
+                            <TextSection>
+                                Contact details
 
-                                </TextSection>
-                                <TextSection description>
-                                    Take a Seat uses your contact details in the Terms & conditions, Privacy statement
-                                    and emails to guests.
-                                </TextSection>
-                                <Field name={"name"} type={"text"} component={TextField} labelText={"Restaurant name"}/>
-                                <Field name={"streetAndNumber"} type={"text"} component={TextField} labelText={"Street and number"}/>
-                                <Field name={"postCode"} type={"text"} component={TextField} labelText={"Postal code"}/>
-                                <Field name={"city"} type={"text"} component={TextField} labelText={"City"}/>
-                                <Field name={"province"} type={"text"} component={TextField} labelText={"Province / Area"}/>
-                                <Field name={"country"} type={"text"} component={TextField} labelText={"Country"}/>
-                                <Field name={"phone"} type={"text"} component={TextField} labelText={"Telephone"}/>
-                                <Field name={"email"} type={"text"} component={TextField} labelText={"Email"}/>
-                                <Field name={"website"} type={"text"} component={TextField} labelText={"Website"}/>
-                            </SectionSettings>
+                            </TextSection>
+                            <TextSection description>
+                                Take a Seat uses your contact details in the Terms & conditions, Privacy statement
+                                and emails to guests.
+                            </TextSection>
+                            <Field name={"name"} type={"text"} component={TextField} labelText={"Restaurant name"}/>
+                            <Field name={"streetAndNumber"} type={"text"} component={TextField}
+                                   labelText={"Street and number"}/>
+                            <Field name={"postCode"} type={"text"} component={TextField} labelText={"Postal code"}/>
+                            <Field name={"city"} type={"text"} component={TextField} labelText={"City"}/>
+                            <Field name={"province"} type={"text"} component={TextField} labelText={"Province / Area"}/>
+                            <Field name={"country"} type={"text"} component={TextField} labelText={"Country"}/>
+                            <Field name={"phone"} type={"text"} component={TextField} labelText={"Telephone"}/>
+                            <Field name={"email"} type={"text"} component={TextField} labelText={"Email"}/>
+                            <Field name={"website"} type={"text"} component={TextField} labelText={"Website"}/>
+                        </SectionSettings>
 
-                            <SectionSettings column>
-                                <TextSection>
-                                    Social profiles
-                                </TextSection>
-                                <TextSection description>
-                                    Take a Seat uses your social links in emails to guests.
-                                    Paste the URLs of your profile pages here.
-                                </TextSection>
+                        <SectionSettings column>
+                            <TextSection>
+                                Social profiles
+                            </TextSection>
+                            <TextSection description>
+                                Take a Seat uses your social links in emails to guests.
+                                Paste the URLs of your profile pages here.
+                            </TextSection>
 
-                                <Field name={"facebook"} type={"text"} component={TextField} labelText={"facebook"}/>
-                                <Field name={"instagram"} type={"text"} component={TextField} labelText={"instagram"}/>
-                                <Field name={"twitter"} type={"text"} component={TextField} labelText={"twitter"}/>
-                            </SectionSettings>
+                            <Field name={"facebook"} type={"text"} component={TextField} labelText={"facebook"}/>
+                            <Field name={"instagram"} type={"text"} component={TextField} labelText={"instagram"}/>
+                            <Field name={"twitter"} type={"text"} component={TextField} labelText={"twitter"}/>
+                        </SectionSettings>
+                        <Button onClick = {()=>onSubmit(values)}>Create restaurant</Button>
 
-                        </PageContent>
                     </FormWrapper>)
             }
         }
