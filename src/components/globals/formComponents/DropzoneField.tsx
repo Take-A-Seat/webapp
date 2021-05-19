@@ -24,6 +24,8 @@ interface DropZoneFieldProps extends FieldProps {
     accept?: string;
     icon: string;
     description?: string;
+    fromUrl?:string;
+    urlImage?:string;
 }
 
 const DropZoneField = (
@@ -37,22 +39,28 @@ const DropZoneField = (
         removeFile,
         accept,
         icon,
-        description
+        description,
+        fromUrl,
+        urlImage
     }:
         DropZoneFieldProps
     ) => {
         const [preview, setPreview] = useState<string>();
         useEffect(() => {
-            console.log(files)
-            if (files && !_.isEmpty(files)) {
-                const render = new FileReader();
-                render.onload = () => {
-                    setPreview(render.result as string)
+            console.log("din use effect", files,!fromUrl)
+                if (files && !_.isEmpty(files) && !fromUrl) {
+                    const render = new FileReader();
+                    render.onload = () => {
+                        setPreview(render.result as string)
+                    }
+                    console.log("rerandat")
+                    render.readAsDataURL(files)
+                } else {
+                    console.log("false")
+                    setPreview("");
                 }
-                render.readAsDataURL(files)
-            } else {
-                setPreview("");
-            }
+
+
         }, [files])
         const onDrop = useCallback((acceptedFiles) => {
             acceptedFiles.forEach((file: File) => {
@@ -76,14 +84,14 @@ const DropZoneField = (
                     </FieldLabel>}
                 </FieldTextTitleSection>
 
-                {files && !_.isEmpty(files) ? <InsertedFilesWrapper>
+                {files && !_.isEmpty(files) || fromUrl? <InsertedFilesWrapper>
                     <RemoveFileButton onClick={() => {
                         removeFile()
                     }}>
                         <MaterialIcon iconName={"close"}/>
                     </RemoveFileButton>
 
-                    <PreviewPhoto src={preview} alt={files.name}/>
+                    <PreviewPhoto src={fromUrl?urlImage:preview} alt={files.name}/>
                 </InsertedFilesWrapper> : <DropzoneWrapper
                     {...getRootProps()}
                 >

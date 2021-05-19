@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'HP Simplified';
+    src: local('HP Simplified'), url("../src/fonts/hp-simplified-265.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: 'Cera Regular';
+    src: local('Cera Regular'), url("../src/fonts/cera-basic.otf") format('truetype');
+}

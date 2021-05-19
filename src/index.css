@@ -16,16 +16,13 @@ code {
 }
 
 .App {
-    /* display: flex;
-    flex-direction: row; */
     height: 100%;
-    background: #222222;
-
-
 }
 
 html {
     height: 100%;
+    background: #222222;
+
 }
 
 #root {
@@ -34,14 +31,6 @@ html {
 
 *, *::before, *::after {
     box-sizing: border-box;
+
 }
 
-@font-face {
-    font-family: 'HP Simplified';
-    src: local('HP Simplified'), url("../src/fonts/hp-simplified-265.ttf") format('truetype');
-}
-
-@font-face {
-    font-family: 'Cera Regular';
-    src: local('Cera Regular'), url("../src/fonts/cera-basic.otf") format('truetype');
-}

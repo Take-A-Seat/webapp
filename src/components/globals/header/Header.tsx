@@ -51,7 +51,7 @@ const Header = ({history}: { history: History }) => {
         link: "/products"
     }, {
         name: "Settings",
-        link: "/settings"
+        link: "/settings/restaurant"
     },]
     return (
         <HeaderWrapper>

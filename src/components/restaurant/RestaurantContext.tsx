@@ -3,15 +3,17 @@ import {Action, Dispatch, ReactChildrenType} from "../../constants/globalTypes";
 import {
     ADD_FILE,
     CHECK_MANAGER_RESTAURANT,
-    CHECK_MANAGER_RESTAURANT_FAIL, CHECK_MANAGER_RESTAURANT_FAIL_SHOULD_CREATE_RESTAURANT,
-    CHECK_MANAGER_RESTAURANT_SUCCESS, REMOVE_FILE
+    CHECK_MANAGER_RESTAURANT_FAIL,
+    CHECK_MANAGER_RESTAURANT_FAIL_SHOULD_CREATE_RESTAURANT,
+    CHECK_MANAGER_RESTAURANT_SUCCESS,
+    REMOVE_FILE
 } from "./RestaurantActions";
 
 type State = {
     loading: boolean,
     error: any,
     restaurant: any,
-    file:any,
+    file: any,
     shouldCreateRestaurant: boolean,
 }
 
@@ -22,22 +24,22 @@ const initialState: State = {
     loading: false,
     error: {},
     restaurant: {},
-    file:"",
+    file: "",
     shouldCreateRestaurant: false,
 }
 
 const restaurantReducer = (state: State, action: Action) => {
     switch (action.type) {
-        case ADD_FILE:{
+        case ADD_FILE: {
             return {
                 ...state,
-                file:action.payload
+                file: action.payload
             }
         }
-        case REMOVE_FILE:{
+        case REMOVE_FILE: {
             return {
                 ...state,
-                file:{}
+                file: {}
             }
         }
         case CHECK_MANAGER_RESTAURANT: {
@@ -49,6 +51,7 @@ const restaurantReducer = (state: State, action: Action) => {
             }
         }
         case CHECK_MANAGER_RESTAURANT_SUCCESS: {
+            console.log(action.payload)
             return {
                 ...state,
                 loading: false,

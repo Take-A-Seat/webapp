@@ -1,4 +1,4 @@
-import React, {lazy, useEffect} from 'react'
+import React, {lazy, useEffect,Suspense} from 'react'
 import {Redirect, Switch, withRouter} from "react-router-dom";
 import PrivateRoute from "../../helpers/PrivateRoute";
 import {useRestaurantDispatch, useRestaurantState} from "./RestaurantContext";
@@ -7,6 +7,7 @@ import _ from "lodash";
 import {checkIfManagerHasRestaurant} from "./RestaurantActions";
 
 const CreateRestaurant = lazy(() => import("../restaurant/add/CreateRestaurant"))
+const EditRestaurant = lazy(() => import("../restaurant/edit/EditRestaurant"))
 const RestaurantRouter = () => {
     const restaurantState = useRestaurantState();
     const restaurantDispatch = useRestaurantDispatch();
@@ -19,12 +20,17 @@ const RestaurantRouter = () => {
         }
     }, [loggedUser])
     if (shouldCreateRestaurant) {
-        return <CreateRestaurant/>
+        return <Suspense fallback={<div/>}>
+            <CreateRestaurant/>
+        </Suspense>
     } else
         return (
-            <Switch>
-                <PrivateRoute component={CreateRestaurant} path={"/settings/restaurant"} exact/>
-            </Switch>
+            <Suspense fallback={<div/>}>
+
+                <Switch>
+                    <PrivateRoute component={EditRestaurant} path={"/settings/restaurant"} exact/>
+                </Switch>
+            </Suspense>
         )
 }
 export default withRouter(RestaurantRouter)

@@ -8,24 +8,30 @@ export const CHECK_MANAGER_RESTAURANT_SUCCESS = "check_manager_restaurant_succes
 export const CHECK_MANAGER_RESTAURANT_FAIL = "check_manager_restaurant_fail";
 export const CHECK_MANAGER_RESTAURANT_FAIL_SHOULD_CREATE_RESTAURANT = "check_manager_restaurant_fail_should_create_restaurant";
 
+
 export const checkIfManagerHasRestaurant = ({dispatch, managerId}: { dispatch: Dispatch, managerId: string }) => {
     dispatch({type: CHECK_MANAGER_RESTAURANT, payload: {}});
     authFetch(`/restaurants/managerId/${managerId}`, {method: "GET"}).then(response => {
         if (!response.ok) {
             if (response.status === 400) {
                 response.text().then(error => {
-                    return dispatch({type: CHECK_MANAGER_RESTAURANT_FAIL, payload: JSON.parse(error)})
+                    dispatch({type: CHECK_MANAGER_RESTAURANT_FAIL, payload: JSON.parse(error)})
                 })
             } else if (response.status === 404) {
                 response.text().then(error => {
-                    return dispatch({type: CHECK_MANAGER_RESTAURANT_FAIL_SHOULD_CREATE_RESTAURANT, payload: {error}})
+                    dispatch({type: CHECK_MANAGER_RESTAURANT_FAIL_SHOULD_CREATE_RESTAURANT, payload: {error}})
                 })
-            } else {
-                return response.json()
             }
         }
+        return response.json()
+
     }).then(data => {
-        return dispatch({type: CHECK_MANAGER_RESTAURANT_SUCCESS, payload: data})
+        console.log("data", data)
+        if (data) {
+            console.log("data", data)
+
+            dispatch({type: CHECK_MANAGER_RESTAURANT_SUCCESS, payload: data})
+        }
     }).catch(error => {
         console.log(error)
     })
@@ -103,10 +109,23 @@ export const updateRestaurant = ({
                                      dispatch,
                                      restaurantId,
                                      values,
+                                     file,
+                                     changeLogo,
                                      callBack
-                                 }: { dispatch: Dispatch, restaurantId: string, values: any, callBack: () => void }) => {
+                                 }: { dispatch: Dispatch, restaurantId: string, changeLogo: boolean, file: any, values: any, callBack: () => void }) => {
     dispatch({type: UPDATE_RESTAURANT, payload: {}})
-    authFetch(`/restaurants/id/${restaurantId}`, {method: "PUT", body: JSON.stringify(values)}).then(response => {
+    let data = new FormData();
+    _.forOwn(values, (value, key) => {
+        if (key !== "logo") {
+            if (value) {
+                data.append(key, value as string);
+            }
+        }
+    });
+
+    data.append('logo', file)
+    data.append('changeLogo', `${changeLogo}`)
+    authFetch(`/restaurants/id/${restaurantId}`, {method: "PUT", body: data}).then(response => {
         if (!response.ok) {
             return response.text().then(error => {
                 dispatch({type: UPDATE_RESTAURANT_FAIL, payload: JSON.parse(error)})

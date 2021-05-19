@@ -59,8 +59,23 @@ export const FlexWrapper = styled.div`
   margin-bottom: 20px;
 `;
 
+export const Wrapper = styled.div<any>`
+    width:100%;
+    height:fit-content;
+    display:flex;
+    align-items:center;
+  justify-content: flex-end;
+    margin-bottom:20px;
+    margin-top: 20px;
+     ${({form}) => form && `
+        margin-left: 15px;
+        margin-top: 5px;
+  
+    `}
+`;
+
 export const Button = styled.div<any>`
-  border-radius: 22px;
+  border-radius: 6px;
   box-shadow: 0 4px 6px 0 rgba(50, 50, 93, 0.11), 0 1px 3px 0 rgba(0, 0, 0, 0.08);
   background: ${ORANGE_COLOR};
   color: ${WHITE_COLOR};
@@ -78,6 +93,11 @@ export const Button = styled.div<any>`
     font-size: 18px;
     margin-right: 10px;
   }
+  
+  ${({cancelButton})=>cancelButton &&`
+    background:transparent;
+    border:1px solid ${LIGHT_GRAY}
+  `}
 
   ${({customMarginBottom}) => customMarginBottom && `
         margin-bottom:${customMarginBottom};

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import {Button} from 'reactstrap';
 import {
-  BIG_FONT_SIZE,
+  BIG_FONT_SIZE, BLUE_COLOR,
   BORDER_INPUT,
   BORDER_SWITCH, COLOR_INPUT_BACKGROUND, DARK_GREY_COLOR,
   INPUT_PLACEHOLDER,
@@ -564,7 +564,7 @@ position: absolute;
   z-index: 999;
   color: #fff;
   cursor: pointer;
-  background-color:#406BB2 ;
+  background-color:${BLUE_COLOR} ;
   border-radius: 3px;
   display: flex;
   align-items: center;

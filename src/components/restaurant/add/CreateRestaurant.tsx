@@ -11,10 +11,11 @@ const CreateRestaurant = () => {
     const restaurantState = useRestaurantState();
     const {file} = restaurantState;
     const accountState = useLoginState();
-    const {loggedUser}=accountState
+    const {loggedUser} = accountState
     let history = useHistory();
 
     const initialValues: RestaurantSettingsFormValuesTypes = {
+        id: "",
         address: "",
         country: "",
         description: "",
@@ -27,7 +28,10 @@ const CreateRestaurant = () => {
         program: "",
         twitter: "",
         website: "",
-        logo:""
+        logo: "",
+        streetAndNumber: "",
+        province: "",
+        city: ""
     }
 
     const addNewFile = (file: File) => {
@@ -40,7 +44,7 @@ const CreateRestaurant = () => {
     const onsubmit = (values: RestaurantSettingsFormValuesTypes) => {
         addRestaurant({
             file: file, values: values, dispatch: dispatch, callBack: () => {
-                checkIfManagerHasRestaurant({dispatch:dispatch,managerId:loggedUser.UserId})
+                checkIfManagerHasRestaurant({dispatch: dispatch, managerId: loggedUser.UserId})
                 history.push("/");
             }
         })

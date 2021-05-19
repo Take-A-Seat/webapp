@@ -16,10 +16,10 @@ export const BORDER_INPUT = "#050404";
 export const INPUT_PLACEHOLDER = "#3f3d3d";
 export const BORDER_SWITCH = "#C7CDD4"
 export const ORANGE_POINT_SWITCH = "#FB6340";
-export const BLUE_COLOR = "#5E72E4";
+export const BLUE_COLOR = "#4458ed";
 export const GREEN_COLOR = "rgb(31,102,121)";
 export const DARK_RED = "rgb(175,15,59)";
-
+export const BACKGROUND_COLOR="#222222";
 //font-sizes
 export const SMALL_FONT_SIZE = "13px";
 export const NORMAL_FONT_SIZE = "14px";

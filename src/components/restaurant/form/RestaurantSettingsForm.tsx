@@ -4,9 +4,11 @@ import * as Yup from "yup";
 import {FormWrapper, PageContent, SectionSettings, TextSection} from "../../globals/formComponents/style";
 import TextField from "../../globals/formComponents/TextField";
 import DropZoneField from "../../globals/formComponents/DropzoneField";
-import {Button} from "../../globals/GlobalStyles";
+import {Button, Wrapper} from "../../globals/GlobalStyles";
+import MaterialIcon from "../../globals/MaterialIcons";
 
 export type RestaurantSettingsFormValuesTypes = {
+    id: string;
     name: string;
     description: string;
     address: string;
@@ -19,14 +21,25 @@ export type RestaurantSettingsFormValuesTypes = {
     facebook: string;
     instagram: string;
     twitter: string;
-    logo:any,
+    logo: any,
+    streetAndNumber: string,
+    province: string,
+    city: string,
 }
+
+export type TouchedFormTypes = {
+    name: boolean;
+}
+
 type RestaurantSettingsFormProps = {
     initialValues: RestaurantSettingsFormValuesTypes;
     onSubmit: (values: RestaurantSettingsFormValuesTypes) => void;
+    cancel?: () => void;
     addNewFile: (file: File) => void;
     file: File;
     removeFile: () => void;
+    urlImage?: string;
+    fromUrl?: boolean;
 }
 
 export const RestaurantFormSettings = ({
@@ -34,10 +47,13 @@ export const RestaurantFormSettings = ({
                                            onSubmit,
                                            addNewFile,
                                            file,
-                                           removeFile
+                                           removeFile,
+                                           urlImage,
+                                           fromUrl,
+                                           cancel
                                        }: RestaurantSettingsFormProps) => {
     const validationSchema = Yup.object().shape({
-        name: Yup.string().required("Camp obligatoriu").min(3, "Minim 3")
+        name: Yup.string().min(3,"Minim 3 litere").required("Camp obligatoriu")
     })
 
     return (<Formik enableReinitialize={true} initialValues={initialValues}
@@ -58,6 +74,8 @@ export const RestaurantFormSettings = ({
                                 Avatars are used to personalize your messages.
                             </TextSection>
                             <Field name={"logo"} component={DropZoneField} type="file" title={"Logo"} accept={"image/*"}
+                                   fromUrl={fromUrl}
+                                   urlImage={urlImage}
                                    icon={"attach_file"}
                                    addNewFile={addNewFile} removeFile={() => removeFile()} files={file}
                                    dropzoneText={"Select or drop image"}
@@ -67,7 +85,6 @@ export const RestaurantFormSettings = ({
                         <SectionSettings column>
                             <TextSection>
                                 Contact details
-
                             </TextSection>
                             <TextSection description>
                                 Take a Seat uses your contact details in the Terms & conditions, Privacy statement
@@ -93,12 +110,22 @@ export const RestaurantFormSettings = ({
                                 Take a Seat uses your social links in emails to guests.
                                 Paste the URLs of your profile pages here.
                             </TextSection>
-
                             <Field name={"facebook"} type={"text"} component={TextField} labelText={"facebook"}/>
                             <Field name={"instagram"} type={"text"} component={TextField} labelText={"instagram"}/>
                             <Field name={"twitter"} type={"text"} component={TextField} labelText={"twitter"}/>
                         </SectionSettings>
-                        <Button onClick = {()=>onSubmit(values)}>Create restaurant</Button>
+                        <Wrapper>
+                            {cancel && <Button
+                                onClick={() => {
+                                    cancel()
+                                }} cancelButton>
+                                <MaterialIcon iconName={"cancel"}/>
+                                Cancel
+                            </Button>}
+                            <Button onClick={() => onSubmit(values)} blueButton>
+                                <MaterialIcon iconName={"save"}/>
+                                {initialValues.id == "" ? "Create restaurant" : "Save changes"}</Button>
+                        </Wrapper>
 
                     </FormWrapper>)
             }
