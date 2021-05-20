@@ -64,7 +64,7 @@ const Header = ({history}: { history: History }) => {
 
             <HeaderLinks>
                 {linkElements.map((item, index) => {
-                    return <HeaderElement to={item.link} key={index}>
+                    return <HeaderElement to={item.link} key={index} exact={true} >
                         <HeaderElementText>
                             {item.name}
                         </HeaderElementText>

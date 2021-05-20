@@ -6,30 +6,57 @@ import {
     CHECK_MANAGER_RESTAURANT_FAIL,
     CHECK_MANAGER_RESTAURANT_FAIL_SHOULD_CREATE_RESTAURANT,
     CHECK_MANAGER_RESTAURANT_SUCCESS,
+    GET_AREAS_BY_RESTAURANT_ID,
+    GET_AREAS_BY_RESTAURANT_ID_FAIL,
+    GET_AREAS_BY_RESTAURANT_ID_SUCCESS,
     REMOVE_FILE
-} from "./RestaurantActions";
+} from "./SettingsActions";
 
 type State = {
     loading: boolean,
     error: any,
     restaurant: any,
+    listAreas: any,
     file: any,
     shouldCreateRestaurant: boolean,
 }
 
-const RestaurantStateContext = createContext<State | undefined>(undefined)
-const RestaurantDispatchContext = createContext<Dispatch | undefined>(undefined)
+const SettingsStateContext = createContext<State | undefined>(undefined)
+const SettingsDispatchContext = createContext<Dispatch | undefined>(undefined)
 
 const initialState: State = {
     loading: false,
     error: {},
     restaurant: {},
+    listAreas: [],
     file: "",
     shouldCreateRestaurant: false,
 }
 
 const restaurantReducer = (state: State, action: Action) => {
     switch (action.type) {
+        case GET_AREAS_BY_RESTAURANT_ID: {
+            return {
+                ...state,
+                loading: true,
+                error: ""
+            }
+        }
+        case GET_AREAS_BY_RESTAURANT_ID_SUCCESS: {
+            return {
+                ...state,
+                loading: false,
+                error: "",
+                listAreas: action.payload
+            }
+        }
+        case GET_AREAS_BY_RESTAURANT_ID_FAIL: {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            }
+        }
         case ADD_FILE: {
             return {
                 ...state,
@@ -84,32 +111,32 @@ const restaurantReducer = (state: State, action: Action) => {
     }
 }
 
-const RestaurantProvider = ({children}: ReactChildrenType) => {
+const SettingsProvider = ({children}: ReactChildrenType) => {
     const [state, dispatch] = useReducer(restaurantReducer, initialState)
     return (
-        <RestaurantStateContext.Provider value={state}>
-            <RestaurantDispatchContext.Provider value={dispatch}>
+        <SettingsStateContext.Provider value={state}>
+            <SettingsDispatchContext.Provider value={dispatch}>
                 {children}
-            </RestaurantDispatchContext.Provider>
-        </RestaurantStateContext.Provider>
+            </SettingsDispatchContext.Provider>
+        </SettingsStateContext.Provider>
     )
 }
 
-const useRestaurantState = () => {
-    const context = useContext(RestaurantStateContext);
+const useSettingsState = () => {
+    const context = useContext(SettingsStateContext);
     if (context === undefined) {
-        throw new Error("useRestaurantState must be used within a RestaurantProvider")
+        throw new Error("useSettingsState must be used within a SettingsProvider")
     }
     return context;
 }
 
-const useRestaurantDispatch = () => {
-    const context = useContext(RestaurantDispatchContext);
+const useSettingsDispatch = () => {
+    const context = useContext(SettingsDispatchContext);
 
     if (context === undefined) {
-        throw new Error("useRestaurantState must be used within a RestaurantProvider")
+        throw new Error("useSettingsState must be used within a SettingsProvider")
     }
     return context;
 }
 
-export {RestaurantProvider, useRestaurantDispatch, useRestaurantState}
+export {SettingsProvider, useSettingsDispatch, useSettingsState}

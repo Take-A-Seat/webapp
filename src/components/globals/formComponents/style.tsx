@@ -2,16 +2,16 @@ import styled from 'styled-components'
 
 import {Button} from 'reactstrap';
 import {
-  BIG_FONT_SIZE, BLUE_COLOR,
-  BORDER_INPUT,
-  BORDER_SWITCH, COLOR_INPUT_BACKGROUND, DARK_GREY_COLOR,
-  INPUT_PLACEHOLDER,
-  LIGHT_GRAY,
-  NORMAL_FONT_SIZE,
-  ORANGE_COLOR,
-  RED_COLOR, TEXT_COLOR_INPUT,
-  VERY_DARK_GREY_COLOR,
-  WHITE_COLOR
+    BIG_FONT_SIZE, BLUE_COLOR,
+    BORDER_INPUT,
+    BORDER_SWITCH, COLOR_INPUT_BACKGROUND, DARK_GREY_COLOR,
+    INPUT_PLACEHOLDER,
+    LIGHT_GRAY,
+    NORMAL_FONT_SIZE,
+    ORANGE_COLOR,
+    RED_COLOR, TEXT_COLOR_INPUT,
+    VERY_DARK_GREY_COLOR,
+    WHITE_COLOR
 } from "../../../constants/styleConstants";
 
 export const SectionSettings = styled.div<any>`
@@ -23,8 +23,8 @@ export const SectionSettings = styled.div<any>`
   ${({column}) => column && `
    flex-direction:column;
   `}
-  
-  ${({firstSection})=> firstSection && `
+
+  ${({firstSection}) => firstSection && `
   margin-top:5px;
   `}
 `
@@ -61,7 +61,7 @@ export const HorizontalDelimiter = styled.div<any>`
 export const FormWrapper = styled.form<any>`
   width: 100%;
   max-width: 900px;
-  padding:15px;
+  padding: 15px;
   height: 100%;
   display: flex;
   ${({center}) => center && `
@@ -117,7 +117,7 @@ export const FieldWrapper = styled.div<any>`
   flex-wrap: wrap;
   border-bottom: 1px solid rgb(255 255 255 / 10%);
 
-  
+
   ${({fitContentWidth}) => fitContentWidth && `
         width:fit-content;
         margin-right:15px;
@@ -205,7 +205,7 @@ export const FieldLabel = styled.p<any>`
   text-align: left;
   margin: 0;
   align-items: center;
- padding-right: 30px;
+  padding-right: 30px;
   ${({error}) => error && `
         color:${RED_COLOR};
     `}
@@ -311,12 +311,13 @@ export const CustomStyledInput = styled.input<any>`
   min-width: 100px;
   max-width: 180px;
   border: 1px solid ${BORDER_INPUT};
-  font-family: "Open Sans",sans-serif;
+  font-family: "Open Sans", sans-serif;
   border-radius: 4px;
   padding: 15px;
   margin-left: 30px;
   font-weight: bold;
-  cursor:pointer;
+  cursor: pointer;
+
   ::placeholder,
   ::-webkit-input-placeholder {
     transition: 0.3s ease;
@@ -341,26 +342,21 @@ export const CustomStyledInput = styled.input<any>`
 
   ${({customWidth}) => customWidth && `
         width:${customWidth};
-    `}
-  ${({customInputWidth}) => customInputWidth && `
+    `} ${({noDescription}) => !noDescription && `
+        max-width:100%;
+    `} ${({customInputWidth}) => customInputWidth && `
         width:${customInputWidth};
-    `}
-
-  ${({customMarginLeft}) => customMarginLeft && `
+    `} ${({customMarginLeft}) => customMarginLeft && `
         margin-left:${customMarginLeft};
-    `}
-  ${({customMarginBottom}) => customMarginBottom && `
+    `} ${({customMarginBottom}) => customMarginBottom && `
         
-    `}
-  ${({biggerInput}) => biggerInput && `
+    `} ${({biggerInput}) => biggerInput && `
         width:90%;
-    `}
-  ${({disabled}) => disabled && `
+    `} ${({disabled}) => disabled && `
         background-color: hsl(0,0%,95%);
         border-color: hsl(0,0%,90%);
     `}
-
-  @media only screen and (max-width: 600px) {
+  @media only screen and(max-width: 600 px) {
   margin-left: 0;
 }
 `;
@@ -552,19 +548,19 @@ export const InsertedFilesWrapper = styled.div`
 `;
 
 export const PreviewPhoto = styled.img<any>`
- width: 184px;
+  width: 184px;
   height: auto;
-  
+
 `
 
 export const RemoveFileButton = styled.div`
-position: absolute;
+  position: absolute;
   top: 0;
   right: 0;
   z-index: 999;
   color: #fff;
   cursor: pointer;
-  background-color:${BLUE_COLOR} ;
+  background-color: ${BLUE_COLOR};
   border-radius: 3px;
   display: flex;
   align-items: center;

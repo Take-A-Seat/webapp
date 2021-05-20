@@ -160,6 +160,57 @@ export const getRestaurantById = ({dispatch, restaurantId}: { dispatch: Dispatch
     })
 }
 
+export const CREATE_NEW_AREA = "create_area";
+export const CREATE_NEW_AREA_SUCCESS = "create_area_success";
+export const CREATE_NEW_AREA_FAIL = "create_area_fail";
+export const addArea = ({
+                            dispatch,
+                            values,
+                            callBack
+                        }: { dispatch: Dispatch, values: any, callBack?: () => void }) => {
+    dispatch({type: CREATE_NEW_AREA, payload: {}})
+
+
+    authFetch(`/restaurants/id/${values.restaurantId}/area`, {
+        method: "POST",
+        body: JSON.stringify(values)
+    }).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: CREATE_NEW_AREA_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        dispatch({type: CREATE_NEW_AREA_SUCCESS, payload: data})
+        if (callBack) {
+            callBack()
+        }
+    }).catch(error => {
+        console.log("error", error)
+    })
+}
+
+export const GET_AREAS_BY_RESTAURANT_ID = "get_restaurant_by_restaurant_id";
+export const GET_AREAS_BY_RESTAURANT_ID_SUCCESS = "get_restaurant_by_restaurant_id_success";
+export const GET_AREAS_BY_RESTAURANT_ID_FAIL = "get_restaurant_by_restaurant_id_fail";
+
+export const getAreasByRestaurantId = ({dispatch, restaurantId}: { dispatch: Dispatch, restaurantId: string }) => {
+    dispatch({type: GET_AREAS_BY_RESTAURANT_ID, payload: {}});
+    authFetch(`/restaurants/id/${restaurantId}/areas`, {method: "GET"}).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: GET_AREAS_BY_RESTAURANT_ID_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        dispatch({type: GET_AREAS_BY_RESTAURANT_ID_SUCCESS, payload: data})
+    }).catch(error => {
+        console.log("error", error)
+    })
+}
+
 export const ADD_FILE = 'add_file';
 export const addFile = ({dispatch, file}: { dispatch: Dispatch, file: File }) => {
     dispatch({type: ADD_FILE, payload: file})

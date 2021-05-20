@@ -1,7 +1,7 @@
 import {Field, Formik} from "formik";
 import React from "react";
 import * as Yup from "yup";
-import {FormWrapper, PageContent, SectionSettings, TextSection} from "../../globals/formComponents/style";
+import {FormWrapper, SectionSettings, TextSection} from "../../globals/formComponents/style";
 import TextField from "../../globals/formComponents/TextField";
 import DropZoneField from "../../globals/formComponents/DropzoneField";
 import {Button, Wrapper} from "../../globals/GlobalStyles";
@@ -27,9 +27,6 @@ export type RestaurantSettingsFormValuesTypes = {
     city: string,
 }
 
-export type TouchedFormTypes = {
-    name: boolean;
-}
 
 type RestaurantSettingsFormProps = {
     initialValues: RestaurantSettingsFormValuesTypes;
@@ -53,7 +50,7 @@ export const RestaurantFormSettings = ({
                                            cancel
                                        }: RestaurantSettingsFormProps) => {
     const validationSchema = Yup.object().shape({
-        name: Yup.string().min(3,"Minim 3 litere").required("Camp obligatoriu")
+        name: Yup.string().min(3, "Minim 3 litere").required("Camp obligatoriu")
     })
 
     return (<Formik enableReinitialize={true} initialValues={initialValues}
@@ -124,7 +121,7 @@ export const RestaurantFormSettings = ({
                             </Button>}
                             <Button onClick={() => onSubmit(values)} blueButton>
                                 <MaterialIcon iconName={"save"}/>
-                                {initialValues.id == "" ? "Create restaurant" : "Save changes"}</Button>
+                                {initialValues.id == "" ? "Create settings" : "Save changes"}</Button>
                         </Wrapper>
 
                     </FormWrapper>)

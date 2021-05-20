@@ -140,6 +140,14 @@ export const Button = styled.div<any>`
     `}
   ${({customWidth}) => customWidth && `
       width:${customWidth};
+    `} 
+  ${({circle}) => circle && `
+      border-radius:30px;
+      padding:7px;
+      text-align:center;
+       & i {
+        margin-right:0px;
+        }
     `}
 `;
 

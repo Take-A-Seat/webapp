@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
+import {HEADER_SETTINGS_BACKGROUND} from "../../../constants/styleConstants";
 
-export const HeaderWrapper = styled.div`
+export const HeaderWrapper = styled.div<any>`
   height: 64px;
   width: 100%;
   display: flex;
@@ -12,6 +13,12 @@ export const HeaderWrapper = styled.div`
   box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.1);
   z-index: 10000;
   position: sticky;
+
+  ${({settings}) => settings && `
+  height:30px;
+  background-color:${HEADER_SETTINGS_BACKGROUND};
+  justify-content:center;
+  `}
 `;
 
 export const LogoWrapper = styled.div`
@@ -58,8 +65,26 @@ export const HeaderElement = styled(NavLink)`
   }
 `
 
+export const HeaderElementSettings = styled(Link)`
+  width: 100%;
+  //height: fit-content;
+  padding-left: 25px;
+  padding-right: 25px;
+  //display: flex;
+  //align-items: center;
+  text-decoration: none;
+  color: rgba(239, 244, 255, 0.42);
+  font-weight: 700;
 
-export const HeaderElementText = styled.p`
+  &.active, &.hover {
+    background-color: #242424;
+    font-weight: 700;
+    color: #fff;
+  }
+`
+
+
+export const HeaderElementText = styled.span<any>`
   white-space: nowrap;
 
   &:hover {
@@ -67,5 +92,9 @@ export const HeaderElementText = styled.p`
     font-weight: 700;
     color: #fff;
   }
+
+  ${({settings}) => settings && `
+    font-size:14px;
+  `}
 
 `

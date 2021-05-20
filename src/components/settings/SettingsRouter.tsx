@@ -1,0 +1,40 @@
+import React, {lazy, Suspense, useEffect} from 'react'
+import {Switch, withRouter} from "react-router-dom";
+import PrivateRoute from "../../helpers/PrivateRoute";
+import {useSettingsDispatch, useSettingsState} from "./SettingsContext";
+import {useLoginState} from "../auth/AuthContext";
+import _ from "lodash";
+import {checkIfManagerHasRestaurant} from "./SettingsActions";
+import HeaderSettings from "./Headers/HeaderSettings";
+
+const CreateRestaurant = lazy(() => import("./add/CreateRestaurant"))
+const EditRestaurant = lazy(() => import("./edit/EditRestaurant"))
+const AreaListing = lazy(() => import("./listing/AreaListing"))
+const SettingsRouter = () => {
+    const settingsState = useSettingsState();
+    const settingsDispatch = useSettingsDispatch();
+    const {shouldCreateRestaurant} = settingsState;
+    const logInState = useLoginState();
+    const {loggedUser} = logInState;
+    useEffect(() => {
+        if (!_.isEmpty(loggedUser) && loggedUser.UserId != undefined) {
+            checkIfManagerHasRestaurant({dispatch: settingsDispatch, managerId: loggedUser.UserId})
+        }
+    }, [loggedUser])
+
+    if (shouldCreateRestaurant) {
+        return <Suspense fallback={<div/>}>
+            <CreateRestaurant/>
+        </Suspense>
+    } else
+        return (
+            <Suspense fallback={<div/>}>
+                <HeaderSettings/>
+                <Switch>
+                    <PrivateRoute component={EditRestaurant} path={"/settings/restaurant"} exact/>
+                    <PrivateRoute component={AreaListing} path={"/settings/tables/plan"} exact/>
+                </Switch>
+            </Suspense>
+        )
+}
+export default withRouter(SettingsRouter)

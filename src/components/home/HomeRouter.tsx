@@ -1,16 +1,11 @@
-import React, {lazy, Suspense, useEffect} from "react";
-import {Redirect, Route, Switch, withRouter} from 'react-router-dom'
+import React, {lazy, Suspense} from "react";
+import {Route, Switch, withRouter} from 'react-router-dom'
 
 import {History} from 'history'
 import Header from "../globals/header/Header";
-import {useRestaurantDispatch, useRestaurantState} from "../restaurant/RestaurantContext";
-import {checkIfManagerHasRestaurant} from "../restaurant/RestaurantActions";
-import {useLoginState} from "../auth/AuthContext";
 import {HomePageWrapper} from "./style";
-import _ from "lodash";
-import PrivateRoute from "../../helpers/PrivateRoute";
 
-const RestaurantRouter = lazy(() => import("../restaurant/RestaurantRouter"))
+const SettingsRouter = lazy(() => import("../settings/SettingsRouter"))
 
 const HomeRouter = ({history}: { history: History }) => {
         return (
@@ -18,7 +13,7 @@ const HomeRouter = ({history}: { history: History }) => {
                 <HomePageWrapper>
                     <Header/>
                     <Switch>
-                        <Route component={RestaurantRouter} path={"/"}/>
+                        <Route component={SettingsRouter} path={"/"}/>
                     </Switch>
                 </HomePageWrapper>
             </Suspense>

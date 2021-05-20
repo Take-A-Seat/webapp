@@ -2,14 +2,14 @@ import React from "react";
 import {useHistory, withRouter} from "react-router-dom";
 import {RestaurantFormSettings, RestaurantSettingsFormValuesTypes} from "../form/RestaurantSettingsForm";
 import {PageWrapper} from "../../globals/GlobalStyles";
-import {addFile, addRestaurant, checkIfManagerHasRestaurant, removeFile} from "../RestaurantActions";
-import {useRestaurantDispatch, useRestaurantState} from "../RestaurantContext";
+import {addFile, addRestaurant, checkIfManagerHasRestaurant, removeFile} from "../SettingsActions";
+import {useSettingsState,useSettingsDispatch} from "../SettingsContext";
 import {useLoginState} from "../../auth/AuthContext";
 
 const CreateRestaurant = () => {
-    const dispatch = useRestaurantDispatch();
-    const restaurantState = useRestaurantState();
-    const {file} = restaurantState;
+    const dispatch = useSettingsDispatch();
+    const settingsState = useSettingsState();
+    const {file} = settingsState;
     const accountState = useLoginState();
     const {loggedUser} = accountState
     let history = useHistory();

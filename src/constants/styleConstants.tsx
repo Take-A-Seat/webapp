@@ -2,7 +2,7 @@
 export const ORANGE_COLOR = "#FB6340";
 export const VERY_DARK_GREY_COLOR = "#4A4A4A";
 export const COLOR_INPUT_BACKGROUND = "#353535";
-export const TEXT_COLOR_INPUT="#fff"
+export const TEXT_COLOR_INPUT = "#fff"
 export const DARK_GREY_COLOR = "#808080";
 export const LIGHT_GRAYISH_BLUE_COLOR = "#E9ECEF";
 export const WHITE_COLOR = "#FFFFFF";
@@ -13,13 +13,15 @@ export const BLACK_COLOR = "#000000";
 export const DARK_GREY2_COLOR = "#888888";
 export const LIGHT_GRAY = "#E9ECEF";
 export const BORDER_INPUT = "#050404";
-export const INPUT_PLACEHOLDER = "#3f3d3d";
+export const INPUT_PLACEHOLDER = "#4a4747";
 export const BORDER_SWITCH = "#C7CDD4"
 export const ORANGE_POINT_SWITCH = "#FB6340";
 export const BLUE_COLOR = "#4458ed";
 export const GREEN_COLOR = "rgb(31,102,121)";
 export const DARK_RED = "rgb(175,15,59)";
-export const BACKGROUND_COLOR="#222222";
+export const BACKGROUND_COLOR = "#222222";
+export const HEADER_SETTINGS_BACKGROUND = "#242424";
+export const SETTINGS_BACKGROUND_GREY = "#323232"
 //font-sizes
 export const SMALL_FONT_SIZE = "13px";
 export const NORMAL_FONT_SIZE = "14px";

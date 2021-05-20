@@ -1,17 +1,23 @@
 import React, {useState} from "react";
-import {useRestaurantDispatch, useRestaurantState} from "../RestaurantContext";
+import {useSettingsDispatch, useSettingsState} from "../SettingsContext";
 import {RestaurantFormSettings, RestaurantSettingsFormValuesTypes} from "../form/RestaurantSettingsForm";
 import {PageWrapper} from "../../globals/GlobalStyles";
-import {addFile, checkIfManagerHasRestaurant, removeFile, updateRestaurant} from "../RestaurantActions";
+import {
+    addFile,
+    checkIfManagerHasRestaurant,
+    getAreasByRestaurantId, getOwnerRestaurants,
+    removeFile,
+    updateRestaurant
+} from "../SettingsActions";
 import {withRouter} from "react-router-dom";
 import {useLoginState} from "../../auth/AuthContext";
 
 const EditRestaurant = () => {
-    const dispatch = useRestaurantDispatch();
-    const restaurantState = useRestaurantState();
+    const dispatch = useSettingsDispatch();
+    const settingsState = useSettingsState();
     const logInState = useLoginState();
     const {loggedUser} = logInState;
-    const {restaurant, file} = restaurantState;
+    const {restaurant, file} = settingsState;
     const [fromUrl, setLogoFrom] = useState(true)
     const initialValues: RestaurantSettingsFormValuesTypes = {
         id: restaurant.id,
@@ -34,13 +40,13 @@ const EditRestaurant = () => {
     }
 
     const onSubmit = (values: RestaurantSettingsFormValuesTypes) => {
-        console.log(values)
         updateRestaurant({
             restaurantId: restaurant.id,
             changeLogo: !fromUrl,
             values: values,
             file: file,
             callBack: () => {
+                checkIfManagerHasRestaurant({dispatch: dispatch,managerId:loggedUser.UserId})
             },
             dispatch: dispatch
         })
