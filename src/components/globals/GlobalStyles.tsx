@@ -36,12 +36,12 @@ export const PageWrapper = styled.div<any>`
   display: flex;
   flex-direction: column;
   padding: 45px 50px 150px 50px;
-  ${({centerPage})=> centerPage && `
+  ${({centerPage}) => centerPage && `
   justify-content:center;
   align-items:center;
   margin:0 auto;
   `}
-  
+
   ${({big}) => big && `
     flex:1;
   `}
@@ -60,14 +60,14 @@ export const FlexWrapper = styled.div`
 `;
 
 export const Wrapper = styled.div<any>`
-    width:100%;
-    height:fit-content;
-    display:flex;
-    align-items:center;
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
   justify-content: flex-end;
-    margin-bottom:20px;
-    margin-top: 20px;
-     ${({form}) => form && `
+  margin-bottom: 20px;
+  margin-top: 20px;
+  ${({form}) => form && `
         margin-left: 15px;
         margin-top: 5px;
   
@@ -93,8 +93,8 @@ export const Button = styled.div<any>`
     font-size: 18px;
     margin-right: 10px;
   }
-  
-  ${({cancelButton})=>cancelButton &&`
+
+  ${({cancelButton}) => cancelButton && `
     background:transparent;
     border:1px solid ${LIGHT_GRAY}
   `}
@@ -140,12 +140,15 @@ export const Button = styled.div<any>`
     `}
   ${({customWidth}) => customWidth && `
       width:${customWidth};
-    `} 
+    `}
   ${({circle}) => circle && `
       border-radius:30px;
       padding:7px;
       text-align:center;
+      height:fit-content;
        & i {
+       font-size:25px;
+       font-weight:400;
         margin-right:0px;
         }
     `}

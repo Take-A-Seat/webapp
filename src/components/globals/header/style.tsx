@@ -3,21 +3,28 @@ import {Link, NavLink} from "react-router-dom";
 import {HEADER_SETTINGS_BACKGROUND} from "../../../constants/styleConstants";
 
 export const HeaderWrapper = styled.div<any>`
-  height: 64px;
   width: 100%;
   display: flex;
   justify-content: space-around;
   flex-direction: row;
   align-items: center;
-  padding: 0 30px 0 30px;
+  flex-wrap: wrap;
+  padding: 5px 30px 5px 30px;
   box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.1);
   z-index: 10000;
   position: sticky;
+  border:1px solid rgba(40,44,52,0.21);
 
   ${({settings}) => settings && `
-  height:30px;
+  padding: 0;
   background-color:${HEADER_SETTINGS_BACKGROUND};
   justify-content:center;
+  `}
+  
+  ${({table})=>table && `
+  background-color :#323232;
+  border:1px solid black;
+  padding:10px;
   `}
 `;
 
@@ -36,6 +43,7 @@ export const HeaderLinks = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   margin: auto;
   color: #fff;
 `
@@ -48,8 +56,8 @@ export const HeaderAccountSection = styled.div`
 `
 
 export const HeaderElement = styled(NavLink)`
-  width: 100%;
-  height: fit-content;
+  //width: 100%;
+  //height: fit-content;
   padding-left: 25px;
   padding-right: 25px;
   display: flex;
@@ -65,8 +73,8 @@ export const HeaderElement = styled(NavLink)`
   }
 `
 
-export const HeaderElementSettings = styled(Link)`
-  width: 100%;
+export const HeaderElementSettings = styled(NavLink)`
+  //width: 100%;
   //height: fit-content;
   padding-left: 25px;
   padding-right: 25px;
@@ -84,7 +92,7 @@ export const HeaderElementSettings = styled(Link)`
 `
 
 
-export const HeaderElementText = styled.span<any>`
+export const HeaderElementText = styled.p<any>`
   white-space: nowrap;
 
   &:hover {

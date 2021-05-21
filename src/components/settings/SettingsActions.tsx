@@ -191,6 +191,71 @@ export const addArea = ({
     })
 }
 
+export const UPDATE_AREA = "update_area";
+export const UPDATE_AREA_SUCCESS = "update_area_success";
+export const UPDATE_AREA_FAIL = "update_area_fail";
+
+export const updateArea = ({
+                               dispatch,
+                               values,
+                               callBack
+                           }: { dispatch: Dispatch, values: any, callBack?: () => void }) => {
+    dispatch({type: UPDATE_AREA, payload: {}})
+
+
+    authFetch(`/restaurants/id/${values.restaurantId}/area/${values.id}`, {
+        method: "PUT",
+        body: JSON.stringify(values)
+    }).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: UPDATE_AREA_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        dispatch({type: UPDATE_AREA_SUCCESS, payload: data})
+        if (callBack) {
+            callBack()
+        }
+    }).catch(error => {
+        console.log("error", error)
+    })
+}
+
+export const DELETE_AREA = "delete_area";
+export const DELETE_AREA_SUCCESS = "delete_area_success";
+export const DELETE_AREA_FAIL = "delete_area_fail";
+
+
+export const deleteArea = ({
+                               dispatch,
+                               areaId,
+                               restaurantId,
+                               callBack
+                           }: { dispatch: Dispatch, areaId: string,restaurantId:string, callBack?: () => void }) => {
+    dispatch({type: DELETE_AREA, payload: {}})
+
+
+    authFetch(`/restaurants/id/${restaurantId}/area/${areaId}`, {
+        method: "DELETE",
+    }).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: DELETE_AREA_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        dispatch({type: DELETE_AREA_SUCCESS, payload: data})
+        if (callBack) {
+            callBack()
+        }
+    }).catch(error => {
+        console.log("error", error)
+    })
+}
+
 export const GET_AREAS_BY_RESTAURANT_ID = "get_restaurant_by_restaurant_id";
 export const GET_AREAS_BY_RESTAURANT_ID_SUCCESS = "get_restaurant_by_restaurant_id_success";
 export const GET_AREAS_BY_RESTAURANT_ID_FAIL = "get_restaurant_by_restaurant_id_fail";

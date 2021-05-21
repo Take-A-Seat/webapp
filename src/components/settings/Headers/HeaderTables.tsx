@@ -6,6 +6,7 @@ import {useSettingsDispatch} from "../SettingsContext";
 import {Button} from "../../globals/GlobalStyles";
 import Popup from "../../globals/popup/Popup";
 import MaterialIcon from "../../globals/MaterialIcons";
+import {SectionTableSettings, TextTitleHeader, TitleHeader} from "./style";
 
 export const HeaderTables = ({restaurant, listAreas}: { restaurant: any, listAreas: any },) => {
     const [showPopup, setShowPopup] = useState(false)
@@ -30,19 +31,25 @@ export const HeaderTables = ({restaurant, listAreas}: { restaurant: any, listAre
         })
     }
 
-    return <HeaderWrapper>
-        <Button onClick={() => {
-            initialValues = {
-                name: "",
-                id: "",
-                displayName: "",
-                onlineCapacity: 0,
-                priority: listAreas && listAreas.length || 0,
-                restaurantId: restaurant.id
-            }
-            setShowPopup(!showPopup)
-        }} blueButton noBorder circle><MaterialIcon iconName={"add"}/></Button>
+    return <HeaderWrapper table>
+        <SectionTableSettings>
+            <TitleHeader>
+                <MaterialIcon iconName={"home"}/>
+                <TextTitleHeader>Areas</TextTitleHeader>
 
+            </TitleHeader>
+            <Button onClick={() => {
+                initialValues = {
+                    name: "",
+                    id: "",
+                    displayName: "",
+                    onlineCapacity: 0,
+                    priority: listAreas && listAreas.length || 0,
+                    restaurantId: restaurant.id
+                }
+                setShowPopup(!showPopup)
+            }} blueButton noBorder circle><MaterialIcon iconName={"add"}/></Button>
+        </SectionTableSettings>
 
         <Popup
             show={showPopup}

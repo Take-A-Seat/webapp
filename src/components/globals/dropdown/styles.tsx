@@ -1,10 +1,11 @@
 import styled from "styled-components"
 import {
-    BIG_FONT_SIZE,
-    BLUE_WHITE_COLOR,
+    BACKGROUND_COLOR,
+    BIG_FONT_SIZE, BLUE_COLOR,
+    BLUE_WHITE_COLOR, DARK_GREY2_COLOR,
     LIGHT_GRAYISH_BLUE_COLOR,
     LIGHT_GREY_COLOR,
-    ORANGE_COLOR,
+    ORANGE_COLOR, SETTINGS_BACKGROUND_GREY,
     VERY_DARK_GREY_COLOR,
     WHITE_COLOR
 } from "../../../constants/styleConstants";
@@ -18,7 +19,6 @@ export const ActionsWrapper = styled.div<any>`
   justify-content: center;
   cursor: pointer;
   position: relative;
-
   :hover {
     background: ${LIGHT_GREY_COLOR};
   }
@@ -44,8 +44,9 @@ export const DropdownWrapper = styled.div`
   top: 0;
   width: auto;
   height: auto;
-  padding: 30px 20px;
-  background: ${WHITE_COLOR};
+  padding: 5px 5px;
+  background-color:${SETTINGS_BACKGROUND_GREY};
+  border:1px solid ${DARK_GREY2_COLOR};
   display: flex;
   flex-direction: column;
   border-radius: 4px;
@@ -55,10 +56,13 @@ export const DropdownElementWrapper = styled.div<any>`
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 10px 5px;
+  padding: 5px 5px;
 
   :hover {
-    background: ${BLUE_WHITE_COLOR};
+    background: ${BLUE_COLOR};
+    i {
+      color: white;
+    }
   }
 
   ${({topBorder}) => topBorder && `
@@ -66,11 +70,12 @@ export const DropdownElementWrapper = styled.div<any>`
     `}
 `;
 export const DropdownText = styled.div<any>`
-  color: ${VERY_DARK_GREY_COLOR};
+  color: ${WHITE_COLOR};
   font-size: ${BIG_FONT_SIZE};
   line-height: 27px;
   white-space: nowrap;
-
+  font-family:HP,sans-serif;
+  
   & i {
     font-size: ${BIG_FONT_SIZE};
     margin-right: 22px;
@@ -82,5 +87,9 @@ export const DropdownText = styled.div<any>`
         & i {
             color:${customColor};
         }
+    `}
+
+  ${({boldText}) => boldText && `
+       font-weight:500
     `}
 `;

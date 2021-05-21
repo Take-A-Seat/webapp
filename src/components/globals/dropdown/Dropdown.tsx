@@ -37,11 +37,11 @@ const Dropdown = ({
                     >
                         {
                             element.icon &&
-                            <DropdownText id={id} customColor={element.customColor}>
+                            <DropdownText id={id} customColor={element.customColor} boldText>
                                 <MaterialIcon iconName={element.icon}/>
                             </DropdownText>
                         }
-                        <DropdownText id={id} customColor={element.customColor}>
+                        <DropdownText id={id} customColor={element.customColor} boldText>
                             {element.text}
                         </DropdownText>
                     </DropdownElementWrapper>

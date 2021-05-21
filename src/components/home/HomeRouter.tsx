@@ -13,7 +13,7 @@ const HomeRouter = ({history}: { history: History }) => {
                 <HomePageWrapper>
                     <Header/>
                     <Switch>
-                        <Route component={SettingsRouter} path={"/"}/>
+                        <Route component={SettingsRouter} path={"/settings"}/>
                     </Switch>
                 </HomePageWrapper>
             </Suspense>

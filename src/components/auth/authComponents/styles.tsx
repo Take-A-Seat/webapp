@@ -125,7 +125,6 @@ export const AuthFieldWrapper = styled.div`
 
 export const AuthInputWrapper = styled.div`
     width:100%;
-    height:45px;
     display:flex;
     align-items:center;
     background:${WHITE_COLOR};

@@ -356,9 +356,9 @@ export const CustomStyledInput = styled.input<any>`
         background-color: hsl(0,0%,95%);
         border-color: hsl(0,0%,90%);
     `}
-  @media only screen and(max-width: 600 px) {
+  @media only screen and (max-width: 600px) {
   margin-left: 0;
-}
+   }
 `;
 
 
