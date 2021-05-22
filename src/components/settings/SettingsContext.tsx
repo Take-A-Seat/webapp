@@ -6,9 +6,17 @@ import {
     CHECK_MANAGER_RESTAURANT_FAIL,
     CHECK_MANAGER_RESTAURANT_FAIL_SHOULD_CREATE_RESTAURANT,
     CHECK_MANAGER_RESTAURANT_SUCCESS,
+    CREATE_TABLE,
+    CREATE_TABLE_FAIL,
+    GET_AREA_BY_ID,
+    GET_AREA_BY_ID_FAIL,
+    GET_AREA_BY_ID_SUCCESS,
     GET_AREAS_BY_RESTAURANT_ID,
     GET_AREAS_BY_RESTAURANT_ID_FAIL,
     GET_AREAS_BY_RESTAURANT_ID_SUCCESS,
+    GET_TABLES_BY_AREA_ID,
+    GET_TABLES_BY_AREA_ID_FAIL,
+    GET_TABLES_BY_AREA_ID_SUCCESS,
     REMOVE_FILE
 } from "./SettingsActions";
 
@@ -17,7 +25,9 @@ type State = {
     error: any,
     restaurant: any,
     listAreas: any,
+    listTables: any,
     file: any,
+    selectedArea: any,
     shouldCreateRestaurant: boolean,
 }
 
@@ -29,12 +39,74 @@ const initialState: State = {
     error: {},
     restaurant: {},
     listAreas: [],
+    listTables: [],
+    selectedArea: {},
     file: "",
     shouldCreateRestaurant: false,
 }
 
 const restaurantReducer = (state: State, action: Action) => {
     switch (action.type) {
+        case GET_AREA_BY_ID: {
+            return {
+                ...state,
+                selectedArea: {},
+                loading: true,
+                error: ""
+            }
+        }
+        case GET_AREA_BY_ID_SUCCESS: {
+            return {
+                ...state,
+                selectedArea: action.payload,
+                loading: false,
+                error: ""
+            }
+        }
+        case GET_AREA_BY_ID_FAIL: {
+            return {
+                ...state,
+                error: action.payload.error,
+                selectedArea: {}
+            }
+        }
+        case CREATE_TABLE: {
+            return {
+                ...state,
+                loading: true,
+                error: ""
+            }
+        }
+        case CREATE_TABLE_FAIL: {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            }
+        }
+        case GET_TABLES_BY_AREA_ID: {
+            return {
+                ...state,
+                loading: true,
+                error: "",
+                listTables: []
+            }
+        }
+        case GET_TABLES_BY_AREA_ID_SUCCESS: {
+            return {
+                ...state,
+                loading: false,
+                error: "",
+                listTables: action.payload
+            }
+        }
+        case GET_TABLES_BY_AREA_ID_FAIL: {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error,
+            }
+        }
         case GET_AREAS_BY_RESTAURANT_ID: {
             return {
                 ...state,

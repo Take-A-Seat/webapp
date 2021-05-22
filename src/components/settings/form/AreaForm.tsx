@@ -22,27 +22,33 @@ type AreaFormProps = {
 }
 
 export const AreaForm = ({initialValues, onSubmit, cancel, withDisplayName}: AreaFormProps) => {
-    return (<Formik enableReinitialize={true} initialValues={initialValues} onSubmit={(values: AreaFormValuesTypes) => {
-        onSubmit(values)
-    }}>{({values, handleSubmit}) => {
-        return <FormWrapper onSubmit={handleSubmit}>
-            <Field name={"name"} type={"text"} component={TextField} labelText={"Area name"} customWidth={"100%"}/>
-            {withDisplayName &&
-            <Field name={"displayName"} type={"text"} component={TextField} labelText={"Display name"} customWidth={"100%"}/>}
-            <Wrapper>
-                {cancel && <Button
-                    onClick={() => {
-                        cancel()
-                    }} cancelButton>
-                    <MaterialIcon iconName={"cancel"}/>
-                    Cancel
-                </Button>}
-                <Button onClick={() => onSubmit(values)} blueButton>
-                    <MaterialIcon iconName={"save"}/>
-                    Save</Button>
-            </Wrapper>
-        </FormWrapper>
-    }}
+    return (
+        <Formik enableReinitialize={true}
+                initialValues={initialValues}
+                onSubmit={(values: AreaFormValuesTypes) => {
+            onSubmit(values)
+        }}>{({values, handleSubmit}) => {
 
-    </Formik>)
+            return <FormWrapper onSubmit={handleSubmit}>
+                <Field name={"name"} type={"text"} component={TextField} labelText={"Area name"} customWidth={"100%"}/>
+                {withDisplayName &&
+                <Field name={"displayName"} type={"text"} component={TextField} labelText={"Display name"}
+                       customWidth={"100%"}/>}
+                <Wrapper>
+                    {cancel && <Button
+                        previewButton
+                        onClick={() => {
+                            cancel()
+                        }} cancelButton>
+                        <MaterialIcon iconName={"cancel"}/>
+                        Cancel
+                    </Button>}
+                    <Button previewButton onClick={() => onSubmit(values)} blueButton>
+                        <MaterialIcon iconName={"save"}/>
+                        Save</Button>
+                </Wrapper>
+            </FormWrapper>
+        }}
+
+        </Formik>)
 }

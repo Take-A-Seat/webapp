@@ -1,5 +1,5 @@
 import React from 'react'
-import {PopupContentWrapper, PopupHeaderWrapper, PopupName, PopupWrapper} from "./styles";
+import {PopupContentWrapper, PopupHeaderWrapper, PopupName, PopupText, PopupWrapper} from "./styles";
 import {ReactChildrenType} from "../../../constants/globalTypes";
 import MaterialIcon from "../MaterialIcons";
 import {HorizontalDelimiter} from "../GlobalStyles";
@@ -22,7 +22,9 @@ const Popup = ({show, popupDetails, onClose, withoutCloseIcon, children, iconTit
                     <PopupHeaderWrapper>
                         <PopupName>
                             {iconTitle && <MaterialIcon iconName={iconTitle}/>}
+                            <PopupText>
                             {popupDetails.title}
+                            </PopupText>
                         </PopupName>
                         {
                             !withoutCloseIcon &&

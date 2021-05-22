@@ -16,20 +16,22 @@ const SwitchField = ({
                      }: SwitchFieldProps) => {
     return (
         <FieldWrapper isSwitch>
-            <FieldLabel
+            <FieldLabel title
             >
                 {labelText}
             </FieldLabel>
             <SwitchStyle>
-                <Switch checked={checked} onChange={(checked) => onChange(checked)}
+                <Switch checked={checked} onChange={(checked) => {
+                    onChange(checked)
+                }}
                         onColor="#FFFFFF"
                         offColor="#FFFFFF"
                         onHandleColor={ORANGE_POINT_SWITCH}
                         offHandleColor="#C7CDD4"
-                        handleDiameter={20}
+                        handleDiameter={18}
                         uncheckedIcon={false}
                         checkedIcon={false}
-                        height={25}
+                        height={23}
                         width={55}
                 />
             </SwitchStyle>

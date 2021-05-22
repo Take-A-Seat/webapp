@@ -3,10 +3,20 @@ import "./style"
 import {History} from "history";
 import {DropdownElement} from "../dropdown/Dropdown";
 import {withRouter} from "react-router-dom";
-import {HeaderAccountSection, HeaderElement, HeaderElementText, HeaderLinks, HeaderWrapper, LogoWrapper} from "./style";
+import {
+    HeaderAccountSection,
+    HeaderElement,
+    HeaderElementText,
+    HeaderLinks,
+    HeaderText,
+    HeaderWrapper,
+    LogoWrapper
+} from "./style";
 import Logo from "../../../assets/Asset 5 (1).svg"
 import {useLoginDispatch, useLoginState} from "../../auth/AuthContext";
 import {getLoggedUser} from "../../auth/AuthActions";
+import {VerticalDelimitator} from "../GlobalStyles";
+import {logout} from "../../../helpers/createAuthProvider";
 
 const Header = ({history}: { history: History }) => {
     const authState = useLoginState();
@@ -64,7 +74,7 @@ const Header = ({history}: { history: History }) => {
 
             <HeaderLinks>
                 {linkElements.map((item, index) => {
-                    return <HeaderElement to={item.link} key={index} exact={true} >
+                    return <HeaderElement to={item.link} key={index} exact={true}>
                         <HeaderElementText>
                             {item.name}
                         </HeaderElementText>
@@ -74,6 +84,14 @@ const Header = ({history}: { history: History }) => {
 
             <HeaderAccountSection>
                 {loggedUser && loggedUser.Email ? loggedUser.Email : ""}
+                <VerticalDelimitator/>
+                <HeaderText logout onClick={() => logout(
+                    () => {
+                        history.push("/auth/login")
+                    }
+                )}>
+                    Deconectare
+                </HeaderText>
             </HeaderAccountSection>
         </HeaderWrapper>
     )

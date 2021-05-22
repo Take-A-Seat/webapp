@@ -35,24 +35,30 @@ export const TableRow = styled.div<any>`
   cursor: pointer;
   ${({customWidth}) => customWidth && `
         width:${customWidth};
-    `} ${({tableBody}) => tableBody && `
+        
+  `} ${({tableBody}) => tableBody && `
         // border-bottom:1px solid ${DARK_GREY_COLOR};
         padding:10px 10px 10px 30px;
         background-color:${SETTINGS_BACKGROUND_GREY};
         :hover {
             background:${VERY_DARK_GREY_COLOR};
         }
-    `} ${({horizontalScroll}) => horizontalScroll && `
+  `} ${({horizontalScroll}) => horizontalScroll && `
         min-width:100%;
         width:fit-content;
         overflow-x:auto;
-    `}
+  `}
+  
   ${({withMargin}) => withMargin && `
-        margin-top:15px;
-    `}
+        margin-bottom:15px;
+  `}
+  
   ${({withBorderRadius}) => withBorderRadius && `
        border-radius:10px;
-    `}
+       border:1px solid black;
+
+  `}
+  
 `;
 
 export const TableColumn = styled.div<any>`
@@ -73,6 +79,9 @@ export const TableColumn = styled.div<any>`
     `} ${({marginLeftAuto}) => marginLeftAuto && `
         margin-left:auto;
     `}
+  ${({customFlex}) => customFlex && `
+        flex:${customFlex};
+    `}
 `;
 
 export const TableText = styled.p <any>`
@@ -91,7 +100,8 @@ export const TableText = styled.p <any>`
         & i {
             font-size:18px;
         }
-    `} ${({bold}) => bold && `
+    `} 
+    ${({bold}) => bold && `
         font-weight:bold;
     `} ${({firstLetterUpperCase}) => firstLetterUpperCase && `
         ::first-letter {
@@ -121,7 +131,8 @@ export const TableText = styled.p <any>`
     `}
   ${({whiteTextBold})=>whiteTextBold && `
     color:${WHITE_COLOR};
-    
+            font-weight:bold;
+
   `}
   
 `;
@@ -131,7 +142,6 @@ export const TextContainer = styled.div`
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  padding:0;
 `
 
 export const TableCheckbox = styled.input`

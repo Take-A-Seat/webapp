@@ -26,6 +26,10 @@ export const PopupContentWrapper = styled.div`
   background: ${SETTINGS_BACKGROUND_GREY};
   border-radius: 6px;
   padding: 5px 20px 10px;
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 export const PopupHeaderWrapper = styled.div`
@@ -46,7 +50,6 @@ export const PopupName = styled.p<any>`
   font-weight: bold;
   color: ${DARK_GREY_COLOR};
 
-
   ${({closeIcon}) => closeIcon && `
         margin-left:auto;
         & i {
@@ -61,6 +64,11 @@ export const PopupName = styled.p<any>`
         }
     `}
 `;
+
+export const PopupText = styled.p`
+    padding-top: 6px;
+  padding-left: 3px;
+`
 
 
 

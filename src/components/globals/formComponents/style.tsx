@@ -135,6 +135,7 @@ export const FieldWrapper = styled.div<any>`
   ${({isSwitch}) => isSwitch && `
         margin-top:5px;
         margin-bottom:25px;
+        padding-bottom:10px;
     `}
   ${({error}) => error && `
         flex-direction:column;
@@ -310,7 +311,7 @@ export const CustomStyledInput = styled.input<any>`
   width: auto;
   min-width: 100px;
   max-width: 180px;
-  border: 1px solid ${BORDER_INPUT};
+  border: 1px solid ${WHITE_COLOR};
   font-family: "Open Sans", sans-serif;
   border-radius: 4px;
   padding: 15px;
@@ -335,7 +336,20 @@ export const CustomStyledInput = styled.input<any>`
     margin: 0;
   }
 
+  :focus {
+    border: 1px solid ${BLUE_COLOR} !important;
+    outline: none !important;
+  }
+  :hover {
+    border: 1px solid ${BLUE_COLOR} !important;
+    outline: none !important;
+  }
+
   -moz-appearance: textfield;
+  @media only screen and (max-width: 600px) {
+    margin-left: 0;
+  }
+
   ${({error}) => error && `
         border:1px solid red!important;
     `}
@@ -356,9 +370,7 @@ export const CustomStyledInput = styled.input<any>`
         background-color: hsl(0,0%,95%);
         border-color: hsl(0,0%,90%);
     `}
-  @media only screen and (max-width: 600px) {
-  margin-left: 0;
-   }
+
 `;
 
 

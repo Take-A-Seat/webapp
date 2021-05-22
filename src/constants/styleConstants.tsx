@@ -22,6 +22,8 @@ export const DARK_RED = "rgb(175,15,59)";
 export const BACKGROUND_COLOR = "#222222";
 export const HEADER_SETTINGS_BACKGROUND = "#242424";
 export const SETTINGS_BACKGROUND_GREY = "#323232"
+export const GREEN = "#2B943E"
+export const RED = "#DA1313"
 //font-sizes
 export const SMALL_FONT_SIZE = "13px";
 export const NORMAL_FONT_SIZE = "14px";

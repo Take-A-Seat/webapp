@@ -17,8 +17,15 @@ export const TitleHeader = styled.div`
   justify-content: center;
   color: ${WHITE_COLOR};
 `
-export const TextTitleHeader = styled.span`
+export const TextTitleHeader = styled.span<any>`
   font-weight: 600;
   padding:17px  5px 12px;
   font-size: 20px;
+  ${({noPadding})=> noPadding &&`
+  padding:0 5px;
+  `}
+`
+export const BackContainer = styled.div`
+  cursor: pointer;
+  padding-top: 5px;
 `

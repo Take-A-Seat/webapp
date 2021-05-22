@@ -63,6 +63,7 @@ const TextField = ({
                     biggerInput={biggerInput}
                     noDescription={!noDescription}
                     customInputWidth={customInputWidth}
+
                     disabled={disabled}
                     onBlur={(e: any) => {
                         if (onBlur) {

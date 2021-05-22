@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import {Link, NavLink} from "react-router-dom";
-import {HEADER_SETTINGS_BACKGROUND} from "../../../constants/styleConstants";
+import {
+    BIG_FONT_SIZE,
+    BIGGER_FONT_SIZE, DARK_GREY_COLOR,
+    HEADER_SETTINGS_BACKGROUND, ORANGE_COLOR,
+    VERY_DARK_GREY_COLOR
+} from "../../../constants/styleConstants";
 
 export const HeaderWrapper = styled.div<any>`
   width: 100%;
@@ -13,17 +18,20 @@ export const HeaderWrapper = styled.div<any>`
   box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.1);
   z-index: 10000;
   position: sticky;
-  border:1px solid rgba(40,44,52,0.21);
+  border: 1px solid rgba(40, 44, 52, 0.21);
 
   ${({settings}) => settings && `
   padding: 0;
   background-color:${HEADER_SETTINGS_BACKGROUND};
   justify-content:center;
   `}
-  
-  ${({table})=>table && `
+
+  ${({area}) => area && `
   background-color :#323232;
   border:1px solid black;
+  `}
+
+  ${({table}) => table && `
   padding:10px;
   `}
 `;
@@ -106,3 +114,22 @@ export const HeaderElementText = styled.p<any>`
   `}
 
 `
+export const HeaderText = styled.p <any>`
+  font-size: ${BIG_FONT_SIZE};
+  color: ${VERY_DARK_GREY_COLOR};
+
+  ${({name}) => name && `
+        margin-left:auto;
+        margin-right:5px;
+        cursor:pointer;
+    `}
+  & i {
+    font-size: ${BIGGER_FONT_SIZE};
+    color: ${DARK_GREY_COLOR};
+  }
+
+  ${({logout}) => logout && `
+        color:${ORANGE_COLOR};
+        cursor:pointer;
+     `}
+`;

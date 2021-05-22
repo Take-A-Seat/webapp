@@ -5,11 +5,11 @@ import {deleteArea, getAreasByRestaurantId, updateArea} from "../SettingsActions
 import {PageWrapper} from "../../globals/GlobalStyles";
 import Popup from "../../globals/popup/Popup";
 import {AreaForm, AreaFormValuesTypes} from "../form/AreaForm";
-import {HeaderTables} from "../Headers/HeaderTables";
 import _ from "lodash";
 import {Table, TableBody, TableColumn, TableHead, TableRow, TableText, TextContainer} from "../../globals/TableStyles";
 import {DropdownElement} from "../../globals/dropdown/Dropdown";
 import ContextualMenu from "../../globals/dropdown/ContextualMenu";
+import {HeaderAreas} from "../Headers/HeaderAreas";
 
 
 const AreaListing = () => {
@@ -27,7 +27,6 @@ const AreaListing = () => {
     }, [restaurant])
 
     const editArea = (values: AreaFormValuesTypes) => {
-        console.log(values)
         updateArea({
             dispatch: dispatch, values: values, callBack: () => {
                 getAreasByRestaurantId({dispatch: dispatch, restaurantId: restaurant.id})
@@ -37,9 +36,8 @@ const AreaListing = () => {
     }
 
 
-    console.log("area", listAreas)
     return <PageWrapper noPadding centerPage>
-        <HeaderTables restaurant={restaurant} listAreas={listAreas}/>
+        <HeaderAreas restaurant={restaurant} listAreas={listAreas}/>
         <Table customWidth={"68%"}>
             <TableHead>
                 <TableRow>
@@ -48,28 +46,30 @@ const AreaListing = () => {
                             Name
                         </TableText>
                     </TableColumn>
+
                     <TableColumn>
                         <TableText thead>
                             Tables
                         </TableText>
                     </TableColumn>
+
                     <TableColumn>
                         <TableText thead>
                             Capacity
                         </TableText>
                     </TableColumn>
-                    <TableColumn verySmall/>
+
+                    <TableColumn midSmall/>
                 </TableRow>
             </TableHead>
             <TableBody noBackground>
                 {listAreas && !_.isEmpty(listAreas) && listAreas.map((area: AreaFormValuesTypes, index: number) => {
                     const lastElementId = `areaListing-elem:${index}`;
-
                     const dropdownElements: DropdownElement[] = [{
                         text: "Edit name",
                         icon: "edit",
                         onClick: () => {
-                            setInitialValues(area);
+                            setInitialValues(Object.assign({},area));
                             setPreviewEditName(true)
                         }
                     }, {
@@ -86,7 +86,7 @@ const AreaListing = () => {
                     return (<TableRow key={area.id} withMargin withBorderRadius tableBody onClick={(e: MouseEvent) => {
                         const target = e.target as HTMLDivElement
                         if (target.getAttribute("id") !== lastElementId) {
-                            history.push(`/settings/tables/area/${area.id}`)
+                            history.push(`/settings/tables/area/${area.id}/tables`)
                         }
                     }}>
 
@@ -100,11 +100,13 @@ const AreaListing = () => {
                                 </TableText>
                             </TextContainer>
                         </TableColumn>
+
                         <TableColumn>
                             <TableText thead>
                                 {0}
                             </TableText>
                         </TableColumn>
+
                         <TableColumn>
                             <TableText thead>
                                 0

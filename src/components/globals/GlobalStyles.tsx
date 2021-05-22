@@ -3,11 +3,11 @@ import {
   BIG_FONT_SIZE,
   BLUE_COLOR,
   DARK_GREY2_COLOR,
-  DARK_GREY_COLOR,
+  DARK_GREY_COLOR, GREEN,
   LIGHT_GRAY,
   LIGHT_GRAYISH_BLUE_COLOR,
   NORMAL_FONT_SIZE,
-  ORANGE_COLOR,
+  ORANGE_COLOR, RED,
   VERY_DARK_GREY_COLOR,
   WHITE_COLOR
 } from "../../constants/styleConstants";
@@ -94,10 +94,16 @@ export const Button = styled.div<any>`
     margin-right: 10px;
   }
 
+  ${({previewButton}) => previewButton && `
+     @media only screen and (max-width: 600px) {
+    margin:auto;
+  }
+  `}
   ${({cancelButton}) => cancelButton && `
     background:transparent;
     border:1px solid ${LIGHT_GRAY}
   `}
+
 
   ${({customMarginBottom}) => customMarginBottom && `
         margin-bottom:${customMarginBottom};
@@ -331,3 +337,16 @@ export const Text = styled.p`
   font-weight: normal;
   color: ${DARK_GREY2_COLOR};
 `;
+
+export const Circle = styled.div<any>`
+    width: 15px;
+    height: 15px;
+    display: block;
+  border-radius: 50px;
+  ${({green})=>green &&`
+    background-color: ${GREEN};
+  `}
+  ${({red})=>red &&`
+    background-color: ${RED};
+  `}
+`

@@ -160,6 +160,64 @@ export const getRestaurantById = ({dispatch, restaurantId}: { dispatch: Dispatch
     })
 }
 
+export const GET_TABLES_BY_AREA_ID = "get_table_by_area_id";
+export const GET_TABLES_BY_AREA_ID_SUCCESS = "get_table_by_area_id_success";
+export const GET_TABLES_BY_AREA_ID_FAIL = "get_table_by_area_id_fail";
+
+export const getTablesByAreaId = ({
+                                      dispatch,
+                                      restaurantId,
+                                      areaId
+                                  }: { dispatch: Dispatch, restaurantId: string, areaId: string }) => {
+    dispatch({type: GET_TABLES_BY_AREA_ID, payload: {}});
+    authFetch(`/restaurants/id/${restaurantId}/areas/${areaId}/tables`, {method: "GET"}).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: GET_TABLES_BY_AREA_ID_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        dispatch({type: GET_TABLES_BY_AREA_ID_SUCCESS, payload: data})
+    }).catch(error => {
+        console.log("error", error)
+    })
+}
+
+export const CREATE_TABLE = "create_table";
+export const CREATE_TABLE_SUCCESS = "create_table_success";
+export const CREATE_TABLE_FAIL = "create_table_fail";
+
+export const createTable = ({
+                                dispatch,
+                                restaurantId,
+                                areaId,
+                                values,
+                                callBack,
+                            }: { dispatch: Dispatch, restaurantId: string, areaId: string, values: any, callBack: () => void }) => {
+
+    dispatch({type: CREATE_TABLE, payload: {}});
+    authFetch(`/restaurants/id/${restaurantId}/area/${areaId}/table`, {
+        method: "POST",
+        body: JSON.stringify(values)
+    }).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: CREATE_TABLE_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        dispatch({type: CREATE_TABLE_SUCCESS, payload: data})
+        if (callBack) {
+            callBack()
+        }
+    }).catch(error => {
+        console.log("error", error)
+    })
+}
+
+
 export const CREATE_NEW_AREA = "create_area";
 export const CREATE_NEW_AREA_SUCCESS = "create_area_success";
 export const CREATE_NEW_AREA_FAIL = "create_area_fail";
@@ -182,9 +240,11 @@ export const addArea = ({
         }
         return response.json()
     }).then(data => {
-        dispatch({type: CREATE_NEW_AREA_SUCCESS, payload: data})
-        if (callBack) {
-            callBack()
+        if (data) {
+            dispatch({type: CREATE_NEW_AREA_SUCCESS, payload: data})
+            if (callBack) {
+                callBack()
+            }
         }
     }).catch(error => {
         console.log("error", error)
@@ -214,9 +274,53 @@ export const updateArea = ({
         }
         return response.json()
     }).then(data => {
-        dispatch({type: UPDATE_AREA_SUCCESS, payload: data})
-        if (callBack) {
-            callBack()
+        if (data) {
+            dispatch({type: UPDATE_AREA_SUCCESS, payload: data})
+            if (callBack) {
+                callBack()
+            }
+        }
+    }).catch(error => {
+        console.log("error", error)
+    })
+}
+
+export const UPDATE_TABLE = "update_table";
+export const UPDATE_TABLE_SUCCESS = "update_table_success";
+export const UPDATE_TABLE_FAIL = "update_table_fail";
+
+export const updateTable = ({
+                                dispatch,
+                                values,
+                                restaurantId,
+                                areaId,
+                                tableId,
+                                callBack
+                            }: {
+    dispatch: Dispatch,
+    values: any,
+    callBack?: () => void,
+    restaurantId: string,
+    areaId: string,
+    tableId: string
+}) => {
+    dispatch({type: UPDATE_TABLE, payload: {}})
+    authFetch(`/restaurants/id/${restaurantId}/area/${areaId}/table/${tableId}`, {
+        method: "PUT",
+        body: JSON.stringify(values)
+    }).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: UPDATE_TABLE_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        if (data) {
+            dispatch({type: UPDATE_TABLE_SUCCESS, payload: data})
+            if (callBack) {
+                callBack()
+            }
         }
     }).catch(error => {
         console.log("error", error)
@@ -226,14 +330,12 @@ export const updateArea = ({
 export const DELETE_AREA = "delete_area";
 export const DELETE_AREA_SUCCESS = "delete_area_success";
 export const DELETE_AREA_FAIL = "delete_area_fail";
-
-
 export const deleteArea = ({
                                dispatch,
                                areaId,
                                restaurantId,
                                callBack
-                           }: { dispatch: Dispatch, areaId: string,restaurantId:string, callBack?: () => void }) => {
+                           }: { dispatch: Dispatch, areaId: string, restaurantId: string, callBack?: () => void }) => {
     dispatch({type: DELETE_AREA, payload: {}})
 
 
@@ -247,9 +349,45 @@ export const deleteArea = ({
         }
         return response.json()
     }).then(data => {
-        dispatch({type: DELETE_AREA_SUCCESS, payload: data})
-        if (callBack) {
-            callBack()
+        if (data) {
+            dispatch({type: DELETE_AREA_SUCCESS, payload: data})
+            if (callBack) {
+                callBack()
+            }
+        }
+    }).catch(error => {
+        console.log("error", error)
+    })
+}
+
+export const DELETE_TABLE = "delete_table";
+export const DELETE_TABLE_SUCCESS = "delete_table_success";
+export const DELETE_TABLE_FAIL = "delete_table_fail";
+
+
+export const deleteTable = ({
+                                dispatch,
+                                areaId,
+                                restaurantId,
+                                tableId,
+                                callBack
+                            }: { dispatch: Dispatch, areaId: string, restaurantId: string, callBack?: () => void, tableId: string }) => {
+    dispatch({type: DELETE_TABLE, payload: {}})
+    authFetch(`/restaurants/id/${restaurantId}/area/${areaId}/table/${tableId}`, {
+        method: "DELETE",
+    }).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: DELETE_TABLE_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        if (data) {
+            dispatch({type: DELETE_TABLE_SUCCESS, payload: data})
+            if (callBack) {
+                callBack()
+            }
         }
     }).catch(error => {
         console.log("error", error)
@@ -271,6 +409,30 @@ export const getAreasByRestaurantId = ({dispatch, restaurantId}: { dispatch: Dis
         return response.json()
     }).then(data => {
         dispatch({type: GET_AREAS_BY_RESTAURANT_ID_SUCCESS, payload: data})
+    }).catch(error => {
+        console.log("error", error)
+    })
+}
+
+export const GET_AREA_BY_ID = "get_area_by_id";
+export const GET_AREA_BY_ID_SUCCESS = "get_area_by_id_success";
+export const GET_AREA_BY_ID_FAIL = "get_area_by_id_fail";
+
+export const getAreaById = ({
+                                dispatch,
+                                areaId,
+                                restaurantId
+                            }: { dispatch: Dispatch, restaurantId: string, areaId: string }) => {
+    dispatch({type: GET_AREA_BY_ID, payload: {}});
+    authFetch(`/restaurants/id/${restaurantId}/area/${areaId}`, {method: "GET"}).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: GET_AREA_BY_ID_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        dispatch({type: GET_AREA_BY_ID_SUCCESS, payload: data})
     }).catch(error => {
         console.log("error", error)
     })
