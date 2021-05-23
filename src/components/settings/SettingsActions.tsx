@@ -26,10 +26,7 @@ export const checkIfManagerHasRestaurant = ({dispatch, managerId}: { dispatch: D
         return response.json()
 
     }).then(data => {
-        console.log("data", data)
         if (data) {
-            console.log("data", data)
-
             dispatch({type: CHECK_MANAGER_RESTAURANT_SUCCESS, payload: data})
         }
     }).catch(error => {
@@ -394,6 +391,7 @@ export const deleteTable = ({
     })
 }
 
+
 export const GET_AREAS_BY_RESTAURANT_ID = "get_restaurant_by_restaurant_id";
 export const GET_AREAS_BY_RESTAURANT_ID_SUCCESS = "get_restaurant_by_restaurant_id_success";
 export const GET_AREAS_BY_RESTAURANT_ID_FAIL = "get_restaurant_by_restaurant_id_fail";
@@ -409,6 +407,57 @@ export const getAreasByRestaurantId = ({dispatch, restaurantId}: { dispatch: Dis
         return response.json()
     }).then(data => {
         dispatch({type: GET_AREAS_BY_RESTAURANT_ID_SUCCESS, payload: data})
+    }).catch(error => {
+        console.log("error", error)
+    })
+}
+
+
+export const GET_MENU_BY_RESTAURANT_ID = "get_menu_by_restaurant_id";
+export const GET_MENU_BY_RESTAURANT_ID_SUCCESS = "get_menu_by_restaurant_id_success";
+export const GET_MENU_BY_RESTAURANT_ID_FAIL = "get_menu_by_restaurant_id_fail";
+
+
+export const getMenuByRestaurantId = ({dispatch, restaurantId}: { dispatch: Dispatch, restaurantId: string }) => {
+    dispatch({type: GET_MENU_BY_RESTAURANT_ID, payload: {}});
+    authFetch(`/restaurants/id/${restaurantId}/menu`, {method: "GET"}).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: GET_MENU_BY_RESTAURANT_ID_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        dispatch({type: GET_MENU_BY_RESTAURANT_ID_SUCCESS, payload: data})
+    }).catch(error => {
+        console.log("error", error)
+    })
+}
+
+export const UPDATE_MENU = "update_menu";
+export const UPDATE_MENU_SUCCESS = "update_menu_success";
+export const UPDATE_MENU_FAIL = "update_menu_fail";
+
+
+export const updateMenu = ({
+                               dispatch,
+                               restaurantId,
+                               values,
+                               callBack,
+                           }: { dispatch: Dispatch, restaurantId: string, values: any, callBack: () => void }) => {
+    dispatch({type: UPDATE_MENU, payload: {}});
+    authFetch(`/restaurants/id/${restaurantId}/menu`, {method: "POST", body: JSON.stringify(values)}).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: UPDATE_MENU_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        dispatch({type: UPDATE_MENU_SUCCESS, payload: data})
+        if (callBack) {
+            callBack()
+        }
     }).catch(error => {
         console.log("error", error)
     })

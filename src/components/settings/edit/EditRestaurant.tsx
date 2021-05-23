@@ -66,8 +66,6 @@ const EditRestaurant = () => {
         <RestaurantFormSettings initialValues={initialValues}
                                 onSubmit={(values) => {
                                     onSubmit(values)
-                                    console.log(values)
-
                                 }}
                                 addNewFile={addNewFile} removeFile={removeFileFunc} file={file}
                                 urlImage={initialValues.logo != undefined ? initialValues.logo.path : ""}

@@ -11,6 +11,7 @@ const CreateRestaurant = lazy(() => import("./add/CreateRestaurant"))
 const EditRestaurant = lazy(() => import("./edit/EditRestaurant"))
 const AreaListing = lazy(() => import("./listing/AreaListing"))
 const TablesListing = lazy(() => import("./listing/TablesListing"))
+const MenuView = lazy(() => import("./menu/view/MenuView"))
 const SettingsRouter = () => {
     const settingsState = useSettingsState();
     const settingsDispatch = useSettingsDispatch();
@@ -34,6 +35,7 @@ const SettingsRouter = () => {
                 <Switch>
                     <PrivateRoute component={EditRestaurant} path={"/settings/restaurant"} exact/>
                     <PrivateRoute component={AreaListing} path={"/settings/tables/plan"} exact/>
+                    <PrivateRoute component={MenuView} path={"/settings/menu"} exact/>
                     <PrivateRoute component={TablesListing} path={"/settings/tables/area/:areaId/tables"}  exact={false}/>
 
                 </Switch>

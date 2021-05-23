@@ -13,9 +13,13 @@ const HeaderSettings = ({history}: { history: History }) => {
             name: "Tables",
             link: "/settings/tables/plan"
         }, {
+            name: "Menu",
+            link: "/settings/menu"
+        },{
             name: "Setup",
             link: "/settings/setup"
-        }, {
+        },
+         {
             name: "Email",
             link: "/settings/email"
         }]

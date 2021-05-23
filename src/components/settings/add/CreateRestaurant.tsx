@@ -52,7 +52,6 @@ const CreateRestaurant = () => {
     return <PageWrapper centerPage>
         <RestaurantFormSettings initialValues={initialValues}
                                 onSubmit={(values) => {
-                                    console.log(values)
                                     onsubmit(values as RestaurantSettingsFormValuesTypes)
                                 }}
                                 addNewFile={addNewFile} removeFile={removeFileFunc} file={file}/>

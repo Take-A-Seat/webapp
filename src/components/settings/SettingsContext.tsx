@@ -14,6 +14,9 @@ import {
     GET_AREAS_BY_RESTAURANT_ID,
     GET_AREAS_BY_RESTAURANT_ID_FAIL,
     GET_AREAS_BY_RESTAURANT_ID_SUCCESS,
+    GET_MENU_BY_RESTAURANT_ID,
+    GET_MENU_BY_RESTAURANT_ID_FAIL,
+    GET_MENU_BY_RESTAURANT_ID_SUCCESS,
     GET_TABLES_BY_AREA_ID,
     GET_TABLES_BY_AREA_ID_FAIL,
     GET_TABLES_BY_AREA_ID_SUCCESS,
@@ -28,6 +31,7 @@ type State = {
     listTables: any,
     file: any,
     selectedArea: any,
+    menu: any,
     shouldCreateRestaurant: boolean,
 }
 
@@ -42,11 +46,35 @@ const initialState: State = {
     listTables: [],
     selectedArea: {},
     file: "",
+    menu: {},
     shouldCreateRestaurant: false,
 }
 
 const restaurantReducer = (state: State, action: Action) => {
     switch (action.type) {
+        case GET_MENU_BY_RESTAURANT_ID: {
+            return {
+                ...state,
+                menu: {},
+                loading: true,
+                error: ""
+            }
+        }
+        case GET_MENU_BY_RESTAURANT_ID_SUCCESS: {
+            return {
+                ...state,
+                menu: action.payload,
+                loading: false,
+                error: ""
+            }
+        }
+        case GET_MENU_BY_RESTAURANT_ID_FAIL: {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            }
+        }
         case GET_AREA_BY_ID: {
             return {
                 ...state,

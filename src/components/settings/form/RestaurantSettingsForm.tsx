@@ -91,6 +91,7 @@ export const RestaurantFormSettings = ({
                             <Field name={"streetAndNumber"} type={"text"} component={TextField}
                                    labelText={"Street and number"}/>
                             <Field name={"postCode"} type={"text"} component={TextField} labelText={"Postal code"}/>
+                            <Field name={"address"} type={"text"} component={TextField} labelText={"Address"}/>
                             <Field name={"city"} type={"text"} component={TextField} labelText={"City"}/>
                             <Field name={"province"} type={"text"} component={TextField} labelText={"Province / Area"}/>
                             <Field name={"country"} type={"text"} component={TextField} labelText={"Country"}/>

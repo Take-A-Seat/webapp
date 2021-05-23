@@ -47,16 +47,13 @@ const DropZoneField = (
     ) => {
         const [preview, setPreview] = useState<string>();
         useEffect(() => {
-            console.log("din use effect", files,!fromUrl)
                 if (files && !_.isEmpty(files) && !fromUrl) {
                     const render = new FileReader();
                     render.onload = () => {
                         setPreview(render.result as string)
                     }
-                    console.log("rerandat")
                     render.readAsDataURL(files)
                 } else {
-                    console.log("false")
                     setPreview("");
                 }
 
