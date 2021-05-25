@@ -1,7 +1,11 @@
-import React from "react";
-import {FieldArray, FieldArrayRenderProps} from "formik";
-import {PagesFieldsValuesTypes} from "./PagesFieldArray";
+import React, {useCallback, useState} from "react";
+import {Field, FieldArrayRenderProps} from "formik";
 import {FieldWrapper} from "../../../globals/formComponents/style";
+import TextField from "../../../globals/formComponents/TextField";
+import {Button, Wrapper} from "../../../globals/GlobalStyles";
+import {Table, TableBody, TableColumn, TableHead, TableRow, TableText} from "../../../globals/TableStyles";
+import MaterialIcon from "../../../globals/MaterialIcons";
+import {DeletePopup} from "../../../globals/deletePopup/DeletePopUp";
 
 export type ProductFormValuesTypes = {
     id: string;
@@ -12,19 +16,114 @@ export type ProductFormValuesTypes = {
 
 type ProductsFormProps = {
     name: string;
+    indexPage: number;
+    indexSection: number;
+    deleteCall?: () => void;
     helpers: FieldArrayRenderProps;
 }
 
-export const ProductsFieldArray = ({name, helpers}: ProductsFormProps) => {
-    return <FieldWrapper>
-        {
-            helpers.form.values[name] &&
-            helpers.form.values[name].map((element: ProductFormValuesTypes, index: number) => {
-                console.log("productField", element, index)
-                return <>
-                    {index}
-                </>
-            })
-        }
-    </FieldWrapper>
+export const ProductsFieldArray = ({helpers, indexSection, indexPage, deleteCall}: ProductsFormProps) => {
+    const [, updateState] = useState({});
+    const forceUpdate = useCallback(() => updateState({}), []);
+    const [showPopup, setPopup] = useState({show: false, index: -1})
+
+    return <>
+        <Table customWidth={"100%"}>
+            <TableHead noPadding>
+                <TableRow>
+                    <TableColumn customWidth={"20%"}>
+                        <TableText thead>
+                            Name
+                        </TableText>
+                    </TableColumn>
+
+                    <TableColumn customWidth={"50%"}>
+                        <TableText thead>
+                            Ingredients
+                        </TableText>
+                    </TableColumn>
+
+                    <TableColumn customWidth={"20%"}>
+                        <TableText thead>
+                            Price
+                        </TableText>
+                    </TableColumn>
+                    <TableColumn customWidth={"10%"}/>
+                </TableRow>
+            </TableHead>
+            <TableBody noBackground>
+                <FieldWrapper noBorder>
+                    {
+                        helpers.form.values &&
+                        helpers.form.values.pages[indexPage].sections[indexSection].products.map((element: ProductFormValuesTypes, index: number) => {
+                            return <TableRow key={element.id}>
+                                <TableColumn customWidth={"20%"}>
+                                    <Field name={`pages.${indexPage}.sections.${indexSection}.products.${index}.name`}
+                                           type={"text"}
+                                           noDescription={true}
+                                           noBorder={true}
+                                           component={TextField}
+                                           placeholder={"Name product"}/>
+                                </TableColumn>
+
+                                <TableColumn customWidth={"50%"}>
+                                    <Field
+                                        name={`pages.${indexPage}.sections.${indexSection}.products.${index}.ingredients`}
+                                        type={"text-area"}
+                                        noDescription={true}
+                                        component={TextField}
+                                        noBorder={true}
+                                        placeholder={"Ingredients"}/>
+                                </TableColumn>
+
+                                <TableColumn customWidth={"20%"}>
+                                    <Field name={`pages.${indexPage}.sections.${indexSection}.products.${index}.price`}
+                                           type={"number"}
+                                           component={TextField}
+                                           noDescription={true}
+                                           noBorder={true}
+                                           placeholder={"Price"}/>
+                                </TableColumn>
+
+                                <TableColumn customWidth={"10%"}>
+                                    <Button customMarginBottom={"14px"} customMarginTop={"0px"} onClick={() => {
+                                        console.log(index)
+                                        setPopup({show: true, index: index})
+                                    }}>Delete</Button>
+                                </TableColumn>
+                            </TableRow>
+                        })
+                    }
+                </FieldWrapper>
+            </TableBody>
+        </Table>
+
+        <Wrapper customMarginTop={"50px"} flexStart>
+            <Button blueButton alignedLeft customMarginRight={"15px"} customWidth={"200px"} onClick={() => {
+                helpers.form.values.pages[indexPage].sections[indexSection].products.push({
+                    name: "",
+                    ingredients: "",
+                    price: 0
+
+                })
+                forceUpdate()
+            }}>Add new product</Button>
+            <Button lastElement customWidth={"180px"} onClick={() => {
+                if (deleteCall) {
+                    deleteCall()
+                }
+            }}><MaterialIcon iconName={"delete"}/> Delete Section</Button>
+        </Wrapper>
+        <DeletePopup
+            show={showPopup.show}
+            title={"Delete product?"}
+            textDeleteButton={"Delete product"}
+            deleteFunction={() => {
+                helpers.form.values.pages[indexPage].sections[indexSection].products.splice(showPopup.index, 1)
+                setPopup({show: false, index: -1})
+            }}
+            whatDelete={["product"]}
+            cancelFunction={() => setPopup({show: false, index: -1})}/>
+    </>
+
 }

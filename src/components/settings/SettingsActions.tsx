@@ -496,3 +496,8 @@ export const REMOVE_FILE = "remove_file";
 export const removeFile = ({dispatch}: { dispatch: Dispatch, }) => {
     dispatch({type: REMOVE_FILE, payload: {}})
 }
+
+export const SET_MARK = "set_mark";
+export const setMark = ({dispatch, mark}: { dispatch: Dispatch, mark: any }) => {
+    dispatch({type: SET_MARK, payload: mark})
+}

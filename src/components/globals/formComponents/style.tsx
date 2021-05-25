@@ -85,6 +85,9 @@ export const FormWrapper = styled.form<any>`
   ${({customWidth}) => customWidth && `
         width:${customWidth};
     `}
+  ${({customMaxWidth}) => customMaxWidth && `
+        max-width:${customMaxWidth};
+    `}
 `;
 
 export const FieldsWrapper = styled.div`
@@ -151,6 +154,9 @@ export const FieldWrapper = styled.div<any>`
     `}
   ${({flexStart}) => flexStart && `
         align-items:flex-start;
+    `}
+  ${({noBorder}) => noBorder && `
+       border-bottom:none;
     `}
 `;
 
@@ -336,10 +342,12 @@ export const CustomStyledInput = styled.input<any>`
     margin: 0;
   }
 
+
   :focus {
     border: 1px solid ${BLUE_COLOR} !important;
     outline: none !important;
   }
+
   :hover {
     border: 1px solid ${BLUE_COLOR} !important;
     outline: none !important;
@@ -370,6 +378,12 @@ export const CustomStyledInput = styled.input<any>`
         background-color: hsl(0,0%,95%);
         border-color: hsl(0,0%,90%);
     `}
+    ${({customFontSize}) => customFontSize && `
+    font-size:${customFontSize};
+      `}
+    ${({customHeight}) => customHeight && `
+    height:${customHeight};
+      `}
 
 `;
 

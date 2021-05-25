@@ -7,7 +7,7 @@ import {
   LIGHT_GRAY,
   LIGHT_GRAYISH_BLUE_COLOR,
   NORMAL_FONT_SIZE,
-  ORANGE_COLOR, RED,
+  ORANGE_COLOR, RED, RED_DELETE, SETTINGS_BACKGROUND_GREY,
   VERY_DARK_GREY_COLOR,
   WHITE_COLOR
 } from "../../constants/styleConstants";
@@ -45,6 +45,17 @@ export const PageWrapper = styled.div<any>`
   ${({big}) => big && `
     flex:1;
   `}
+  ${({smallPaddingBottom}) => smallPaddingBottom && `
+  padding: 45px 50px 50px 50px;
+  `}
+  
+  ${({noPaddingBottom}) => noPaddingBottom && `
+  padding: 45px 50px 0px 50px;
+  `}
+
+  ${({justPaddingBottom}) => justPaddingBottom && `
+  padding: 0px 0px 100px 0px;
+  `}
   ${({noPadding}) => noPadding && `
     padding:0;
   `}
@@ -65,12 +76,19 @@ export const Wrapper = styled.div<any>`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  
   margin-bottom: 20px;
   margin-top: 20px;
   ${({form}) => form && `
         margin-left: 15px;
         margin-top: 5px;
-  
+    `}
+
+  ${({customMarginTop}) => customMarginTop && `
+        margin-top: ${customMarginTop};
+    `}
+  ${({flexStart}) => flexStart && `
+  justify-content: flex-end;
     `}
 `;
 
@@ -105,6 +123,20 @@ export const Button = styled.div<any>`
   `}
 
 
+  ${({cancelButtonDelete}) => cancelButtonDelete && `
+    background:transparent;
+    font-size:16px;
+    color:${SETTINGS_BACKGROUND_GREY};
+    border:1px solid ${SETTINGS_BACKGROUND_GREY};
+  `}
+  ${({deleteButton}) => deleteButton && `
+    background:${RED_DELETE};
+    font-size:16px;
+  `}
+
+  ${({customMarginRight}) => customMarginRight && `
+        margin-right:${customMarginRight};
+    `}
   ${({customMarginBottom}) => customMarginBottom && `
         margin-bottom:${customMarginBottom};
     `}
@@ -146,6 +178,12 @@ export const Button = styled.div<any>`
     `}
   ${({customWidth}) => customWidth && `
       width:${customWidth};
+    `}
+  ${({customMarginTop}) => customMarginTop && `
+        margin-top:${customMarginTop};
+    `}
+  ${({customMarginBottom}) => customMarginBottom && `
+        margin-bottom:${customMarginBottom};
     `}
   ${({circle}) => circle && `
       border-radius:30px;

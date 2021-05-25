@@ -4,6 +4,7 @@ import {PageWrapper} from "../../../globals/GlobalStyles";
 import {useSettingsDispatch, useSettingsState} from "../../SettingsContext";
 import {getMenuByRestaurantId} from "../../SettingsActions";
 import {MenuForm} from "../form/MenuForm";
+import _ from "lodash";
 
 
 const MenuView = () => {
@@ -16,8 +17,9 @@ const MenuView = () => {
             getMenuByRestaurantId({restaurantId: restaurant.id, dispatch: dispatch})
         }
     }, [restaurant])
-    return <PageWrapper noPadding centerPage>
-        <MenuForm initialValues={menu} onSubmit={(values) => {
+
+    return <PageWrapper noPadding centerPage >
+        <MenuForm initialValues={menu!=[] && !_.isEmpty(menu)?menu:[]} onSubmit={(values) => {
             console.log(values)
         }}/>
     </PageWrapper>

@@ -6,10 +6,10 @@ import {HorizontalDelimiter} from "../GlobalStyles";
 
 interface PopupProps extends ReactChildrenType {
     show: boolean;
-    popupDetails: {
+    popupDetails?: {
         title: string
     };
-    onClose: () => void;
+    onClose?: () => void;
     withoutCloseIcon?: boolean;
     iconTitle?: string;
 }
@@ -20,12 +20,12 @@ const Popup = ({show, popupDetails, onClose, withoutCloseIcon, children, iconTit
             <PopupWrapper>
                 <PopupContentWrapper>
                     <PopupHeaderWrapper>
-                        <PopupName>
+                        {popupDetails &&<PopupName>
                             {iconTitle && <MaterialIcon iconName={iconTitle}/>}
                             <PopupText>
-                            {popupDetails.title}
+                                {popupDetails.title}
                             </PopupText>
-                        </PopupName>
+                        </PopupName>}
                         {
                             !withoutCloseIcon &&
                             <PopupName

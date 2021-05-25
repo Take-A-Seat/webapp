@@ -20,7 +20,7 @@ import {
     GET_TABLES_BY_AREA_ID,
     GET_TABLES_BY_AREA_ID_FAIL,
     GET_TABLES_BY_AREA_ID_SUCCESS,
-    REMOVE_FILE
+    REMOVE_FILE, SET_MARK
 } from "./SettingsActions";
 
 type State = {
@@ -33,6 +33,7 @@ type State = {
     selectedArea: any,
     menu: any,
     shouldCreateRestaurant: boolean,
+    mark:any,
 }
 
 const SettingsStateContext = createContext<State | undefined>(undefined)
@@ -48,10 +49,17 @@ const initialState: State = {
     file: "",
     menu: {},
     shouldCreateRestaurant: false,
+    mark:{}
 }
 
 const restaurantReducer = (state: State, action: Action) => {
     switch (action.type) {
+        case SET_MARK:{
+            return {
+                ...state,
+                mark:action.payload
+            }
+        }
         case GET_MENU_BY_RESTAURANT_ID: {
             return {
                 ...state,
@@ -72,6 +80,7 @@ const restaurantReducer = (state: State, action: Action) => {
             return {
                 ...state,
                 loading: false,
+                menu:[],
                 error: action.payload.error
             }
         }
@@ -183,7 +192,8 @@ const restaurantReducer = (state: State, action: Action) => {
                 ...state,
                 loading: false,
                 shouldCreateRestaurant: false,
-                restaurant: action.payload
+                restaurant: action.payload,
+                mark: {lat:action.payload.lat,lng:action.payload.lng}
             }
         }
         case CHECK_MANAGER_RESTAURANT_FAIL: {

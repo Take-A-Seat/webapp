@@ -17,7 +17,7 @@ const EditRestaurant = () => {
     const settingsState = useSettingsState();
     const logInState = useLoginState();
     const {loggedUser} = logInState;
-    const {restaurant, file} = settingsState;
+    const {restaurant, file, mark} = settingsState;
     const [fromUrl, setLogoFrom] = useState(true)
     const initialValues: RestaurantSettingsFormValuesTypes = {
         id: restaurant.id,
@@ -36,17 +36,22 @@ const EditRestaurant = () => {
         country: restaurant.country,
         province: restaurant.province,
         streetAndNumber: restaurant.streetAndNumber,
-        city: restaurant.city
+        city: restaurant.city,
+        lat: restaurant.lat,
+        lng: restaurant.lng
+
     }
 
     const onSubmit = (values: RestaurantSettingsFormValuesTypes) => {
+        values.lat = mark.lat;
+        values.lng = mark.lng;
         updateRestaurant({
             restaurantId: restaurant.id,
             changeLogo: !fromUrl,
             values: values,
             file: file,
             callBack: () => {
-                checkIfManagerHasRestaurant({dispatch: dispatch,managerId:loggedUser.UserId})
+                checkIfManagerHasRestaurant({dispatch: dispatch, managerId: loggedUser.UserId})
             },
             dispatch: dispatch
         })
@@ -63,16 +68,18 @@ const EditRestaurant = () => {
         }
     }
     return <PageWrapper centerPage>
-        <RestaurantFormSettings initialValues={initialValues}
-                                onSubmit={(values) => {
-                                    onSubmit(values)
-                                }}
-                                addNewFile={addNewFile} removeFile={removeFileFunc} file={file}
-                                urlImage={initialValues.logo != undefined ? initialValues.logo.path : ""}
-                                fromUrl={fromUrl}
-                                cancel={() => {
-                                    checkIfManagerHasRestaurant({dispatch: dispatch, managerId: loggedUser.UserId})
-                                }}/>
+        <RestaurantFormSettings
+            initialValues={initialValues}
+            onSubmit={(values) => {
+                onSubmit(values)
+            }}
+            addNewFile={addNewFile} removeFile={removeFileFunc} file={file}
+            urlImage={initialValues.logo != undefined ? initialValues.logo.path : ""}
+            fromUrl={fromUrl}
+            cancel={() => {
+                checkIfManagerHasRestaurant({dispatch: dispatch, managerId: loggedUser.UserId})
+            }}
+        />
 
     </PageWrapper>
 }

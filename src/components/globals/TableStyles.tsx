@@ -25,14 +25,22 @@ export const Table = styled.div<any>`
     `}
 `;
 
-export const TableHead = styled.div`
+export const TableHead = styled.div<any>`
   width: 100%;
   padding: 10px 30px;
-`;
+  ${({noPadding}) => noPadding && `
+        padding:0;
+        
+  `}
+  
+`
+
+
 export const TableRow = styled.div<any>`
   width: 100%;
   display: flex;
   cursor: pointer;
+ 
   ${({customWidth}) => customWidth && `
         width:${customWidth};
         
@@ -52,6 +60,7 @@ export const TableRow = styled.div<any>`
   ${({withMargin}) => withMargin && `
         margin-bottom:15px;
   `}
+
   
   ${({withBorderRadius}) => withBorderRadius && `
        border-radius:10px;
@@ -65,7 +74,7 @@ export const TableColumn = styled.div<any>`
   display: flex;
   align-items: center;
   flex: 1;
-  margin-right: 5px;
+  margin-right: 6px;
   ${({small}) => small && `
         flex:.33;
     `} ${({verySmall}) => verySmall && `

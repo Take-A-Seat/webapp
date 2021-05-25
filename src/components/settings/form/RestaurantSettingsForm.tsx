@@ -6,6 +6,8 @@ import TextField from "../../globals/formComponents/TextField";
 import DropZoneField from "../../globals/formComponents/DropzoneField";
 import {Button, Wrapper} from "../../globals/GlobalStyles";
 import MaterialIcon from "../../globals/MaterialIcons";
+import Map from "../../globals/Maps/Map";
+
 
 export type RestaurantSettingsFormValuesTypes = {
     id: string;
@@ -25,6 +27,9 @@ export type RestaurantSettingsFormValuesTypes = {
     streetAndNumber: string,
     province: string,
     city: string,
+    lng: number,
+    lat: number,
+
 }
 
 
@@ -47,7 +52,8 @@ export const RestaurantFormSettings = ({
                                            removeFile,
                                            urlImage,
                                            fromUrl,
-                                           cancel
+                                           cancel,
+
                                        }: RestaurantSettingsFormProps) => {
     const validationSchema = Yup.object().shape({
         name: Yup.string().min(3, "Minim 3 litere").required("Camp obligatoriu")
@@ -79,6 +85,8 @@ export const RestaurantFormSettings = ({
                                    description={`Upload a .png with a transparent background or a .jpg with a white background.  Your logo should be perfectly sharp. \n\n Make sure the colors contrast with a white background.`}/>
 
                         </SectionSettings>
+                        <TextSection>
+                        </TextSection>
                         <SectionSettings column>
                             <TextSection>
                                 Contact details
@@ -92,6 +100,7 @@ export const RestaurantFormSettings = ({
                                    labelText={"Street and number"}/>
                             <Field name={"postCode"} type={"text"} component={TextField} labelText={"Postal code"}/>
                             <Field name={"address"} type={"text"} component={TextField} labelText={"Address"}/>
+                            <Map/>
                             <Field name={"city"} type={"text"} component={TextField} labelText={"City"}/>
                             <Field name={"province"} type={"text"} component={TextField} labelText={"Province / Area"}/>
                             <Field name={"country"} type={"text"} component={TextField} labelText={"Country"}/>
@@ -116,11 +125,11 @@ export const RestaurantFormSettings = ({
                             {cancel && <Button
                                 onClick={() => {
                                     cancel()
-                                }} cancelButton>
+                                }} cancelButton >
                                 <MaterialIcon iconName={"cancel"}/>
                                 Cancel
                             </Button>}
-                            <Button onClick={() => onSubmit(values)} blueButton>
+                            <Button alignedLeft onClick={() => onSubmit(values)} blueButton>
                                 <MaterialIcon iconName={"save"}/>
                                 {initialValues.id == "" ? "Create settings" : "Save changes"}</Button>
                         </Wrapper>

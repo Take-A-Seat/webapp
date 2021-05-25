@@ -10,6 +10,7 @@ import {Table, TableBody, TableColumn, TableHead, TableRow, TableText, TextConta
 import {DropdownElement} from "../../globals/dropdown/Dropdown";
 import ContextualMenu from "../../globals/dropdown/ContextualMenu";
 import {HeaderAreas} from "../Headers/HeaderAreas";
+import {DeletePopup} from "../../globals/deletePopup/DeletePopUp";
 
 
 const AreaListing = () => {
@@ -19,6 +20,7 @@ const AreaListing = () => {
     let history = useHistory();
     let [editNamePreview, setPreviewEditName] = useState(false)
     let [initialValues, setInitialValues] = useState({})
+    const [showPopup, setPopup] = useState({show: false, areaId: ""})
 
     useEffect(() => {
         if (restaurant.id != undefined) {
@@ -69,18 +71,14 @@ const AreaListing = () => {
                         text: "Edit name",
                         icon: "edit",
                         onClick: () => {
-                            setInitialValues(Object.assign({},area));
+                            setInitialValues(Object.assign({}, area));
                             setPreviewEditName(true)
                         }
                     }, {
                         text: "Remove area",
                         icon: "remove",
                         onClick: () => {
-                            deleteArea({
-                                dispatch: dispatch, areaId: area.id, restaurantId: restaurant.id, callBack: () => {
-                                    getAreasByRestaurantId({dispatch: dispatch, restaurantId: restaurant.id})
-                                }
-                            })
+                            setPopup({show: true, areaId: area.id});
                         }
                     }];
                     return (<TableRow key={area.id} withMargin withBorderRadius tableBody onClick={(e: MouseEvent) => {
@@ -135,11 +133,24 @@ const AreaListing = () => {
         >
             <AreaForm withDisplayName={true} initialValues={initialValues as AreaFormValuesTypes}
                       onSubmit={(values: AreaFormValuesTypes) => {
-                          // onSubmitCreateArea(values)
                           editArea(values)
                       }} cancel={() => setPreviewEditName(false)}/>
         </Popup>
 
+        <DeletePopup
+            show={showPopup.show}
+            title={"Delete area?"}
+            textDeleteButton={"Delete area"}
+            deleteFunction={() => {
+                deleteArea({
+                    dispatch: dispatch, areaId: showPopup.areaId, restaurantId: restaurant.id, callBack: () => {
+                        getAreasByRestaurantId({dispatch: dispatch, restaurantId: restaurant.id})
+                    }
+                });
+                setPopup({show: false, areaId: ""})
+            }}
+            whatDelete={["area","tables"]}
+            cancelFunction={() => setPopup({show: false, areaId:""})}/>
     </PageWrapper>
 }
 

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {Link, NavLink} from "react-router-dom";
 import {
     BIG_FONT_SIZE,
-    BIGGER_FONT_SIZE, DARK_GREY_COLOR,
+    BIGGER_FONT_SIZE, BLUE_COLOR, DARK_GREY_COLOR,
     HEADER_SETTINGS_BACKGROUND, ORANGE_COLOR,
     VERY_DARK_GREY_COLOR
 } from "../../../constants/styleConstants";
@@ -133,3 +133,4 @@ export const HeaderText = styled.p <any>`
         cursor:pointer;
      `}
 `;
+

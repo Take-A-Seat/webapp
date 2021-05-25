@@ -13,6 +13,9 @@ interface TextFieldProps extends FieldProps {
     onBlur?: () => void;
     description?: string;
     noDescription?: boolean;
+    customFontSize?: number;
+    noBorder?:boolean;
+    customHeight?: number;
 }
 
 const TextField = ({
@@ -29,6 +32,9 @@ const TextField = ({
                        disabled,
                        onBlur,
                        noDescription,
+                   noBorder,
+                       customFontSize,
+                       customHeight,
                        ...props
                    }:
                        TextFieldProps
@@ -39,10 +45,11 @@ const TextField = ({
             customWidth={customWidth}
             withoutMarginBottom={withoutMarginBottom}
             error={error}
+            noBorder={noBorder}
             smallFields={smallFields}
         >
             <FieldText>
-                {!noDescription&& <FieldTextTitleSection>
+                {!noDescription && <FieldTextTitleSection>
                     <FieldLabel
                         title
                         error={error}
@@ -63,7 +70,8 @@ const TextField = ({
                     biggerInput={biggerInput}
                     noDescription={!noDescription}
                     customInputWidth={customInputWidth}
-
+                    customHeight={customHeight}
+                    customFontSize={customFontSize}
                     disabled={disabled}
                     onBlur={(e: any) => {
                         if (onBlur) {

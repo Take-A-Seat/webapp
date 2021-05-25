@@ -2,7 +2,14 @@ import React, {useEffect, useState} from "react";
 import {RouteComponentProps, useHistory, withRouter} from "react-router-dom";
 import {Circle, PageWrapper} from "../../globals/GlobalStyles";
 import {useSettingsDispatch, useSettingsState} from "../SettingsContext";
-import {deleteTable, getAreaById, getTablesByAreaId, updateTable} from "../SettingsActions";
+import {
+    deleteArea,
+    deleteTable,
+    getAreaById,
+    getAreasByRestaurantId,
+    getTablesByAreaId,
+    updateTable
+} from "../SettingsActions";
 import {HeaderTables} from "../Headers/HeaderTables";
 import {Table, TableBody, TableColumn, TableHead, TableRow, TableText} from "../../globals/TableStyles";
 import _ from "lodash";
@@ -10,6 +17,7 @@ import {DropdownElement} from "../../globals/dropdown/Dropdown";
 import ContextualMenu from "../../globals/dropdown/ContextualMenu";
 import {TableForm, TablesFormValues} from "../form/TablesForm";
 import Popup from "../../globals/popup/Popup";
+import {DeletePopup} from "../../globals/deletePopup/DeletePopUp";
 
 export type MatchParams = {
     areaId: string;
@@ -25,6 +33,9 @@ const TablesListing = ({match}: TablesListingProps) => {
     const {listTables, restaurant} = settingsState;
     const [initialValues, setInitialValues] = useState({} as TablesFormValues);
     const [showPopup, setPreview] = useState(false);
+    const [showPopupDelete, setPopup] = useState({show: false, tableId: ""})
+
+
     let history = useHistory();
     useEffect(() => {
         getTablesByAreaId({dispatch: dispatch, areaId: match.params.areaId, restaurantId: restaurant.id})
@@ -35,6 +46,7 @@ const TablesListing = ({match}: TablesListingProps) => {
     for (let index = 1; index <= 50; index++) {
         optionPeopleNumber.push({label: `${index}`, value: index})
     }
+
     return <PageWrapper noPadding centerPage>
         <HeaderTables optionPeopleNumber={optionPeopleNumber} listTables={listTables} restaurantId={restaurant.id}
                       areaId={match.params.areaId}/>
@@ -85,19 +97,7 @@ const TablesListing = ({match}: TablesListingProps) => {
                         text: "Remove table",
                         icon: "remove",
                         onClick: () => {
-                            deleteTable({
-                                dispatch: dispatch,
-                                areaId: match.params.areaId,
-                                restaurantId: restaurant.id,
-                                tableId: table.id,
-                                callBack: () => {
-                                    getTablesByAreaId({
-                                        dispatch: dispatch,
-                                        areaId: match.params.areaId,
-                                        restaurantId: restaurant.id
-                                    })
-                                }
-                            })
+                            setPopup({show: true,tableId: table.id})
                         }
                     }];
                     return (<TableRow key={table.id} withMargin withBorderRadius tableBody>
@@ -174,6 +174,28 @@ const TablesListing = ({match}: TablesListingProps) => {
                 optionsNumberPeople={optionPeopleNumber}
             />
         </Popup>
+        <DeletePopup
+            show={showPopupDelete.show}
+            title={"Delete table?"}
+            textDeleteButton={"Delete table"}
+            deleteFunction={() => {
+                deleteTable({
+                    dispatch: dispatch,
+                    areaId: match.params.areaId,
+                    restaurantId: restaurant.id,
+                    tableId: showPopupDelete.tableId,
+                    callBack: () => {
+                        getTablesByAreaId({
+                            dispatch: dispatch,
+                            areaId: match.params.areaId,
+                            restaurantId: restaurant.id
+                        })
+                    }
+                })
+                setPopup({show: false, tableId: ""})
+            }}
+            whatDelete={["table"]}
+            cancelFunction={() => setPopup({show: false, tableId:""})}/>
     </PageWrapper>
 
 }

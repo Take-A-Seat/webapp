@@ -1,5 +1,7 @@
 //colors
 export const ORANGE_COLOR = "#FB6340";
+export const RED_DELETE = "#F53649";
+export const BACKGROUND_DELETE = "#FFFFFF";
 export const VERY_DARK_GREY_COLOR = "#4A4A4A";
 export const COLOR_INPUT_BACKGROUND = "#353535";
 export const TEXT_COLOR_INPUT = "#fff"
