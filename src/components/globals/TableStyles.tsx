@@ -40,7 +40,7 @@ export const TableRow = styled.div<any>`
   width: 100%;
   display: flex;
   cursor: pointer;
- 
+ flex-wrap: wrap;
   ${({customWidth}) => customWidth && `
         width:${customWidth};
         

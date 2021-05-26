@@ -2,6 +2,7 @@
 export const ORANGE_COLOR = "#FB6340";
 export const RED_DELETE = "#F53649";
 export const BACKGROUND_DELETE = "#FFFFFF";
+export const THRD_BUTTON = "#262525";
 export const VERY_DARK_GREY_COLOR = "#4A4A4A";
 export const COLOR_INPUT_BACKGROUND = "#353535";
 export const TEXT_COLOR_INPUT = "#fff"
@@ -23,7 +24,7 @@ export const GREEN_COLOR = "rgb(31,102,121)";
 export const DARK_RED = "rgb(175,15,59)";
 export const BACKGROUND_COLOR = "#222222";
 export const HEADER_SETTINGS_BACKGROUND = "#242424";
-export const SETTINGS_BACKGROUND_GREY = "#323232"
+export const SETTINGS_BACKGROUND_GREY = "#2b2a2a"
 export const GREEN = "#2B943E"
 export const RED = "#DA1313"
 //font-sizes

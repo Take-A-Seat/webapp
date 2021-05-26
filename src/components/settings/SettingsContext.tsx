@@ -20,8 +20,13 @@ import {
     GET_TABLES_BY_AREA_ID,
     GET_TABLES_BY_AREA_ID_FAIL,
     GET_TABLES_BY_AREA_ID_SUCCESS,
-    REMOVE_FILE, SET_MARK
+    REMOVE_FILE, SAVE_MENU_FAIL,
+    SAVE_MENU_SUCCESS,
+    SET_MARK,
+    UPDATE_RESTAURANT_FAIL,
+    UPDATE_RESTAURANT_SUCCESS
 } from "./SettingsActions";
+import {useToasts} from "react-toast-notifications";
 
 type State = {
     loading: boolean,
@@ -33,7 +38,7 @@ type State = {
     selectedArea: any,
     menu: any,
     shouldCreateRestaurant: boolean,
-    mark:any,
+    mark: any,
 }
 
 const SettingsStateContext = createContext<State | undefined>(undefined)
@@ -49,15 +54,50 @@ const initialState: State = {
     file: "",
     menu: {},
     shouldCreateRestaurant: false,
-    mark:{}
+    mark: {}
 }
 
+export const SUCCESS_TOAST = "success_toast";
+export const FAIL_TOAST = "fail_toast;"
+
 const restaurantReducer = (state: State, action: Action) => {
+    const {addToast} = useToasts();
+
     switch (action.type) {
-        case SET_MARK:{
+        case SAVE_MENU_SUCCESS: {
+            addToast('Save menu successfully', {appearance: 'success'});
             return {
                 ...state,
-                mark:action.payload
+                error: ""
+            }
+        }
+        case SAVE_MENU_FAIL:{
+            addToast(action.payload.error, {appearance: 'error'});
+
+            return {
+                ...state,
+                error: action.payload.error
+            }
+        }
+        case UPDATE_RESTAURANT_FAIL: {
+            addToast(action.payload.error, {appearance: 'error'});
+            return {
+                ...state,
+                error: action.payload.error
+            }
+        }
+        case UPDATE_RESTAURANT_SUCCESS: {
+            addToast('Update restaurant successfully', {appearance: 'success'});
+
+            return {
+                ...state,
+                error: ""
+            }
+        }
+        case SET_MARK: {
+            return {
+                ...state,
+                mark: action.payload
             }
         }
         case GET_MENU_BY_RESTAURANT_ID: {
@@ -69,6 +109,7 @@ const restaurantReducer = (state: State, action: Action) => {
             }
         }
         case GET_MENU_BY_RESTAURANT_ID_SUCCESS: {
+            addToast('Get menu successfully', {appearance: 'info'});
             return {
                 ...state,
                 menu: action.payload,
@@ -77,10 +118,17 @@ const restaurantReducer = (state: State, action: Action) => {
             }
         }
         case GET_MENU_BY_RESTAURANT_ID_FAIL: {
+            if (action.payload.error == "mongo: no documents in result") {
+                addToast("No menu found", {appearance: 'warning'});
+            } else {
+                addToast(action.payload.error, {appearance: 'error'});
+
+            }
+
             return {
                 ...state,
                 loading: false,
-                menu:[],
+                menu: [],
                 error: action.payload.error
             }
         }
@@ -93,6 +141,7 @@ const restaurantReducer = (state: State, action: Action) => {
             }
         }
         case GET_AREA_BY_ID_SUCCESS: {
+
             return {
                 ...state,
                 selectedArea: action.payload,
@@ -101,6 +150,7 @@ const restaurantReducer = (state: State, action: Action) => {
             }
         }
         case GET_AREA_BY_ID_FAIL: {
+            addToast(action.payload.error, {appearance: 'error'});
             return {
                 ...state,
                 error: action.payload.error,
@@ -130,6 +180,8 @@ const restaurantReducer = (state: State, action: Action) => {
             }
         }
         case GET_TABLES_BY_AREA_ID_SUCCESS: {
+            addToast('Get tables successfully', {appearance: 'info'});
+
             return {
                 ...state,
                 loading: false,
@@ -138,6 +190,8 @@ const restaurantReducer = (state: State, action: Action) => {
             }
         }
         case GET_TABLES_BY_AREA_ID_FAIL: {
+            addToast(action.payload.error, {appearance: 'error'});
+
             return {
                 ...state,
                 loading: false,
@@ -152,6 +206,8 @@ const restaurantReducer = (state: State, action: Action) => {
             }
         }
         case GET_AREAS_BY_RESTAURANT_ID_SUCCESS: {
+            addToast('Get area successfully', {appearance: 'info'});
+
             return {
                 ...state,
                 loading: false,
@@ -160,6 +216,8 @@ const restaurantReducer = (state: State, action: Action) => {
             }
         }
         case GET_AREAS_BY_RESTAURANT_ID_FAIL: {
+            addToast(action.payload.error, {appearance: 'error'});
+
             return {
                 ...state,
                 loading: false,
@@ -187,21 +245,24 @@ const restaurantReducer = (state: State, action: Action) => {
             }
         }
         case CHECK_MANAGER_RESTAURANT_SUCCESS: {
-            console.log(action.payload)
+            addToast('Get restaurant successfully', {appearance: 'info'});
+
             return {
                 ...state,
                 loading: false,
                 shouldCreateRestaurant: false,
                 restaurant: action.payload,
-                mark: {lat:action.payload.lat,lng:action.payload.lng}
+                mark: {lat: action.payload.lat, lng: action.payload.lng}
             }
         }
         case CHECK_MANAGER_RESTAURANT_FAIL: {
+            addToast(action.payload.error, {appearance: 'error'});
+
             return {
                 ...state,
                 loading: false,
                 shouldCreateRestaurant: false,
-                error: action.payload,
+                error: action.payload.error,
                 restaurant: {}
             }
         }

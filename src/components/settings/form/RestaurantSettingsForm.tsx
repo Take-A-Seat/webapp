@@ -85,8 +85,7 @@ export const RestaurantFormSettings = ({
                                    description={`Upload a .png with a transparent background or a .jpg with a white background.  Your logo should be perfectly sharp. \n\n Make sure the colors contrast with a white background.`}/>
 
                         </SectionSettings>
-                        <TextSection>
-                        </TextSection>
+
                         <SectionSettings column>
                             <TextSection>
                                 Contact details
@@ -95,18 +94,27 @@ export const RestaurantFormSettings = ({
                                 Take a Seat uses your contact details in the Terms & conditions, Privacy statement
                                 and emails to guests.
                             </TextSection>
-                            <Field name={"name"} type={"text"} component={TextField} labelText={"Restaurant name"}/>
-                            <Field name={"streetAndNumber"} type={"text"} component={TextField}
-                                   labelText={"Street and number"}/>
-                            <Field name={"postCode"} type={"text"} component={TextField} labelText={"Postal code"}/>
-                            <Field name={"address"} type={"text"} component={TextField} labelText={"Address"}/>
+                            <Field name={"name"} type={"text"} customMaxWidth={"220px"} alignRight customHeight={"30px"}
+                                   component={TextField} labelText={"Restaurant name"}/>
+                            <Field name={"streetAndNumber"} type={"text"} customMaxWidth={"220px"} alignRight
+                                   customHeight={"30px"} component={TextField} labelText={"Street and number"}/>
+                            <Field name={"postCode"} type={"text"} customMaxWidth={"220px"} alignRight
+                                   customHeight={"30px"} component={TextField} labelText={"Postal code"}/>
+                            <Field name={"address"} type={"text"} customMaxWidth={"220px"} alignRight
+                                   customHeight={"30px"} component={TextField} labelText={"Address"}/>
                             <Map/>
-                            <Field name={"city"} type={"text"} component={TextField} labelText={"City"}/>
-                            <Field name={"province"} type={"text"} component={TextField} labelText={"Province / Area"}/>
-                            <Field name={"country"} type={"text"} component={TextField} labelText={"Country"}/>
-                            <Field name={"phone"} type={"text"} component={TextField} labelText={"Telephone"}/>
-                            <Field name={"email"} type={"text"} component={TextField} labelText={"Email"}/>
-                            <Field name={"website"} type={"text"} component={TextField} labelText={"Website"}/>
+                            <Field name={"city"} type={"text"} customMaxWidth={"220px"} alignRight customHeight={"30px"}
+                                   component={TextField} labelText={"City"}/>
+                            <Field name={"province"} type={"text"} customMaxWidth={"220px"} alignRight
+                                   customHeight={"30px"} component={TextField} labelText={"Province / Area"}/>
+                            <Field name={"country"} type={"text"} customMaxWidth={"220px"} alignRight
+                                   customHeight={"30px"} component={TextField} labelText={"Country"}/>
+                            <Field name={"phone"} type={"text"} customMaxWidth={"220px"} alignRight
+                                   customHeight={"30px"} component={TextField} labelText={"Telephone"}/>
+                            <Field name={"email"} type={"text"} customMaxWidth={"220px"} alignRight
+                                   customHeight={"30px"} component={TextField} labelText={"Email"}/>
+                            <Field name={"website"} type={"text"} customMaxWidth={"220px"} alignRight
+                                   customHeight={"30px"} component={TextField} labelText={"Website"}/>
                         </SectionSettings>
 
                         <SectionSettings column>
@@ -117,15 +125,15 @@ export const RestaurantFormSettings = ({
                                 Take a Seat uses your social links in emails to guests.
                                 Paste the URLs of your profile pages here.
                             </TextSection>
-                            <Field name={"facebook"} type={"text"} component={TextField} labelText={"facebook"}/>
-                            <Field name={"instagram"} type={"text"} component={TextField} labelText={"instagram"}/>
-                            <Field name={"twitter"} type={"text"} component={TextField} labelText={"twitter"}/>
+                            <Field name={"facebook"} type={"text"} customMaxWidth={"220px"} alignRight customHeight={"30px"} component={TextField} labelText={"facebook"}/>
+                            <Field name={"instagram"} type={"text"} customMaxWidth={"220px"} alignRight customHeight={"30px"} component={TextField} labelText={"instagram"}/>
+                            <Field name={"twitter"} type={"text"} customMaxWidth={"220px"} alignRight customHeight={"30px"} component={TextField} labelText={"twitter"}/>
                         </SectionSettings>
                         <Wrapper>
                             {cancel && <Button
                                 onClick={() => {
                                     cancel()
-                                }} cancelButton >
+                                }} cancelButton>
                                 <MaterialIcon iconName={"cancel"}/>
                                 Cancel
                             </Button>}

@@ -20,7 +20,7 @@ const AuthRouter = () => {
             </Switch>
         );
     } else {
-        return <Redirect to={"/"}/>;
+        return <Redirect to={"/dashboard"}/>;
     }
 };
 

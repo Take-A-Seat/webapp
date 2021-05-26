@@ -68,7 +68,7 @@ const DropZoneField = (
         const error = form.touched[field.name] && form.errors[field.name];
 
         return (
-            <FieldWrapper>
+            <FieldWrapper checkBoxMargin>
                 <FieldTextTitleSection>
                     <FieldLabel
                         title

@@ -9,6 +9,7 @@ export const PageMenu = styled.div<any>`
   width: 100%;
   padding: 15px 10px;
   background-color:${HEADER_SETTINGS_BACKGROUND};
+  border:1px solid black;
   margin-top: 15px;
   margin-bottom: 25px;
   border-radius: 10px;

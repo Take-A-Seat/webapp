@@ -43,7 +43,7 @@ export const ProductsFieldArray = ({helpers, indexSection, indexPage, deleteCall
                         </TableText>
                     </TableColumn>
 
-                    <TableColumn customWidth={"20%"}>
+                    <TableColumn customWidth={"10%"}>
                         <TableText thead>
                             Price
                         </TableText>
@@ -72,24 +72,33 @@ export const ProductsFieldArray = ({helpers, indexSection, indexPage, deleteCall
                                         type={"text-area"}
                                         noDescription={true}
                                         component={TextField}
+                                        customWidth={"100%"}
+
                                         noBorder={true}
                                         placeholder={"Ingredients"}/>
                                 </TableColumn>
 
-                                <TableColumn customWidth={"20%"}>
+                                <TableColumn customWidth={"10%"}>
                                     <Field name={`pages.${indexPage}.sections.${indexSection}.products.${index}.price`}
                                            type={"number"}
                                            component={TextField}
                                            noDescription={true}
+                                           customWidth={"100%"}
                                            noBorder={true}
                                            placeholder={"Price"}/>
                                 </TableColumn>
-
                                 <TableColumn customWidth={"10%"}>
-                                    <Button customMarginBottom={"14px"} customMarginTop={"0px"} onClick={() => {
-                                        console.log(index)
-                                        setPopup({show: true, index: index})
-                                    }}>Delete</Button>
+                                    <Button
+                                        customMarginBottom={"14px"}
+                                        customMarginTop={"0px"}
+                                        tertiaryButton
+                                        alignedRight
+                                        onClick={() => {
+                                            setPopup({show: true, index: index})
+                                        }}>
+                                        <MaterialIcon iconName={"delete"}/>
+                                        Delete
+                                    </Button>
                                 </TableColumn>
                             </TableRow>
                         })
@@ -98,21 +107,35 @@ export const ProductsFieldArray = ({helpers, indexSection, indexPage, deleteCall
             </TableBody>
         </Table>
 
-        <Wrapper customMarginTop={"50px"} flexStart>
-            <Button blueButton alignedLeft customMarginRight={"15px"} customWidth={"200px"} onClick={() => {
-                helpers.form.values.pages[indexPage].sections[indexSection].products.push({
-                    name: "",
-                    ingredients: "",
-                    price: 0
+        <Wrapper customMarginTop={"50px"} flexStart wrap>
+            <Button secondaryButton
+                    alignedLeft
+                    customMarginRight={"15px"}
+                    onClick={() => {
+                        helpers.form.values.pages[indexPage].sections[indexSection].products.push({
+                            name: "",
+                            ingredients: "",
+                            price: 0
 
-                })
-                forceUpdate()
-            }}>Add new product</Button>
-            <Button lastElement customWidth={"180px"} onClick={() => {
-                if (deleteCall) {
-                    deleteCall()
-                }
-            }}><MaterialIcon iconName={"delete"}/> Delete Section</Button>
+                        })
+                        forceUpdate()
+                    }}>
+                <MaterialIcon iconName={"add"}/>
+                Add product
+            </Button>
+
+            <Button
+                alignedRight
+                tertiaryButton
+                customMarginRight={"15px"}
+                onClick={() => {
+                    if (deleteCall) {
+                        deleteCall()
+                    }
+                }}><
+                MaterialIcon iconName={"delete"}/>
+                Delete Section
+            </Button>
         </Wrapper>
         <DeletePopup
             show={showPopup.show}

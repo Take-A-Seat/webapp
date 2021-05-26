@@ -14,8 +14,13 @@ interface TextFieldProps extends FieldProps {
     description?: string;
     noDescription?: boolean;
     customFontSize?: number;
-    noBorder?:boolean;
-    customHeight?: number;
+    noBorder?: boolean;
+    customHeight?: string;
+    customWidthField?:string;
+    customPaddingRight?:string;
+    customMaxWidth?:string;
+    customWidthInput?:string;
+    noMarginTitle?:string;
 }
 
 const TextField = ({
@@ -26,15 +31,20 @@ const TextField = ({
                        labelText,
                        withoutMarginBottom,
                        smallFields,
+                       customPaddingRight,
                        biggerInput,
                        description,
                        customInputWidth,
                        disabled,
                        onBlur,
+                       customWidthField,
                        noDescription,
-                   noBorder,
+                       noBorder,
                        customFontSize,
                        customHeight,
+                       customMaxWidth,
+                       customWidthInput,
+    noMarginTitle,
                        ...props
                    }:
                        TextFieldProps
@@ -42,16 +52,17 @@ const TextField = ({
     const error = form.touched[field.name] && form.errors[field.name];
     return (
         <FieldWrapper
-            customWidth={customWidth}
+            customWidth={customWidthField}
             withoutMarginBottom={withoutMarginBottom}
             error={error}
             noBorder={noBorder}
             smallFields={smallFields}
         >
             <FieldText>
-                {!noDescription && <FieldTextTitleSection>
+                {!noDescription && <FieldTextTitleSection customPaddingRight={customPaddingRight}>
                     <FieldLabel
                         title
+                        noMarginTitle
                         error={error}
                     >
                         {labelText}
@@ -70,6 +81,8 @@ const TextField = ({
                     biggerInput={biggerInput}
                     noDescription={!noDescription}
                     customInputWidth={customInputWidth}
+                    customMaxWidth={customMaxWidth}
+                    customWidthInput={customWidthInput}
                     customHeight={customHeight}
                     customFontSize={customFontSize}
                     disabled={disabled}

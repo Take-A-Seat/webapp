@@ -93,5 +93,6 @@ export const ContainerButtons = styled.div`
   flex-direction: row;
   padding: 20px 10px 20px 10px;
   justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
 `

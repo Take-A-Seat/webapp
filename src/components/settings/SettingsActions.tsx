@@ -99,6 +99,37 @@ export const addRestaurant = ({
 }
 
 
+export const SAVE_MENU = "save_menu";
+export const SAVE_MENU_SUCCESS = "save_menu_success";
+export const SAVE_MENU_FAIL = "save_menu_fail";
+export const saveMenu = ({
+                             dispatch,
+                             restaurantId,
+                             values,
+                             callBack,
+                         }: { dispatch: Dispatch, restaurantId: string, values: any, callBack: () => void }) => {
+
+    dispatch({type: SAVE_MENU, payload: {}});
+    authFetch(`/restaurants/id/${restaurantId}/menu`, {
+        method: "POST",
+        body: JSON.stringify(values)
+    }).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: SAVE_MENU_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        dispatch({type: SAVE_MENU_SUCCESS, payload: data})
+        if (callBack) {
+            callBack()
+        }
+    }).catch(error => {
+        console.log("error", error)
+    })
+}
+
 export const UPDATE_RESTAURANT = "update_restaurant";
 export const UPDATE_RESTAURANT_SUCCESS = "update_restaurant_success";
 export const UPDATE_RESTAURANT_FAIL = "update_restaurant_fail";
@@ -428,7 +459,9 @@ export const getMenuByRestaurantId = ({dispatch, restaurantId}: { dispatch: Disp
         }
         return response.json()
     }).then(data => {
-        dispatch({type: GET_MENU_BY_RESTAURANT_ID_SUCCESS, payload: data})
+        if (data) {
+            dispatch({type: GET_MENU_BY_RESTAURANT_ID_SUCCESS, payload: data})
+        }
     }).catch(error => {
         console.log("error", error)
     })

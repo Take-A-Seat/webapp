@@ -2,16 +2,20 @@ import styled from 'styled-components'
 
 import {Button} from 'reactstrap';
 import {
-    BIG_FONT_SIZE, BLUE_COLOR,
-    BORDER_INPUT,
-    BORDER_SWITCH, COLOR_INPUT_BACKGROUND, DARK_GREY_COLOR,
-    INPUT_PLACEHOLDER,
-    LIGHT_GRAY,
-    NORMAL_FONT_SIZE,
-    ORANGE_COLOR,
-    RED_COLOR, TEXT_COLOR_INPUT,
-    VERY_DARK_GREY_COLOR,
-    WHITE_COLOR
+  BIG_FONT_SIZE,
+  BLUE_COLOR,
+  BORDER_INPUT,
+  BORDER_SWITCH,
+  COLOR_INPUT_BACKGROUND,
+  DARK_GREY_COLOR,
+  INPUT_PLACEHOLDER,
+  LIGHT_GRAY,
+  NORMAL_FONT_SIZE,
+  ORANGE_COLOR,
+  RED_COLOR,
+  TEXT_COLOR_INPUT,
+  VERY_DARK_GREY_COLOR,
+  WHITE_COLOR
 } from "../../../constants/styleConstants";
 
 export const SectionSettings = styled.div<any>`
@@ -28,6 +32,10 @@ export const SectionSettings = styled.div<any>`
   margin-top:5px;
   `}
 `
+export const ColumnContainer = styled.div<any>`
+  display: flex;
+  flex-direction: column;
+`
 
 export const TextSection = styled.span<any>`
   text-align: left;
@@ -38,9 +46,9 @@ export const TextSection = styled.span<any>`
   color: #fff;
   font-family: "Cera", "Open Sans", sans-serif;;
   ${({description}) => description && `
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
-  padding: 5px 0;
+  padding: 12px 0;
   line-height: 1.6;
   `}
 `
@@ -109,6 +117,16 @@ export const CounterField = styled.div`
   flex-direction: column;
 `;
 
+export const CenterContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`
+export const ContainerIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 
 export const FieldWrapper = styled.div<any>`
   width: 100%;
@@ -153,7 +171,10 @@ export const FieldWrapper = styled.div<any>`
         width:35%!important;
     `}
   ${({flexStart}) => flexStart && `
-        align-items:flex-start;
+        align-self:flex-start;
+    `}
+  ${({flexEnd}) => flexEnd && `
+        align-self:flex-end;
     `}
   ${({noBorder}) => noBorder && `
        border-bottom:none;
@@ -203,9 +224,12 @@ export const FieldTextTitleSection = styled.div<any>`
   padding-right: 15px;
   padding-top: 15px;
   padding-bottom: 15px;
+  ${({customPaddingRight}) => customPaddingRight && `
+         padding-right:${customPaddingRight};
+    `}
 `
 
-export const FieldLabel = styled.p<any>`
+export const FieldLabel = styled.span<any>`
   font-size: 16px;
   color: ${VERY_DARK_GREY_COLOR};
   line-height: 1.9;
@@ -218,6 +242,11 @@ export const FieldLabel = styled.p<any>`
     `}
   ${({marginBottom}) => marginBottom && `
     margin-bottom:${marginBottom};
+    `}
+  ${({noMarginTitle}) => noMarginTitle && `
+    margin:0;
+    padding-right:0;
+    text-align:end;
     `}
 
   ${({title}) => title && `
@@ -316,8 +345,8 @@ export const CustomStyledInput = styled.input<any>`
   height: 20px;
   width: auto;
   min-width: 100px;
-  max-width: 180px;
-  border: 1px solid ${WHITE_COLOR};
+  max-width: 100%;
+  border: 1px solid transparent;
   font-family: "Open Sans", sans-serif;
   border-radius: 4px;
   padding: 15px;
@@ -336,13 +365,21 @@ export const CustomStyledInput = styled.input<any>`
     color: ${BORDER_INPUT};
   }
 
+  :-webkit-autofill,
+  :-webkit-autofill:hover,
+  :-webkit-autofill:focus,
+  :-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: ${WHITE_COLOR};
+  }
+
   ::-webkit-outer-spin-button,
   ::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-
+  
   :focus {
     border: 1px solid ${BLUE_COLOR} !important;
     outline: none !important;
@@ -364,25 +401,39 @@ export const CustomStyledInput = styled.input<any>`
 
   ${({customWidth}) => customWidth && `
         width:${customWidth};
-    `} ${({noDescription}) => !noDescription && `
+        min-width:${customWidth}
+    `}
+  ${({customWidthInput}) => customWidthInput && `
+        width:${customWidthInput};
+        min-width:${customWidthInput}
+    `}
+  ${({noDescription}) => !noDescription && `
         max-width:100%;
     `} ${({customInputWidth}) => customInputWidth && `
         width:${customInputWidth};
+        min-width:${customInputWidth}
     `} ${({customMarginLeft}) => customMarginLeft && `
         margin-left:${customMarginLeft};
     `} ${({customMarginBottom}) => customMarginBottom && `
-        
+        margin-bottom:${customMarginBottom};
     `} ${({biggerInput}) => biggerInput && `
         width:90%;
     `} ${({disabled}) => disabled && `
         background-color: hsl(0,0%,95%);
         border-color: hsl(0,0%,90%);
     `}
-    ${({customFontSize}) => customFontSize && `
+  ${({customFontSize}) => customFontSize && `
     font-size:${customFontSize};
       `}
-    ${({customHeight}) => customHeight && `
+  ${({customHeight}) => customHeight && `
     height:${customHeight};
+      `}
+  ${({customMaxWidth}) => customMaxWidth && `
+     max-width:${customMaxWidth};
+      `}
+
+  ${({alignRight}) => alignRight && `
+     margin-left:auto;
       `}
 
 `;

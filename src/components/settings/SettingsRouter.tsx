@@ -14,15 +14,7 @@ const TablesListing = lazy(() => import("./listing/TablesListing"))
 const MenuView = lazy(() => import("./menu/view/MenuView"))
 const SettingsRouter = () => {
     const settingsState = useSettingsState();
-    const settingsDispatch = useSettingsDispatch();
     const {shouldCreateRestaurant} = settingsState;
-    const logInState = useLoginState();
-    const {loggedUser} = logInState;
-    useEffect(() => {
-        if (!_.isEmpty(loggedUser) && loggedUser.UserId != undefined) {
-            checkIfManagerHasRestaurant({dispatch: settingsDispatch, managerId: loggedUser.UserId})
-        }
-    }, [loggedUser])
 
     if (shouldCreateRestaurant) {
         return <Suspense fallback={<div/>}>

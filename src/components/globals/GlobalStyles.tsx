@@ -5,9 +5,9 @@ import {
   DARK_GREY2_COLOR,
   DARK_GREY_COLOR, GREEN,
   LIGHT_GRAY,
-  LIGHT_GRAYISH_BLUE_COLOR,
+  LIGHT_GRAYISH_BLUE_COLOR, LIGHT_GREY_COLOR,
   NORMAL_FONT_SIZE,
-  ORANGE_COLOR, RED, RED_DELETE, SETTINGS_BACKGROUND_GREY,
+  ORANGE_COLOR, RED, RED_DELETE, SETTINGS_BACKGROUND_GREY, THRD_BUTTON,
   VERY_DARK_GREY_COLOR,
   WHITE_COLOR
 } from "../../constants/styleConstants";
@@ -48,7 +48,7 @@ export const PageWrapper = styled.div<any>`
   ${({smallPaddingBottom}) => smallPaddingBottom && `
   padding: 45px 50px 50px 50px;
   `}
-  
+
   ${({noPaddingBottom}) => noPaddingBottom && `
   padding: 45px 50px 0px 50px;
   `}
@@ -76,7 +76,6 @@ export const Wrapper = styled.div<any>`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  
   margin-bottom: 20px;
   margin-top: 20px;
   ${({form}) => form && `
@@ -88,7 +87,14 @@ export const Wrapper = styled.div<any>`
         margin-top: ${customMarginTop};
     `}
   ${({flexStart}) => flexStart && `
+  justify-content: flex-start;
+    `}
+  ${({flexEnd}) => flexEnd && `
   justify-content: flex-end;
+    `}
+
+  ${({wrap}) => wrap && `
+  flex-wrap: wrap;
     `}
 `;
 
@@ -119,7 +125,7 @@ export const Button = styled.div<any>`
   `}
   ${({cancelButton}) => cancelButton && `
     background:transparent;
-    border:1px solid ${LIGHT_GRAY}
+    border:1px solid ${LIGHT_GRAY};
   `}
 
 
@@ -129,10 +135,12 @@ export const Button = styled.div<any>`
     color:${SETTINGS_BACKGROUND_GREY};
     border:1px solid ${SETTINGS_BACKGROUND_GREY};
   `}
+  
   ${({deleteButton}) => deleteButton && `
     background:${RED_DELETE};
     font-size:16px;
   `}
+  
 
   ${({customMarginRight}) => customMarginRight && `
         margin-right:${customMarginRight};
@@ -140,10 +148,20 @@ export const Button = styled.div<any>`
   ${({customMarginBottom}) => customMarginBottom && `
         margin-bottom:${customMarginBottom};
     `}
+  
   ${({secondaryButton}) => secondaryButton && `
-        color:${ORANGE_COLOR};
-        background:rgba(255,255,255,0);
+        color:${WHITE_COLOR};
+        background-color:${THRD_BUTTON};
+        border:1px solid ${BLUE_COLOR};
+
     `}
+  ${({tertiaryButton}) => tertiaryButton && `
+        color:${WHITE_COLOR};
+        background:transparent;
+        border:1px solid ${RED_DELETE};
+
+    `}
+
   ${({alignedRight}) => alignedRight && `
         margin-left:auto;
     `}
@@ -158,6 +176,7 @@ export const Button = styled.div<any>`
         border:1px solid ${BLUE_COLOR};
         color:${WHITE_COLOR};
     `}
+
   ${({authButton}) => authButton && `
         width:fit-content;
         padding:15px 70px;
@@ -377,14 +396,14 @@ export const Text = styled.p`
 `;
 
 export const Circle = styled.div<any>`
-    width: 15px;
-    height: 15px;
-    display: block;
+  width: 15px;
+  height: 15px;
+  display: block;
   border-radius: 50px;
-  ${({green})=>green &&`
+  ${({green}) => green && `
     background-color: ${GREEN};
   `}
-  ${({red})=>red &&`
+  ${({red}) => red && `
     background-color: ${RED};
   `}
 `

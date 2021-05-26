@@ -4,9 +4,10 @@ import {Field, FieldArray, FieldArrayRenderProps} from "formik";
 import {FieldWrapper} from "../../../globals/formComponents/style";
 import {PagesFieldsValuesTypes} from "./PagesFieldArray";
 import TextField from "../../../globals/formComponents/TextField";
-import {Button, PageWrapper, Wrapper} from "../../../globals/GlobalStyles";
+import {Button, Wrapper} from "../../../globals/GlobalStyles";
 import {SectionPage} from "./style";
 import {DeletePopup} from "../../../globals/deletePopup/DeletePopUp";
+import MaterialIcon from "../../../globals/MaterialIcons";
 
 export type SectionsFormValuesTypes = {
     titleSection: string;
@@ -22,7 +23,7 @@ type SectionsFormProps = {
 export const SectionsFieldArray = ({name, helpers, indexPage}: SectionsFormProps) => {
     const [, updateState] = useState({});
     const forceUpdate = useCallback(() => updateState({}), []);
-    const [showPopup, setPopup] = useState({show:false,index:-1})
+    const [showPopup, setPopup] = useState({show: false, index: -1})
 
     return <>
         <FieldWrapper noBorder>
@@ -34,7 +35,7 @@ export const SectionsFieldArray = ({name, helpers, indexPage}: SectionsFormProps
                                type={"text"}
                                placeholder={"Title"}
                                component={TextField}
-                               customWidth={"200px"}
+                               customWidthField={"250px"}
                                noDescription={true}
                                noBorder={true}
                                customFontSize={"20px"}
@@ -43,8 +44,8 @@ export const SectionsFieldArray = ({name, helpers, indexPage}: SectionsFormProps
                             {
                                 fieldArrayProps => (
                                     <ProductsFieldArray name={"products"} helpers={fieldArrayProps}
-                                                        indexPage={indexPage} indexSection={index} deleteCall={()=>{
-                                        setPopup({show:true,index: index})
+                                                        indexPage={indexPage} indexSection={index} deleteCall={() => {
+                                        setPopup({show: true, index: index})
                                     }}/>
                                 )
                             }
@@ -54,7 +55,7 @@ export const SectionsFieldArray = ({name, helpers, indexPage}: SectionsFormProps
                 })
             }
             <Wrapper>
-                <Button blueButton alignedLeft customWidth={"200px"} onClick={() => {
+                <Button secondaryButton alignedLeft onClick={() => {
                     helpers.form.values.pages[indexPage].sections.push(Object.assign({
                         titleSection: "",
                         products: [{
@@ -65,7 +66,7 @@ export const SectionsFieldArray = ({name, helpers, indexPage}: SectionsFormProps
                         }]
                     }))
                     forceUpdate()
-                }}>Create a new section</Button></Wrapper>
+                }}><MaterialIcon iconName={"add"}/> Add section</Button></Wrapper>
 
             <DeletePopup
                 show={showPopup.show}
@@ -73,10 +74,10 @@ export const SectionsFieldArray = ({name, helpers, indexPage}: SectionsFormProps
                 textDeleteButton={"Delete section"}
                 deleteFunction={() => {
                     helpers.form.values.pages[indexPage].sections.splice(showPopup.index, 1)
-                    setPopup({show:false,index:-1})
+                    setPopup({show: false, index: -1})
                 }}
-                whatDelete={ ["section", "products"]}
-                cancelFunction={() => setPopup({show:false,index:-1})}/>
+                whatDelete={["section", "products"]}
+                cancelFunction={() => setPopup({show: false, index: -1})}/>
         </FieldWrapper>
     </>
 }
