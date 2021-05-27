@@ -17,7 +17,9 @@ export const HeaderAreas = ({restaurant, listAreas}: { restaurant: any, listArea
         displayName: "",
         onlineCapacity: 0,
         priority: listAreas && listAreas.length || 0,
-        restaurantId: restaurant.id
+        restaurantId: restaurant.id,
+        numberTables:0,
+        capacity:"",
     }
 
     const onSubmitCreateArea = (values: AreaFormValuesTypes) => {
@@ -45,7 +47,9 @@ export const HeaderAreas = ({restaurant, listAreas}: { restaurant: any, listArea
                     displayName: "",
                     onlineCapacity: 0,
                     priority: listAreas && listAreas.length || 0,
-                    restaurantId: restaurant.id
+                    restaurantId: restaurant.id,
+                    capacity:"",
+                    numberTables:0,
                 }
                 setShowPopup(!showPopup)
             }} blueButton noBorder circle><MaterialIcon iconName={"add"}/></Button>

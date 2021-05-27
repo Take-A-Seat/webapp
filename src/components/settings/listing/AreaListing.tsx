@@ -101,13 +101,13 @@ const AreaListing = () => {
 
                         <TableColumn>
                             <TableText thead>
-                                {0}
+                                {area.numberTables}
                             </TableText>
                         </TableColumn>
 
                         <TableColumn>
                             <TableText thead>
-                                0
+                                {area.capacity}
                             </TableText>
                         </TableColumn>
 

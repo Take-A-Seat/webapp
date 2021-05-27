@@ -12,6 +12,8 @@ export type AreaFormValuesTypes = {
     priority: number;
     restaurantId: string;
     onlineCapacity: number;
+    capacity:string;
+    numberTables:number;
 }
 
 type AreaFormProps = {

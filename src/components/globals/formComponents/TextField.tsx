@@ -59,10 +59,10 @@ const TextField = ({
             smallFields={smallFields}
         >
             <FieldText>
-                {!noDescription && <FieldTextTitleSection customPaddingRight={customPaddingRight}>
+                {!noDescription && <FieldTextTitleSection customPaddingRight={customPaddingRight?customPaddingRight:"auto"}>
                     <FieldLabel
                         title
-                        noMarginTitle
+                        noMarginTitle={noMarginTitle}
                         error={error}
                     >
                         {labelText}
