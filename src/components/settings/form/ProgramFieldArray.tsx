@@ -4,7 +4,6 @@ import {FieldWrapper} from "../../globals/formComponents/style";
 import {ProgramFormValueType} from "./RestaurantSettingsForm";
 import {getDayNameByNumber} from "../../../helpers/sharedFunctions";
 import TimePicker from "rc-time-picker";
-// import 'rc-time-picker/assets/index.tsx';
 import moment from "moment";
 import {Table, TableBody, TableColumn, TableHead, TableRow, TableText} from "../../globals/TableStyles";
 import SwitchField from "../../globals/formComponents/SwitchField";
