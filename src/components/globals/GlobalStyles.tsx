@@ -36,6 +36,9 @@ export const PageWrapper = styled.div<any>`
   display: flex;
   flex-direction: column;
   padding: 45px 50px 150px 50px;
+  @media only screen and (max-width: 600px) {
+    padding: 5px 5px 15px 5px;
+  }
   ${({centerPage}) => centerPage && `
   justify-content:center;
   align-items:center;

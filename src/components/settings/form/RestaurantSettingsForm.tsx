@@ -1,4 +1,4 @@
-import {Field, Formik} from "formik";
+import {Field, FieldArray, Formik} from "formik";
 import React from "react";
 import * as Yup from "yup";
 import {FormWrapper, SectionSettings, TextSection} from "../../globals/formComponents/style";
@@ -7,6 +7,7 @@ import DropZoneField from "../../globals/formComponents/DropzoneField";
 import {Button, Wrapper} from "../../globals/GlobalStyles";
 import MaterialIcon from "../../globals/MaterialIcons";
 import Map from "../../globals/Maps/Map";
+import {ProgramFieldArray} from "./ProgramFieldArray";
 
 
 export type RestaurantSettingsFormValuesTypes = {
@@ -15,7 +16,7 @@ export type RestaurantSettingsFormValuesTypes = {
     description: string;
     address: string;
     phone: string;
-    program: string;
+    program: ProgramFormValueType[];
     postCode: string;
     country: string;
     email: string;
@@ -29,7 +30,13 @@ export type RestaurantSettingsFormValuesTypes = {
     city: string,
     lng: number,
     lat: number,
+}
 
+export type ProgramFormValueType = {
+    startAt: any,
+    endAt: any,
+    day: number,
+    close: boolean,
 }
 
 
@@ -116,6 +123,14 @@ export const RestaurantFormSettings = ({
                             <Field name={"website"} type={"text"} customMaxWidth={"220px"} alignRight
                                    customHeight={"30px"} component={TextField} labelText={"Website"}/>
                         </SectionSettings>
+                        <SectionSettings column>
+                            <TextSection>
+                                Program
+                            </TextSection>
+                            <FieldArray name={"program"} render={fieldArrayProps => {
+                                return <ProgramFieldArray name={"program"} helpers={fieldArrayProps}/>
+                            }}/>
+                        </SectionSettings>
 
                         <SectionSettings column>
                             <TextSection>
@@ -125,9 +140,12 @@ export const RestaurantFormSettings = ({
                                 Take a Seat uses your social links in emails to guests.
                                 Paste the URLs of your profile pages here.
                             </TextSection>
-                            <Field name={"facebook"} type={"text"} customMaxWidth={"220px"} alignRight customHeight={"30px"} component={TextField} labelText={"facebook"}/>
-                            <Field name={"instagram"} type={"text"} customMaxWidth={"220px"} alignRight customHeight={"30px"} component={TextField} labelText={"instagram"}/>
-                            <Field name={"twitter"} type={"text"} customMaxWidth={"220px"} alignRight customHeight={"30px"} component={TextField} labelText={"twitter"}/>
+                            <Field name={"facebook"} type={"text"} customMaxWidth={"220px"} alignRight
+                                   customHeight={"30px"} component={TextField} labelText={"facebook"}/>
+                            <Field name={"instagram"} type={"text"} customMaxWidth={"220px"} alignRight
+                                   customHeight={"30px"} component={TextField} labelText={"instagram"}/>
+                            <Field name={"twitter"} type={"text"} customMaxWidth={"220px"} alignRight
+                                   customHeight={"30px"} component={TextField} labelText={"twitter"}/>
                         </SectionSettings>
                         <Wrapper>
                             {cancel && <Button

@@ -1,27 +1,35 @@
-import React from "react";
+import React, {useState} from "react";
 import {FieldLabel, FieldWrapper, SwitchStyle} from "./style";
 import Switch from "react-switch";
 import {ORANGE_POINT_SWITCH} from "../../../constants/styleConstants";
 
 interface SwitchFieldProps {
-    labelText: string,
+    labelText?: string,
     checked: boolean,
-    onChange: any
+    onChange: any,
+    noBorder?: boolean,
+    isSwitch?: boolean,
+    withoutMarginBottom?: boolean
 }
 
 const SwitchField = ({
                          labelText,
                          checked,
-                         onChange
+                         onChange,
+                         noBorder,
+                         isSwitch,
+                         withoutMarginBottom
                      }: SwitchFieldProps) => {
+    const [checkState, setCheck] = useState(checked);
     return (
-        <FieldWrapper isSwitch>
-            <FieldLabel title
+        <FieldWrapper isSwitch={isSwitch} noBorder={noBorder} withoutMarginBottom={withoutMarginBottom}>
+            {labelText && <FieldLabel title
             >
                 {labelText}
-            </FieldLabel>
-            <SwitchStyle>
-                <Switch checked={checked} onChange={(checked) => {
+            </FieldLabel>}
+            <SwitchStyle noBorder={noBorder}>
+                <Switch checked={checkState} onChange={(checked) => {
+                    setCheck(checked)
                     onChange(checked)
                 }}
                         onColor="#FFFFFF"

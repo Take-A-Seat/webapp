@@ -194,12 +194,16 @@ export const PageContent = styled.div<any>`
 `
 
 
-export const SwitchStyle = styled.div`
+export const SwitchStyle = styled.div<any>`
   border: 1px solid ${BORDER_SWITCH};
   border-radius: 20px;
   height: fit-content;
   display: flex;
   align-items: center;
+
+  ${({noBorder}) => noBorder && `
+       border:none;
+    `}
 `
 
 
@@ -224,6 +228,9 @@ export const FieldTextTitleSection = styled.div<any>`
   padding-right: 15px;
   padding-top: 15px;
   padding-bottom: 15px;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
   ${({customPaddingRight}) => customPaddingRight && `
          padding-right:${customPaddingRight};
     `}

@@ -72,7 +72,7 @@ export const addRestaurant = ({
     let data = new FormData();
 
     _.forOwn(values, (value, key) => {
-        if (key !== "logo") {
+        if (key !== "logo" && key !=="program") {
             if (value) {
                 data.append(key, value as string);
             }
@@ -80,6 +80,8 @@ export const addRestaurant = ({
     });
 
     data.append('logo', file)
+    data.append('program',JSON.stringify(values.program))
+
 
     authFetch("/restaurants/", {method: "POST", body: data}).then(response => {
         if (!response.ok) {
@@ -144,7 +146,7 @@ export const updateRestaurant = ({
     dispatch({type: UPDATE_RESTAURANT, payload: {}})
     let data = new FormData();
     _.forOwn(values, (value, key) => {
-        if (key !== "logo") {
+        if (key !== "logo" && key !=="program") {
             if (value) {
                 data.append(key, value as string);
             }
@@ -153,6 +155,8 @@ export const updateRestaurant = ({
 
     data.append('logo', file)
     data.append('changeLogo', `${changeLogo}`)
+    data.append('program',JSON.stringify(values.program))
+
     authFetch(`/restaurants/id/${restaurantId}`, {method: "PUT", body: data}).then(response => {
         if (!response.ok) {
             return response.text().then(error => {

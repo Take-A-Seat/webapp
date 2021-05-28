@@ -58,9 +58,12 @@ export const HeaderLinks = styled.div`
 export const HeaderAccountSection = styled.div`
   display: flex;
   justify-content: flex-end;
-  width: 10%;
+  width: auto;
   align-items: center;
   color: #fff;
+  @media only screen and (max-width: 600px) {
+    width: auto;
+  }
 `
 
 export const HeaderElement = styled(NavLink)`

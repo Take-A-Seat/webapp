@@ -5,6 +5,7 @@ import {PageWrapper} from "../../globals/GlobalStyles";
 import {addFile, addRestaurant, checkIfManagerHasRestaurant, removeFile, setMark} from "../SettingsActions";
 import {useSettingsDispatch, useSettingsState} from "../SettingsContext";
 import {useLoginState} from "../../auth/AuthContext";
+import moment from "moment";
 
 const CreateRestaurant = () => {
     const dispatch = useSettingsDispatch();
@@ -25,7 +26,6 @@ const CreateRestaurant = () => {
         name: "",
         phone: "",
         postCode: "",
-        program: "",
         twitter: "",
         website: "",
         logo: "",
@@ -33,7 +33,43 @@ const CreateRestaurant = () => {
         province: "",
         city: "",
         lat: 0,
-        lng: 0
+        lng: 0,
+        program: [{
+            day: 1,
+            startAt: "",
+            endAt: "",
+            close: false,
+        }, {
+            day: 2,
+            startAt: "",
+            endAt: "",
+            close: false,
+        }, {
+            day: 3,
+            startAt: "",
+            endAt: "",
+            close: false,
+        }, {
+            day: 4,
+            startAt: "",
+            endAt: "",
+            close: false,
+        }, {
+            day: 5,
+            startAt: "",
+            endAt: "",
+            close: false,
+        }, {
+            day: 6,
+            startAt: "",
+            endAt: "",
+            close: false,
+        }, {
+            day: 7,
+            startAt: "",
+            endAt: "",
+            close: false,
+        }]
     }
 
     useEffect(() => {
@@ -57,9 +93,10 @@ const CreateRestaurant = () => {
         removeFile({dispatch: dispatch})
     }
     const onsubmit = (values: RestaurantSettingsFormValuesTypes) => {
-        console.log(values)
         values.lat = mark.lat;
         values.lng = mark.lng;
+        // console.log(values)
+
         addRestaurant({
             file: file, values: values, dispatch: dispatch, callBack: () => {
                 checkIfManagerHasRestaurant({dispatch: dispatch, managerId: loggedUser.UserId})
