@@ -8,6 +8,18 @@ import {
     CHECK_MANAGER_RESTAURANT_SUCCESS,
     CREATE_TABLE,
     CREATE_TABLE_FAIL,
+    GET_ALL_SPECIFICS,
+    GET_ALL_SPECIFICS_BY_RESTAURANT_ID,
+    GET_ALL_SPECIFICS_BY_RESTAURANT_ID_FAIL,
+    GET_ALL_SPECIFICS_BY_RESTAURANT_ID_SUCCESS,
+    GET_ALL_SPECIFICS_FAIL,
+    GET_ALL_SPECIFICS_SUCCESS,
+    GET_ALL_TYPES_BY_RESTAURANT_ID,
+    GET_ALL_TYPES_BY_RESTAURANT_ID_FAIL,
+    GET_ALL_TYPES_BY_RESTAURANT_ID_SUCCESS,
+    GET_ALL_TYPES_RESTAURANT,
+    GET_ALL_TYPES_RESTAURANT_FAIL,
+    GET_ALL_TYPES_RESTAURANT_SUCCESS,
     GET_AREA_BY_ID,
     GET_AREA_BY_ID_FAIL,
     GET_AREA_BY_ID_SUCCESS,
@@ -20,7 +32,8 @@ import {
     GET_TABLES_BY_AREA_ID,
     GET_TABLES_BY_AREA_ID_FAIL,
     GET_TABLES_BY_AREA_ID_SUCCESS,
-    REMOVE_FILE, SAVE_MENU_FAIL,
+    REMOVE_FILE,
+    SAVE_MENU_FAIL,
     SAVE_MENU_SUCCESS,
     SET_MARK,
     UPDATE_RESTAURANT_FAIL,
@@ -37,10 +50,16 @@ type State = {
     file: any,
     selectedArea: any,
     menu: any,
+    listSpecifics: { id: string, name: string }[],
+    listTypes: { id: string, name: string }[],
+    fetchListSpecifics: SpecificRestaurant[],
+    fetchListTypes: TypeRestaurant[],
     shouldCreateRestaurant: boolean,
     mark: any,
 }
 
+export type SpecificRestaurant = { id: string, restaurantId: string, specificRestaurantId: string }
+export type TypeRestaurant = { id: string, restaurantId: string, typeRestaurantId: string }
 const SettingsStateContext = createContext<State | undefined>(undefined)
 const SettingsDispatchContext = createContext<Dispatch | undefined>(undefined)
 
@@ -53,17 +72,111 @@ const initialState: State = {
     selectedArea: {},
     file: "",
     menu: {},
+    listSpecifics: [],
+    listTypes: [],
+    fetchListSpecifics: [],
+    fetchListTypes: [],
     shouldCreateRestaurant: false,
     mark: {}
 }
-
-export const SUCCESS_TOAST = "success_toast";
-export const FAIL_TOAST = "fail_toast;"
 
 const restaurantReducer = (state: State, action: Action) => {
     const {addToast} = useToasts();
 
     switch (action.type) {
+        case GET_ALL_TYPES_BY_RESTAURANT_ID_FAIL: {
+            addToast(action.payload.error, {appearance: 'error'});
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            }
+        }
+        case GET_ALL_TYPES_BY_RESTAURANT_ID_SUCCESS: {
+            addToast('Get types restaurant successfully', {appearance: 'info'});
+            return {
+                ...state,
+                fetchListTypes: action.payload,
+                loading: false,
+                error: ""
+            }
+        }
+        case GET_ALL_TYPES_BY_RESTAURANT_ID: {
+            return {
+                ...state,
+                loading: true,
+                error: ""
+            }
+        }
+        case GET_ALL_SPECIFICS_BY_RESTAURANT_ID_FAIL: {
+            addToast(action.payload.error, {appearance: 'error'});
+            return {
+                ...state,
+                error: action.payload.error,
+                loading: false,
+            }
+        }
+        case GET_ALL_SPECIFICS_BY_RESTAURANT_ID_SUCCESS: {
+            addToast('Get specifics restaurant successfully', {appearance: 'info'});
+            return {
+                ...state,
+                fetchListSpecifics: action.payload,
+                error: "",
+                loading: false
+            }
+        }
+        case GET_ALL_SPECIFICS_BY_RESTAURANT_ID: {
+            return {
+                ...state,
+                loading: true,
+                fetchListSpecifics: [],
+                error: "",
+            }
+        }
+        case GET_ALL_TYPES_RESTAURANT: {
+            return {
+                ...state,
+                error: "",
+                loading: true
+            }
+        }
+        case GET_ALL_TYPES_RESTAURANT_SUCCESS: {
+            return {
+                ...state,
+                listTypes: action.payload,
+                loading: false,
+                error: ""
+            }
+        }
+        case GET_ALL_TYPES_RESTAURANT_FAIL: {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            }
+        }
+        case GET_ALL_SPECIFICS: {
+            return {
+                ...state,
+                error: "",
+                loading: true
+            }
+        }
+        case GET_ALL_SPECIFICS_SUCCESS: {
+            return {
+                ...state,
+                listSpecifics: action.payload,
+                loading: false,
+                error: ""
+            }
+        }
+        case GET_ALL_SPECIFICS_FAIL: {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            }
+        }
         case SAVE_MENU_SUCCESS: {
             addToast('Save menu successfully', {appearance: 'success'});
             return {
@@ -71,7 +184,7 @@ const restaurantReducer = (state: State, action: Action) => {
                 error: ""
             }
         }
-        case SAVE_MENU_FAIL:{
+        case SAVE_MENU_FAIL: {
             addToast(action.payload.error, {appearance: 'error'});
 
             return {

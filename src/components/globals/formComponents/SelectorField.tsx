@@ -3,13 +3,7 @@ import {FieldError, FieldLabel, FieldText, FieldWrapper} from "./style";
 import {FieldProps} from "formik";
 import Select, {ActionMeta, ValueType} from 'react-select';
 import _ from 'lodash';
-import {
-    BACKGROUND_COLOR, BLUE_COLOR, DARK_GREY2_COLOR,
-    LIGHT_GRAY,
-    LIGHT_GRAYISH_BLUE_COLOR, ORANGE_COLOR,
-    SETTINGS_BACKGROUND_GREY,
-    WHITE_COLOR
-} from "../../../constants/styleConstants";
+import {BACKGROUND_COLOR, BLUE_COLOR, SETTINGS_BACKGROUND_GREY, WHITE_COLOR} from "../../../constants/styleConstants";
 
 export type OptionsType = {
     label: string;
@@ -29,13 +23,14 @@ interface SelectorFieldProps extends FieldProps {
     required?: boolean;
     selectorStyles?: any;
     hasFullWidth?: boolean;
+    noBorder?: boolean;
 }
 
 const selectorStyles = {
     container: (provided: any) =>
         ({
             ...provided,
-            minWidth: '100px',
+            minWidth: '135px',
             maxWidth: "190px",
             marginLeft: "auto",
         }),
@@ -46,7 +41,7 @@ const selectorStyles = {
             minWidth: '40%',
             backgroundColor: `transparent`,
             color: `${WHITE_COLOR}`,
-            borderRadius:"5px",
+            borderRadius: "5px",
 
         }),
     noLabel: (provided: any) =>
@@ -57,34 +52,34 @@ const selectorStyles = {
         }),
     control: (provided: any) => ({
         ...provided,
-        backgroundColor:`${SETTINGS_BACKGROUND_GREY}`,
+        backgroundColor: `${SETTINGS_BACKGROUND_GREY}`,
         ':hover': {
             borderColor: `${BLUE_COLOR}`
         },
-        color:`${WHITE_COLOR}`,
+        color: `${WHITE_COLOR}`,
         height: "14px;"
     }),
 
-    valueContainer: (provided:any) => ({
+    valueContainer: (provided: any) => ({
         ...provided,
         backgroundColor: `${SETTINGS_BACKGROUND_GREY}`,
-        color:`${WHITE_COLOR}`,
+        color: `${WHITE_COLOR}`,
 
     }),
 
-    singleValue: (provided:any) => ({
+    singleValue: (provided: any) => ({
         ...provided,
-        color:`${WHITE_COLOR}`,
+        color: `${WHITE_COLOR}`,
     }),
 
-    indicatorsContainer: (provided:any) => ({
+    indicatorsContainer: (provided: any) => ({
         ...provided,
         backgroundColor: `${SETTINGS_BACKGROUND_GREY}`,
-        color:`${WHITE_COLOR}`
+        color: `${WHITE_COLOR}`
     }),
-    option:(provided:any,state:any)=>({
+    option: (provided: any, state: any) => ({
         ...provided,
-        backgroundColor:state.isFocused?`${SETTINGS_BACKGROUND_GREY}`:`${BACKGROUND_COLOR}`
+        backgroundColor: state.isFocused ? `${SETTINGS_BACKGROUND_GREY}` : `${BACKGROUND_COLOR}`
     })
 
 };
@@ -93,9 +88,10 @@ const fullWidth = {
     ...selectorStyles,
     container: (provided: any) => ({
         ...provided,
-        minWidth: '100%'
+        minWidth: '50%'
     })
 }
+
 
 const SelectorField = ({
                            options,
@@ -107,6 +103,7 @@ const SelectorField = ({
                            customWidth,
                            withoutMarginBottom,
                            onChange,
+                           noBorder,
                            disabled,
                            required,
                            hasFullWidth
@@ -136,6 +133,7 @@ const SelectorField = ({
             fitContentWidth={fitContentWidth}
             customWidth={customWidth}
             alignCenter
+            noBorder={noBorder}
             withoutMarginBottom={withoutMarginBottom}
             error={error}
         >

@@ -1,9 +1,9 @@
 import {Field, Formik} from "formik";
 import React from "react";
-import {FormWrapper} from "../../globals/formComponents/style";
-import TextField from "../../globals/formComponents/TextField";
-import {Button, Wrapper} from "../../globals/GlobalStyles";
-import MaterialIcon from "../../globals/MaterialIcons";
+import {FormWrapper} from "../../../globals/formComponents/style";
+import TextField from "../../../globals/formComponents/TextField";
+import {Button, Wrapper} from "../../../globals/GlobalStyles";
+import MaterialIcon from "../../../globals/MaterialIcons";
 
 export type AreaFormValuesTypes = {
     id: string;

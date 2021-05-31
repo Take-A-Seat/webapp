@@ -2,20 +2,20 @@ import styled from 'styled-components'
 
 import {Button} from 'reactstrap';
 import {
-  BIG_FONT_SIZE,
-  BLUE_COLOR,
-  BORDER_INPUT,
-  BORDER_SWITCH,
-  COLOR_INPUT_BACKGROUND,
-  DARK_GREY_COLOR,
-  INPUT_PLACEHOLDER,
-  LIGHT_GRAY,
-  NORMAL_FONT_SIZE,
-  ORANGE_COLOR,
-  RED_COLOR,
-  TEXT_COLOR_INPUT,
-  VERY_DARK_GREY_COLOR,
-  WHITE_COLOR
+    BIG_FONT_SIZE,
+    BLUE_COLOR,
+    BORDER_INPUT,
+    BORDER_SWITCH,
+    COLOR_INPUT_BACKGROUND,
+    DARK_GREY_COLOR,
+    INPUT_PLACEHOLDER,
+    LIGHT_GRAY,
+    NORMAL_FONT_SIZE,
+    ORANGE_COLOR,
+    RED_COLOR,
+    TEXT_COLOR_INPUT,
+    VERY_DARK_GREY_COLOR,
+    WHITE_COLOR
 } from "../../../constants/styleConstants";
 
 export const SectionSettings = styled.div<any>`
@@ -51,6 +51,11 @@ export const TextSection = styled.span<any>`
   padding: 12px 0;
   line-height: 1.6;
   `}
+
+  ${({customMarginBottom}) => customMarginBottom && `
+  margin-bottom:${customMarginBottom}
+  `}
+
 `
 
 export const HorizontalDelimiter = styled.div<any>`
@@ -386,7 +391,7 @@ export const CustomStyledInput = styled.input<any>`
     margin: 0;
   }
 
-  
+
   :focus {
     border: 1px solid ${BLUE_COLOR} !important;
     outline: none !important;
@@ -703,7 +708,7 @@ export const GroupsSelectorWrapper = styled.div<any>`
   padding: 20px 15px 25px 15px;
   display: flex;
   flex-direction: column;
-  border: 1px solid ${BORDER_INPUT};
+    //border: 1px solid ${BORDER_INPUT};
   border-radius: 4px;
   ${({error}) => error && `
         border:1px solid ${RED_COLOR};
@@ -738,13 +743,14 @@ export const SelectedGroupElement = styled.div`
   background: ${ORANGE_COLOR};
   border-radius: 22px;
   font-size: ${NORMAL_FONT_SIZE};
-  padding: 10px 24px;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
   width: fit-content;
   height: fit-content;
   color: ${WHITE_COLOR};
   margin-right: 15px;
+  margin-top: 10px;
 `;
 
 export const SelectedGroupElementIconWrapper = styled.div`

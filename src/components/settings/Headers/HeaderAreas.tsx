@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {HeaderWrapper} from "../../globals/header/style";
-import {AreaForm, AreaFormValuesTypes} from "../form/AreaForm";
+import {AreaForm, AreaFormValuesTypes} from "../area/form/AreaForm";
 import {addArea, getAreasByRestaurantId} from "../SettingsActions";
 import {useSettingsDispatch} from "../SettingsContext";
 import {Button} from "../../globals/GlobalStyles";

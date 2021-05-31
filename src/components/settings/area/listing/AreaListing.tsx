@@ -1,16 +1,24 @@
 import React, {useEffect, useState} from "react";
 import {useHistory, withRouter} from "react-router-dom";
-import {useSettingsDispatch, useSettingsState} from "../SettingsContext";
-import {deleteArea, getAreasByRestaurantId, updateArea} from "../SettingsActions";
-import {PageWrapper} from "../../globals/GlobalStyles";
-import Popup from "../../globals/popup/Popup";
+import {useSettingsDispatch, useSettingsState} from "../../SettingsContext";
+import {deleteArea, getAreasByRestaurantId, updateArea} from "../../SettingsActions";
+import {PageWrapper} from "../../../globals/GlobalStyles";
+import Popup from "../../../globals/popup/Popup";
 import {AreaForm, AreaFormValuesTypes} from "../form/AreaForm";
 import _ from "lodash";
-import {Table, TableBody, TableColumn, TableHead, TableRow, TableText, TextContainer} from "../../globals/TableStyles";
-import {DropdownElement} from "../../globals/dropdown/Dropdown";
-import ContextualMenu from "../../globals/dropdown/ContextualMenu";
-import {HeaderAreas} from "../Headers/HeaderAreas";
-import {DeletePopup} from "../../globals/deletePopup/DeletePopUp";
+import {
+    Table,
+    TableBody,
+    TableColumn,
+    TableHead,
+    TableRow,
+    TableText,
+    TextContainer
+} from "../../../globals/TableStyles";
+import {DropdownElement} from "../../../globals/dropdown/Dropdown";
+import ContextualMenu from "../../../globals/dropdown/ContextualMenu";
+import {HeaderAreas} from "../../Headers/HeaderAreas";
+import {DeletePopup} from "../../../globals/deletePopup/DeletePopUp";
 
 
 const AreaListing = () => {
@@ -149,8 +157,8 @@ const AreaListing = () => {
                 });
                 setPopup({show: false, areaId: ""})
             }}
-            whatDelete={["area","tables"]}
-            cancelFunction={() => setPopup({show: false, areaId:""})}/>
+            whatDelete={["area", "tables"]}
+            cancelFunction={() => setPopup({show: false, areaId: ""})}/>
     </PageWrapper>
 }
 

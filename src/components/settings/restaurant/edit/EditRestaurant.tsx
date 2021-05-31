@@ -1,16 +1,16 @@
 import React, {useState} from "react";
-import {useSettingsDispatch, useSettingsState} from "../SettingsContext";
+import {useSettingsDispatch, useSettingsState} from "../../SettingsContext";
 import {RestaurantFormSettings, RestaurantSettingsFormValuesTypes} from "../form/RestaurantSettingsForm";
-import {PageWrapper} from "../../globals/GlobalStyles";
+import {PageWrapper} from "../../../globals/GlobalStyles";
 import {
     addFile,
     checkIfManagerHasRestaurant,
     getAreasByRestaurantId, getOwnerRestaurants,
     removeFile,
     updateRestaurant
-} from "../SettingsActions";
+} from "../../SettingsActions";
 import {withRouter} from "react-router-dom";
-import {useLoginState} from "../../auth/AuthContext";
+import {useLoginState} from "../../../auth/AuthContext";
 
 const EditRestaurant = () => {
     const dispatch = useSettingsDispatch();

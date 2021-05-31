@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {RouteComponentProps, useHistory, withRouter} from "react-router-dom";
-import {Circle, PageWrapper} from "../../globals/GlobalStyles";
-import {useSettingsDispatch, useSettingsState} from "../SettingsContext";
+import {Circle, PageWrapper} from "../../../globals/GlobalStyles";
+import {useSettingsDispatch, useSettingsState} from "../../SettingsContext";
 import {
     deleteArea,
     deleteTable,
@@ -9,15 +9,15 @@ import {
     getAreasByRestaurantId,
     getTablesByAreaId,
     updateTable
-} from "../SettingsActions";
-import {HeaderTables} from "../Headers/HeaderTables";
-import {Table, TableBody, TableColumn, TableHead, TableRow, TableText} from "../../globals/TableStyles";
+} from "../../SettingsActions";
+import {HeaderTables} from "../../Headers/HeaderTables";
+import {Table, TableBody, TableColumn, TableHead, TableRow, TableText} from "../../../globals/TableStyles";
 import _ from "lodash";
-import {DropdownElement} from "../../globals/dropdown/Dropdown";
-import ContextualMenu from "../../globals/dropdown/ContextualMenu";
+import {DropdownElement} from "../../../globals/dropdown/Dropdown";
+import ContextualMenu from "../../../globals/dropdown/ContextualMenu";
 import {TableForm, TablesFormValues} from "../form/TablesForm";
-import Popup from "../../globals/popup/Popup";
-import {DeletePopup} from "../../globals/deletePopup/DeletePopUp";
+import Popup from "../../../globals/popup/Popup";
+import {DeletePopup} from "../../../globals/deletePopup/DeletePopUp";
 
 export type MatchParams = {
     areaId: string;

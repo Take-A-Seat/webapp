@@ -16,8 +16,8 @@ const HeaderSettings = ({history}: { history: History }) => {
             name: "Menu",
             link: "/settings/menu"
         },{
-            name: "Setup",
-            link: "/settings/setup"
+            name: "Specific and Type",
+            link: "/settings/specific&type"
         },
          {
             name: "Email",

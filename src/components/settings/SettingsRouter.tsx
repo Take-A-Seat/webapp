@@ -7,11 +7,12 @@ import _ from "lodash";
 import {checkIfManagerHasRestaurant} from "./SettingsActions";
 import HeaderSettings from "./Headers/HeaderSettings";
 
-const CreateRestaurant = lazy(() => import("./add/CreateRestaurant"))
-const EditRestaurant = lazy(() => import("./edit/EditRestaurant"))
-const AreaListing = lazy(() => import("./listing/AreaListing"))
-const TablesListing = lazy(() => import("./listing/TablesListing"))
+const CreateRestaurant = lazy(() => import("./restaurant/add/CreateRestaurant"))
+const EditRestaurant = lazy(() => import("./restaurant/edit/EditRestaurant"))
+const AreaListing = lazy(() => import("./area/listing/AreaListing"))
+const TablesListing = lazy(() => import("./tables/listing/TablesListing"))
 const MenuView = lazy(() => import("./menu/view/MenuView"))
+const SpecificAndTypeView = lazy(() => import("./specific&type/view/Specific&TypeView"))
 const SettingsRouter = () => {
     const settingsState = useSettingsState();
     const {shouldCreateRestaurant} = settingsState;
@@ -28,6 +29,7 @@ const SettingsRouter = () => {
                     <PrivateRoute component={EditRestaurant} path={"/settings/restaurant"} exact/>
                     <PrivateRoute component={AreaListing} path={"/settings/tables/plan"} exact/>
                     <PrivateRoute component={MenuView} path={"/settings/menu"} exact/>
+                    <PrivateRoute component={SpecificAndTypeView} path={"/settings/specific&type"} exact/>
                     <PrivateRoute component={TablesListing} path={"/settings/tables/area/:areaId/tables"}  exact={false}/>
 
                 </Switch>

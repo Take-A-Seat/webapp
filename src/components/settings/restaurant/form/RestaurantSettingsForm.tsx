@@ -1,12 +1,12 @@
 import {Field, FieldArray, Formik} from "formik";
 import React from "react";
 import * as Yup from "yup";
-import {FormWrapper, SectionSettings, TextSection} from "../../globals/formComponents/style";
-import TextField from "../../globals/formComponents/TextField";
-import DropZoneField from "../../globals/formComponents/DropzoneField";
-import {Button, Wrapper} from "../../globals/GlobalStyles";
-import MaterialIcon from "../../globals/MaterialIcons";
-import Map from "../../globals/Maps/Map";
+import {FormWrapper, SectionSettings, TextSection} from "../../../globals/formComponents/style";
+import TextField from "../../../globals/formComponents/TextField";
+import DropZoneField from "../../../globals/formComponents/DropzoneField";
+import {Button, Wrapper} from "../../../globals/GlobalStyles";
+import MaterialIcon from "../../../globals/MaterialIcons";
+import Map from "../../../globals/Maps/Map";
 import {ProgramFieldArray} from "./ProgramFieldArray";
 
 
@@ -124,7 +124,7 @@ export const RestaurantFormSettings = ({
                                    customHeight={"30px"} component={TextField} labelText={"Website"}/>
                         </SectionSettings>
                         <SectionSettings column>
-                            <TextSection>
+                            <TextSection customMarginBottom={"15px"}>
                                 Program
                             </TextSection>
                             <FieldArray name={"program"} render={fieldArrayProps => {

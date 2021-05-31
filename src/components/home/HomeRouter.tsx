@@ -8,7 +8,7 @@ import {checkIfManagerHasRestaurant} from "../settings/SettingsActions";
 import {useLoginState} from "../auth/AuthContext";
 import {useSettingsDispatch, useSettingsState} from "../settings/SettingsContext";
 import _ from "lodash";
-import CreateRestaurant from "../settings/add/CreateRestaurant";
+import CreateRestaurant from "../settings/restaurant/add/CreateRestaurant";
 
 const SettingsRouter = lazy(() => import("../settings/SettingsRouter"))
 

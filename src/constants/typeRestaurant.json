@@ -1,0 +1,71 @@
+[
+  {
+    "name": "Restaurant"
+  },
+  {
+    "name": "Event"
+  },
+  {
+    "name": "Bar"
+  },
+  {
+    "name": "Cafe"
+  },
+  {
+    "name": "Pizzerias"
+  },
+  {
+    "name": "Pub"
+  },
+  {
+    "name": "Bistro"
+  },
+  {
+    "name": "Club"
+  },
+  {
+    "name": "Lounge"
+  },
+  {
+    "name": "Grill"
+  },
+  {
+    "name": "Brewery"
+  },
+  {
+    "name": "Cafe/Pub"
+  },
+  {
+    "name": "Wine Bar"
+  },
+  {
+    "name": "Fishing"
+  },
+  {
+    "name": "Gastro Pub"
+  },
+  {
+    "name": "Steakhouse"
+  },
+  {
+    "name": "Cocktail Bar"
+  },
+  {
+    "name": "Teahouse"
+  },
+  {
+    "name": "Pastry"
+  },
+  {
+    "name": "Cake shop"
+  },
+  {
+    "name": "Sushi"
+  },
+  {
+    "name": "Snack"
+  },
+  {
+    "name": "Barbeque"
+  }
+]

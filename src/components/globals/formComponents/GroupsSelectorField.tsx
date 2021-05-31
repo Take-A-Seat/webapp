@@ -1,7 +1,6 @@
 import React from "react"
 import {
     FieldError,
-    FieldLabel,
     FieldWrapper,
     GroupSelectorsWrapper,
     GroupsSelectorElement,
@@ -37,32 +36,32 @@ export const groupsSelectorField = (
         <FieldWrapper
             customWidth={"100%"}
             column
+            noBorder
             flexStart
         >
-            <FieldLabel error={error}>
-                {labelText}
-            </FieldLabel>
             <GroupsSelectorWrapper error={error}>
                 <GroupsSelectorElement>
                     <GroupSelectorsWrapper>
                         <Field
                             name={"groupSelector"}
-                            labelText={"Alege grupul:"}
+                            labelText={`${labelText}`}
                             component={SelectorField}
                             options={options}
-                            customWidth={"45%"}
+                            customWidth={"50%"}
+                            fullWidth
+                            noBorder={true}
                             withoutMarginBottom
                             onChange={(selectedOption: { value: string, label: string }) => {
                                 let findId = false;
                                 form.values[fieldName].map((item: any) => {
-                                    if (item.id == selectedOption.value) {
+                                    if (item == selectedOption.value) {
                                         findId = true;
                                     }
                                 })
                                 if (!findId) {
-                                    push({
-                                        id: selectedOption.value
-                                    })
+                                    push(
+                                        selectedOption.value
+                                    )
                                 }
                             }}
                         />
@@ -71,8 +70,8 @@ export const groupsSelectorField = (
                 </GroupsSelectorElement>
                 <GroupsSelectorElement withoutBorderBottom flexWrap>
                     {
-                        form.values[fieldName] && form.values[fieldName].map((group: { id: string }, index: number) => {
-                            const valueFromOptions = _.find(options, option => option.value === group.id)
+                        form.values[fieldName] && form.values[fieldName].map((group: string, index: number) => {
+                            const valueFromOptions = _.find(options, option => option.value === group)
                             return (
                                 <SelectedGroupElement>
                                     {valueFromOptions && valueFromOptions.label}

@@ -19,7 +19,6 @@ type MenuFormProps = {
 }
 
 export const MenuForm = ({initialValues, onSubmit, cancel}: MenuFormProps) => {
-// console.log(initialValues)
     const [, updateState] = useState({});
     const forceUpdate = useCallback(() => updateState({}), []);
     return (<Formik enableReinitialize={true} initialValues={initialValues}

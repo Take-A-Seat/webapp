@@ -58,6 +58,112 @@ export const getOwnerRestaurants = ({dispatch}: { dispatch: Dispatch }) => {
     })
 }
 
+
+export const GET_ALL_SPECIFICS = "get_all_specifics";
+export const GET_ALL_SPECIFICS_SUCCESS = "get_all_specifics_success";
+export const GET_ALL_SPECIFICS_FAIL = "get_all_specifics_fail";
+export const getAllSpecifics = ({dispatch}: { dispatch: Dispatch }) => {
+    dispatch({
+        type: GET_ALL_SPECIFICS,
+        payload: []
+    });
+
+    authFetch(`/restaurants/specificsRestaurant`, {method: "GET"}).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: GET_ALL_SPECIFICS_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        if (data) {
+            dispatch({type: GET_ALL_SPECIFICS_SUCCESS, payload: data})
+        }
+    }).catch(error => {
+        console.log("err", error)
+    })
+}
+
+export const GET_ALL_TYPES_RESTAURANT = "get_all_types_restaurant";
+export const GET_ALL_TYPES_RESTAURANT_SUCCESS = "get_all_types_restaurant_success";
+export const GET_ALL_TYPES_RESTAURANT_FAIL = "get_all_types_restaurant_fail";
+export const getAllTypesRestaurant = ({dispatch}: { dispatch: Dispatch }) => {
+    dispatch({
+        type: GET_ALL_TYPES_RESTAURANT,
+        payload: []
+    });
+
+    authFetch(`/restaurants/typesRestaurant`, {method: "GET"}).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: GET_ALL_TYPES_RESTAURANT_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        if (data) {
+            dispatch({type: GET_ALL_TYPES_RESTAURANT_SUCCESS, payload: data})
+        }
+    }).catch(error => {
+        console.log("err", error)
+    })
+}
+
+export const GET_ALL_TYPES_BY_RESTAURANT_ID = "get_all_types_by_restaurant_id";
+export const GET_ALL_TYPES_BY_RESTAURANT_ID_SUCCESS = "get_all_types_by_restaurant_id_success";
+export const GET_ALL_TYPES_BY_RESTAURANT_ID_FAIL = "get_all_types_by_restaurant_id_fail";
+export const getAllTypesByRestaurantId = ({dispatch, restaurantId}: { dispatch: Dispatch, restaurantId: string }) => {
+    dispatch({
+        type: GET_ALL_TYPES_BY_RESTAURANT_ID,
+        payload: []
+    });
+
+    authFetch(`/restaurants/id/${restaurantId}/typesRestaurant`, {method: "GET"}).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: GET_ALL_TYPES_BY_RESTAURANT_ID_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        if (data) {
+            dispatch({type: GET_ALL_TYPES_BY_RESTAURANT_ID_SUCCESS, payload: data})
+        }
+    }).catch(error => {
+        console.log("err", error)
+    })
+}
+
+
+export const GET_ALL_SPECIFICS_BY_RESTAURANT_ID = "get_all_specifics_by_restaurant_id";
+export const GET_ALL_SPECIFICS_BY_RESTAURANT_ID_SUCCESS = "get_all_specifics_by_restaurant_id_success";
+export const GET_ALL_SPECIFICS_BY_RESTAURANT_ID_FAIL = "get_all_specifics_by_restaurant_id_fail";
+export const getAllSpecificsByRestaurantId = ({
+                                                  dispatch,
+                                                  restaurantId
+                                              }: { dispatch: Dispatch, restaurantId: string }) => {
+    dispatch({
+        type: GET_ALL_SPECIFICS_BY_RESTAURANT_ID,
+        payload: []
+    });
+
+    authFetch(`/restaurants/id/${restaurantId}/specificsRestaurant`, {method: "GET"}).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: GET_ALL_SPECIFICS_BY_RESTAURANT_ID_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        if (data) {
+            dispatch({type: GET_ALL_SPECIFICS_BY_RESTAURANT_ID_SUCCESS, payload: data})
+        }
+    }).catch(error => {
+        console.log("err", error)
+    })
+}
+
+
 export const ADD_RESTAURANT = "add_restaurant";
 export const ADD_RESTAURANT_SUCCESS = "add_restaurant_success";
 export const ADD_RESTAURANT_FAIL = "add_restaurant_fail";
@@ -72,7 +178,7 @@ export const addRestaurant = ({
     let data = new FormData();
 
     _.forOwn(values, (value, key) => {
-        if (key !== "logo" && key !=="program") {
+        if (key !== "logo" && key !== "program") {
             if (value) {
                 data.append(key, value as string);
             }
@@ -80,7 +186,7 @@ export const addRestaurant = ({
     });
 
     data.append('logo', file)
-    data.append('program',JSON.stringify(values.program))
+    data.append('program', JSON.stringify(values.program))
 
 
     authFetch("/restaurants/", {method: "POST", body: data}).then(response => {
@@ -146,7 +252,7 @@ export const updateRestaurant = ({
     dispatch({type: UPDATE_RESTAURANT, payload: {}})
     let data = new FormData();
     _.forOwn(values, (value, key) => {
-        if (key !== "logo" && key !=="program") {
+        if (key !== "logo" && key !== "program") {
             if (value) {
                 data.append(key, value as string);
             }
@@ -155,7 +261,7 @@ export const updateRestaurant = ({
 
     data.append('logo', file)
     data.append('changeLogo', `${changeLogo}`)
-    data.append('program',JSON.stringify(values.program))
+    data.append('program', JSON.stringify(values.program))
 
     authFetch(`/restaurants/id/${restaurantId}`, {method: "PUT", body: data}).then(response => {
         if (!response.ok) {
@@ -474,8 +580,6 @@ export const getMenuByRestaurantId = ({dispatch, restaurantId}: { dispatch: Disp
 export const UPDATE_MENU = "update_menu";
 export const UPDATE_MENU_SUCCESS = "update_menu_success";
 export const UPDATE_MENU_FAIL = "update_menu_fail";
-
-
 export const updateMenu = ({
                                dispatch,
                                restaurantId,
@@ -492,6 +596,70 @@ export const updateMenu = ({
         return response.json()
     }).then(data => {
         dispatch({type: UPDATE_MENU_SUCCESS, payload: data})
+        if (callBack) {
+            callBack()
+        }
+    }).catch(error => {
+        console.log("error", error)
+    })
+}
+
+export const UPDATE_SPECIFICS_RESTAURANT = "update_specifics_restaurant";
+export const UPDATE_SPECIFICS_RESTAURANT_SUCCESS = "update_specifics_restaurant_success";
+export const UPDATE_SPECIFICS_RESTAURANT_FAIL = "update_specifics_restaurant_fail";
+
+
+export const updateSpecificRestaurant = ({
+                                    dispatch,
+                                    restaurantId,
+                                    values,
+                                    callBack,
+                                }: { dispatch: Dispatch, restaurantId: string, values: any, callBack: () => void }) => {
+    dispatch({type: UPDATE_SPECIFICS_RESTAURANT, payload: {}});
+    authFetch(`/restaurants/id/${restaurantId}/specificsRestaurant`, {
+        method: "POST",
+        body: JSON.stringify(values)
+    }).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: UPDATE_SPECIFICS_RESTAURANT_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        dispatch({type: UPDATE_SPECIFICS_RESTAURANT_SUCCESS, payload: data})
+        if (callBack) {
+            callBack()
+        }
+    }).catch(error => {
+        console.log("error", error)
+    })
+}
+
+export const UPDATE_TYPES_RESTAURANT = "update_types_restaurant";
+export const UPDATE_TYPES_RESTAURANT_SUCCESS = "update_types_restaurant_success";
+export const UPDATE_TYPES_RESTAURANT_FAIL = "update_types_restaurant_fail";
+
+
+export const updateTypeRestaurant = ({
+                                    dispatch,
+                                    restaurantId,
+                                    values,
+                                    callBack,
+                                }: { dispatch: Dispatch, restaurantId: string, values: any, callBack: () => void }) => {
+    dispatch({type: UPDATE_TYPES_RESTAURANT, payload: {}});
+    authFetch(`/restaurants/id/${restaurantId}/typesRestaurant`, {
+        method: "POST",
+        body: JSON.stringify(values)
+    }).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: UPDATE_TYPES_RESTAURANT_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        dispatch({type: UPDATE_TYPES_RESTAURANT_SUCCESS, payload: data})
         if (callBack) {
             callBack()
         }

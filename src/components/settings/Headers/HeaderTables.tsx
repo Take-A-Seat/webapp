@@ -6,7 +6,7 @@ import {Button} from "../../globals/GlobalStyles";
 import Popup from "../../globals/popup/Popup";
 import MaterialIcon from "../../globals/MaterialIcons";
 import {BackContainer, SectionTableSettings, TextTitleHeader, TitleHeader} from "./style";
-import {TableForm, TablesFormValues} from "../form/TablesForm";
+import {TableForm, TablesFormValues} from "../tables/form/TablesForm";
 import {useHistory} from "react-router-dom";
 
 export const HeaderTables = ({

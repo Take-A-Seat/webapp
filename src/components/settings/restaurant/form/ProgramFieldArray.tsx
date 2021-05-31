@@ -1,13 +1,13 @@
 import React, {useCallback, useState} from "react";
 import {Field, FieldArrayRenderProps} from "formik";
-import {FieldWrapper} from "../../globals/formComponents/style";
+import {FieldWrapper} from "../../../globals/formComponents/style";
 import {ProgramFormValueType} from "./RestaurantSettingsForm";
-import {getDayNameByNumber} from "../../../helpers/sharedFunctions";
+import {getDayNameByNumber} from "../../../../helpers/sharedFunctions";
 import TimePicker from "rc-time-picker";
 import moment from "moment";
-import {Table, TableBody, TableColumn, TableHead, TableRow, TableText} from "../../globals/TableStyles";
-import SwitchField from "../../globals/formComponents/SwitchField";
-import "../timePiker.css"
+import {Table, TableBody, TableColumn, TableHead, TableRow, TableText} from "../../../globals/TableStyles";
+import SwitchField from "../../../globals/formComponents/SwitchField";
+import "../../../../constants/timePiker.css"
 
 type ProgramFormTypes = {
     name: string,

@@ -1,10 +1,10 @@
 import React, {useEffect} from "react";
 import {useHistory, withRouter} from "react-router-dom";
 import {RestaurantFormSettings, RestaurantSettingsFormValuesTypes} from "../form/RestaurantSettingsForm";
-import {PageWrapper} from "../../globals/GlobalStyles";
-import {addFile, addRestaurant, checkIfManagerHasRestaurant, removeFile, setMark} from "../SettingsActions";
-import {useSettingsDispatch, useSettingsState} from "../SettingsContext";
-import {useLoginState} from "../../auth/AuthContext";
+import {PageWrapper} from "../../../globals/GlobalStyles";
+import {addFile, addRestaurant, checkIfManagerHasRestaurant, removeFile, setMark} from "../../SettingsActions";
+import {useSettingsDispatch, useSettingsState} from "../../SettingsContext";
+import {useLoginState} from "../../../auth/AuthContext";
 import moment from "moment";
 
 const CreateRestaurant = () => {

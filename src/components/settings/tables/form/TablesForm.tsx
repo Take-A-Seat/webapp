@@ -1,11 +1,11 @@
 import {Field, Formik} from "formik";
 import React, {useCallback, useState} from "react";
-import {FormWrapper} from "../../globals/formComponents/style";
-import TextField from "../../globals/formComponents/TextField";
-import SelectorField from "../../globals/formComponents/SelectorField";
-import SwitchField from "../../globals/formComponents/SwitchField";
-import {Button, Wrapper} from "../../globals/GlobalStyles";
-import MaterialIcon from "../../globals/MaterialIcons";
+import {FormWrapper} from "../../../globals/formComponents/style";
+import TextField from "../../../globals/formComponents/TextField";
+import SelectorField from "../../../globals/formComponents/SelectorField";
+import SwitchField from "../../../globals/formComponents/SwitchField";
+import {Button, Wrapper} from "../../../globals/GlobalStyles";
+import MaterialIcon from "../../../globals/MaterialIcons";
 
 export type TablesFormValues = {
     id: string;
