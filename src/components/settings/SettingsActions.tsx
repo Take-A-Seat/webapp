@@ -14,11 +14,11 @@ export const checkIfManagerHasRestaurant = ({dispatch, managerId}: { dispatch: D
     authFetch(`/restaurants/managerId/${managerId}`, {method: "GET"}).then(response => {
         if (!response.ok) {
             if (response.status === 400) {
-                response.text().then(error => {
+                return response.text().then(error => {
                     dispatch({type: CHECK_MANAGER_RESTAURANT_FAIL, payload: JSON.parse(error)})
                 })
             } else if (response.status === 404) {
-                response.text().then(error => {
+                return response.text().then(error => {
                     dispatch({type: CHECK_MANAGER_RESTAURANT_FAIL_SHOULD_CREATE_RESTAURANT, payload: {error}})
                 })
             }
@@ -250,6 +250,8 @@ export const updateRestaurant = ({
                                      callBack
                                  }: { dispatch: Dispatch, restaurantId: string, changeLogo: boolean, file: any, values: any, callBack: () => void }) => {
     dispatch({type: UPDATE_RESTAURANT, payload: {}})
+
+    console.log("data send", values)
     let data = new FormData();
     _.forOwn(values, (value, key) => {
         if (key !== "logo" && key !== "program") {
@@ -610,11 +612,11 @@ export const UPDATE_SPECIFICS_RESTAURANT_FAIL = "update_specifics_restaurant_fai
 
 
 export const updateSpecificRestaurant = ({
-                                    dispatch,
-                                    restaurantId,
-                                    values,
-                                    callBack,
-                                }: { dispatch: Dispatch, restaurantId: string, values: any, callBack: () => void }) => {
+                                             dispatch,
+                                             restaurantId,
+                                             values,
+                                             callBack,
+                                         }: { dispatch: Dispatch, restaurantId: string, values: any, callBack: () => void }) => {
     dispatch({type: UPDATE_SPECIFICS_RESTAURANT, payload: {}});
     authFetch(`/restaurants/id/${restaurantId}/specificsRestaurant`, {
         method: "POST",
@@ -642,11 +644,11 @@ export const UPDATE_TYPES_RESTAURANT_FAIL = "update_types_restaurant_fail";
 
 
 export const updateTypeRestaurant = ({
-                                    dispatch,
-                                    restaurantId,
-                                    values,
-                                    callBack,
-                                }: { dispatch: Dispatch, restaurantId: string, values: any, callBack: () => void }) => {
+                                         dispatch,
+                                         restaurantId,
+                                         values,
+                                         callBack,
+                                     }: { dispatch: Dispatch, restaurantId: string, values: any, callBack: () => void }) => {
     dispatch({type: UPDATE_TYPES_RESTAURANT, payload: {}});
     authFetch(`/restaurants/id/${restaurantId}/typesRestaurant`, {
         method: "POST",

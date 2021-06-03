@@ -15,7 +15,9 @@ function App() {
                     </LoginProvider>
                 </SettingsProvider>
             </ToastProvider>
+
         </div>
+
     );
 }
 

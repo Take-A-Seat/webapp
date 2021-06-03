@@ -5,12 +5,13 @@ import {useSettingsDispatch, useSettingsState} from "../../SettingsContext";
 import {getMenuByRestaurantId, saveMenu} from "../../SettingsActions";
 import {MenuFieldsValues, MenuForm} from "../form/MenuForm";
 import _ from "lodash";
+import {LoaderComponent} from "../../../globals/Loading/Loader";
 
 
 const MenuView = () => {
     const dispatch = useSettingsDispatch();
     const settingsState = useSettingsState();
-    const {restaurant, menu} = settingsState;
+    const {restaurant, menu, loading} = settingsState;
 
     useEffect(() => {
         if (restaurant.id != undefined) {
@@ -42,12 +43,12 @@ const MenuView = () => {
                 number: 1,
             }]
     }
-    return <PageWrapper noPadding centerPage>
+    return !loading ? <PageWrapper noPadding centerPage>
         <MenuForm initialValues={menu != {} && !_.isEmpty(menu) ? menu : initialValues}
                   onSubmit={(values) => {
-            onSubmit(values)
-        }}/>
-    </PageWrapper>
+                      onSubmit(values)
+                  }}/>
+    </PageWrapper> : <LoaderComponent/>
 }
 
 export default withRouter(MenuView)

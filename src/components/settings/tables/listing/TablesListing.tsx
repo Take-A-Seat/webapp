@@ -18,6 +18,7 @@ import ContextualMenu from "../../../globals/dropdown/ContextualMenu";
 import {TableForm, TablesFormValues} from "../form/TablesForm";
 import Popup from "../../../globals/popup/Popup";
 import {DeletePopup} from "../../../globals/deletePopup/DeletePopUp";
+import {LoaderComponent} from "../../../globals/Loading/Loader";
 
 export type MatchParams = {
     areaId: string;
@@ -30,7 +31,7 @@ interface TablesListingProps extends RouteComponentProps<MatchParams> {
 const TablesListing = ({match}: TablesListingProps) => {
     const dispatch = useSettingsDispatch();
     const settingsState = useSettingsState();
-    const {listTables, restaurant} = settingsState;
+    const {listTables, restaurant,loading} = settingsState;
     const [initialValues, setInitialValues] = useState({} as TablesFormValues);
     const [showPopup, setPreview] = useState(false);
     const [showPopupDelete, setPopup] = useState({show: false, tableId: ""})
@@ -47,11 +48,11 @@ const TablesListing = ({match}: TablesListingProps) => {
         optionPeopleNumber.push({label: `${index}`, value: index})
     }
 
-    return <PageWrapper noPadding centerPage>
+    return  <PageWrapper noPadding centerPage>
         <HeaderTables optionPeopleNumber={optionPeopleNumber} listTables={listTables} restaurantId={restaurant.id}
                       areaId={match.params.areaId}/>
-        <Table customWidth={"68%"}>
-            <TableHead>
+        {!loading? <Table customWidth={"68%"}>
+          <TableHead>
                 <TableRow>
                     <TableColumn small>
                         <TableText thead>
@@ -141,7 +142,7 @@ const TablesListing = ({match}: TablesListingProps) => {
                     </TableRow>)
                 })}
             </TableBody>
-        </Table>
+        </Table>:<LoaderComponent/>}
         <Popup
             show={showPopup}
             iconTitle={"add_location_alt"}
@@ -150,7 +151,6 @@ const TablesListing = ({match}: TablesListingProps) => {
         >
             <TableForm
                 onSubmit={(values) => {
-                    console.log(values)
                     updateTable({
                         dispatch: dispatch,
                         values: values,

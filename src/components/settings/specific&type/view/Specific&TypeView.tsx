@@ -11,11 +11,12 @@ import {
 import {SpecificTypeForm} from "../form/Specific&TypeForm";
 import _ from "lodash";
 import {PageWrapper} from "../../../globals/GlobalStyles";
+import {LoaderComponent} from "../../../globals/Loading/Loader";
 
 const SpecificAndTypeView = () => {
     const dispatch = useSettingsDispatch();
     const settingsState = useSettingsState();
-    const {fetchListTypes, fetchListSpecifics, listSpecifics, listTypes, restaurant} = settingsState;
+    const {fetchListTypes, loading, fetchListSpecifics, listSpecifics, listTypes, restaurant} = settingsState;
 
     useEffect(() => {
         if (restaurant.id != undefined) {
@@ -50,7 +51,6 @@ const SpecificAndTypeView = () => {
     })
 
     const onSubmit = (values: any) => {
-        console.log(values)
         updateSpecificRestaurant({
             dispatch: dispatch, restaurantId: restaurant.id, values: values.specific, callBack: () => {
                 getAllSpecificsByRestaurantId({dispatch: dispatch, restaurantId: restaurant.id});
@@ -64,7 +64,7 @@ const SpecificAndTypeView = () => {
         })
     }
 
-    return <PageWrapper noPadding centerPage>
+    return !loading ? <PageWrapper noPadding centerPage>
         <SpecificTypeForm onSubmit={(values) => onSubmit(values)}
                           initialValues={initialValues}
                           cancel={() => {
@@ -74,7 +74,7 @@ const SpecificAndTypeView = () => {
                           optionsSpecific={optionSpecific}
                           optionsTypes={optionType}
         />
-    </PageWrapper>
+    </PageWrapper> : <LoaderComponent/>
 }
 
 export default SpecificAndTypeView

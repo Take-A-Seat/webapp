@@ -5,24 +5,25 @@ import {PageWrapper} from "../../../globals/GlobalStyles";
 import {addFile, addRestaurant, checkIfManagerHasRestaurant, removeFile, setMark} from "../../SettingsActions";
 import {useSettingsDispatch, useSettingsState} from "../../SettingsContext";
 import {useLoginState} from "../../../auth/AuthContext";
-import moment from "moment";
+import {LoaderComponent} from "../../../globals/Loading/Loader";
+
 
 const CreateRestaurant = () => {
     const dispatch = useSettingsDispatch();
     const settingsState = useSettingsState();
-    const {file, mark} = settingsState;
+    const {file, mark, loading} = settingsState;
     const accountState = useLoginState();
     const {loggedUser} = accountState
     let history = useHistory();
 
     const initialValues: RestaurantSettingsFormValuesTypes = {
         id: "",
-        address: "",
         country: "",
         description: "",
         email: "",
         facebook: "",
         instagram: "",
+        visibleOnline: true,
         name: "",
         phone: "",
         postCode: "",
@@ -104,14 +105,17 @@ const CreateRestaurant = () => {
             }
         })
     }
-    return <PageWrapper centerPage>
+    console.log("loading", loading)
+    return !loading ? <PageWrapper centerPage>
         <RestaurantFormSettings initialValues={initialValues}
                                 onSubmit={(values) => {
                                     onsubmit(values as RestaurantSettingsFormValuesTypes)
                                 }}
                                 addNewFile={addNewFile} removeFile={removeFileFunc} file={file}/>
 
-    </PageWrapper>
+    </PageWrapper> : <LoaderComponent/>
+
+
 }
 
 export default withRouter(CreateRestaurant)

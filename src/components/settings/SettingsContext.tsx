@@ -364,8 +364,8 @@ const restaurantReducer = (state: State, action: Action) => {
                 ...state,
                 loading: false,
                 shouldCreateRestaurant: false,
-                restaurant: action.payload,
-                mark: {lat: action.payload.lat, lng: action.payload.lng}
+                restaurant: action.payload.restaurantDetails,
+                mark: {lat: action.payload.restaurantDetails.lat, lng: action.payload.restaurantDetails.lng}
             }
         }
         case CHECK_MANAGER_RESTAURANT_FAIL: {
@@ -389,7 +389,8 @@ const restaurantReducer = (state: State, action: Action) => {
         }
         default: {
             return {
-                ...state
+                ...state,
+                loading: false
             }
         }
     }

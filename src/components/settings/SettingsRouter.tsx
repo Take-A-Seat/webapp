@@ -1,10 +1,7 @@
-import React, {lazy, Suspense, useEffect} from 'react'
+import React, {lazy, Suspense} from 'react'
 import {Switch, withRouter} from "react-router-dom";
 import PrivateRoute from "../../helpers/PrivateRoute";
-import {useSettingsDispatch, useSettingsState} from "./SettingsContext";
-import {useLoginState} from "../auth/AuthContext";
-import _ from "lodash";
-import {checkIfManagerHasRestaurant} from "./SettingsActions";
+import {useSettingsState} from "./SettingsContext";
 import HeaderSettings from "./Headers/HeaderSettings";
 
 const CreateRestaurant = lazy(() => import("./restaurant/add/CreateRestaurant"))
@@ -30,7 +27,8 @@ const SettingsRouter = () => {
                     <PrivateRoute component={AreaListing} path={"/settings/tables/plan"} exact/>
                     <PrivateRoute component={MenuView} path={"/settings/menu"} exact/>
                     <PrivateRoute component={SpecificAndTypeView} path={"/settings/specific&type"} exact/>
-                    <PrivateRoute component={TablesListing} path={"/settings/tables/area/:areaId/tables"}  exact={false}/>
+                    <PrivateRoute component={TablesListing} path={"/settings/tables/area/:areaId/tables"}
+                                  exact={false}/>
 
                 </Switch>
             </Suspense>

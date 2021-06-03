@@ -53,7 +53,6 @@ export const ProgramFieldArray = ({name, helpers}: ProgramFormTypes) => {
 
                         let momentStartDefault = helpers.form.values[name][index].startAt != "" ? moment(helpers.form.values[name][index].startAt, "LT") : undefined
                         let momentEndDefault = helpers.form.values[name][index].endAt != "" ? moment(helpers.form.values[name][index].endAt, "LT") : undefined
-                        console.log("momentStartDefault", momentStartDefault)
                         let dayName = getDayNameByNumber(element.day)
                         return <TableRow key={index} withMargin>
                             <TableColumn customFlex={"1.2"}>
@@ -74,7 +73,6 @@ export const ProgramFieldArray = ({name, helpers}: ProgramFormTypes) => {
                                     format="hh:mm A"
                                     defaultValue={momentStartDefault && momentStartDefault}
                                     onChange={e => {
-                                        console.log(e)
                                         if (e != null) {
                                             helpers.form.values[name][index].startAt = e.format("LT")
                                         }

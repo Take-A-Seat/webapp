@@ -20,7 +20,7 @@ const HomeRouter = ({history}: { history: History }) => {
         const {loggedUser} = logInState;
 
         useEffect(() => {
-            if (!_.isEmpty(loggedUser)) {
+            if (!_.isEmpty(loggedUser) && loggedUser.UserId!="") {
                 checkIfManagerHasRestaurant({dispatch: restaurantDispatch, managerId: loggedUser.UserId})
             }
         }, [loggedUser])

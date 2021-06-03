@@ -19,6 +19,7 @@ import {DropdownElement} from "../../../globals/dropdown/Dropdown";
 import ContextualMenu from "../../../globals/dropdown/ContextualMenu";
 import {HeaderAreas} from "../../Headers/HeaderAreas";
 import {DeletePopup} from "../../../globals/deletePopup/DeletePopUp";
+import {LoaderComponent} from "../../../globals/Loading/Loader";
 
 
 const AreaListing = () => {
@@ -46,9 +47,9 @@ const AreaListing = () => {
     }
 
 
-    return <PageWrapper noPadding centerPage>
+    return  <PageWrapper noPadding centerPage>
         <HeaderAreas restaurant={restaurant} listAreas={listAreas}/>
-        <Table customWidth={"68%"}>
+        { !loading ? <Table customWidth={"68%"}>
             <TableHead>
                 <TableRow>
                     <TableColumn customWidth={"20%"}>
@@ -131,7 +132,7 @@ const AreaListing = () => {
                     </TableRow>)
                 })}
             </TableBody>
-        </Table>
+        </Table>: <LoaderComponent/>}
 
         <Popup
             show={editNamePreview}

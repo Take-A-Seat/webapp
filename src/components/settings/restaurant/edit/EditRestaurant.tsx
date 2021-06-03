@@ -2,26 +2,23 @@ import React, {useState} from "react";
 import {useSettingsDispatch, useSettingsState} from "../../SettingsContext";
 import {RestaurantFormSettings, RestaurantSettingsFormValuesTypes} from "../form/RestaurantSettingsForm";
 import {PageWrapper} from "../../../globals/GlobalStyles";
-import {
-    addFile,
-    checkIfManagerHasRestaurant,
-    getAreasByRestaurantId, getOwnerRestaurants,
-    removeFile,
-    updateRestaurant
-} from "../../SettingsActions";
+import {addFile, checkIfManagerHasRestaurant, removeFile, updateRestaurant} from "../../SettingsActions";
 import {withRouter} from "react-router-dom";
 import {useLoginState} from "../../../auth/AuthContext";
+import _ from "lodash";
+import {LoaderComponent} from "../../../globals/Loading/Loader";
+import {Simulate} from "react-dom/test-utils";
+
 
 const EditRestaurant = () => {
     const dispatch = useSettingsDispatch();
     const settingsState = useSettingsState();
     const logInState = useLoginState();
     const {loggedUser} = logInState;
-    const {restaurant, file, mark} = settingsState;
+    const {restaurant, file, mark, loading} = settingsState;
     const [fromUrl, setLogoFrom] = useState(true)
     const initialValues: RestaurantSettingsFormValuesTypes = {
         id: restaurant.id,
-        address: restaurant.address,
         logo: restaurant.logo,
         website: restaurant.website,
         twitter: restaurant.twitter,
@@ -38,8 +35,8 @@ const EditRestaurant = () => {
         streetAndNumber: restaurant.streetAndNumber,
         city: restaurant.city,
         lat: restaurant.lat,
-        lng: restaurant.lng
-
+        lng: restaurant.lng,
+        visibleOnline: restaurant && !_.isEmpty(restaurant) ? restaurant.visibleOnline : false,
     }
 
     const onSubmit = (values: RestaurantSettingsFormValuesTypes) => {
@@ -67,7 +64,8 @@ const EditRestaurant = () => {
             setLogoFrom(!fromUrl)
         }
     }
-    return <PageWrapper centerPage>
+
+    return !loading ? <PageWrapper centerPage>
         <RestaurantFormSettings
             initialValues={initialValues}
             onSubmit={(values) => {
@@ -81,7 +79,9 @@ const EditRestaurant = () => {
             }}
         />
 
-    </PageWrapper>
+    </PageWrapper> : <LoaderComponent/>
+
+
 }
 
 export default withRouter(EditRestaurant)

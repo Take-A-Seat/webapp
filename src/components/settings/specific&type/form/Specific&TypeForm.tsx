@@ -28,7 +28,6 @@ export const SpecificTypeForm = ({
                        onSubmit(values)
                    }}>{
         ({values, handleSubmit}) => {
-            console.log(values)
             return (<FormWrapper noBorder>
                 <PageMenu>
                     <SectionSettings column  firstSection>

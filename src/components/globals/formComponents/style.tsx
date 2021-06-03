@@ -142,8 +142,6 @@ export const FieldWrapper = styled.div<any>`
   align-items: center;
   flex-wrap: wrap;
   border-bottom: 1px solid rgb(255 255 255 / 10%);
-
-
   ${({fitContentWidth}) => fitContentWidth && `
         width:fit-content;
         margin-right:15px;

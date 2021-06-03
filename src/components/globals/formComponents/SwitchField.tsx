@@ -10,6 +10,7 @@ interface SwitchFieldProps {
     noBorder?: boolean,
     isSwitch?: boolean,
     withoutMarginBottom?: boolean
+    customWidth?: string;
 }
 
 const SwitchField = ({
@@ -18,11 +19,13 @@ const SwitchField = ({
                          onChange,
                          noBorder,
                          isSwitch,
-                         withoutMarginBottom
+                         withoutMarginBottom,
+                         customWidth
                      }: SwitchFieldProps) => {
     const [checkState, setCheck] = useState(checked);
     return (
-        <FieldWrapper isSwitch={isSwitch} noBorder={noBorder} withoutMarginBottom={withoutMarginBottom}>
+        <FieldWrapper isSwitch={isSwitch} noBorder={noBorder} withoutMarginBottom={withoutMarginBottom}
+                      customWidth={customWidth}>
             {labelText && <FieldLabel title
             >
                 {labelText}
