@@ -16,11 +16,12 @@ interface TextFieldProps extends FieldProps {
     customFontSize?: number;
     noBorder?: boolean;
     customHeight?: string;
-    customWidthField?:string;
-    customPaddingRight?:string;
-    customMaxWidth?:string;
-    customWidthInput?:string;
-    noMarginTitle?:string;
+    customWidthField?: string;
+    customPaddingRight?: string;
+    customMaxWidth?: string;
+    customWidthInput?: string;
+    noMarginTitle?: string;
+    textArea?: boolean;
 }
 
 const TextField = ({
@@ -44,7 +45,8 @@ const TextField = ({
                        customHeight,
                        customMaxWidth,
                        customWidthInput,
-    noMarginTitle,
+                       noMarginTitle,
+                       textArea,
                        ...props
                    }:
                        TextFieldProps
@@ -59,7 +61,8 @@ const TextField = ({
             smallFields={smallFields}
         >
             <FieldText>
-                {!noDescription && <FieldTextTitleSection customPaddingRight={customPaddingRight?customPaddingRight:"auto"}>
+                {!noDescription &&
+                <FieldTextTitleSection customPaddingRight={customPaddingRight ? customPaddingRight : "auto"}>
                     <FieldLabel
                         title
                         noMarginTitle={noMarginTitle}
@@ -80,6 +83,7 @@ const TextField = ({
                     customMarginLeft={!labelText && `0`}
                     biggerInput={biggerInput}
                     noDescription={!noDescription}
+                    as={textArea?"textarea":""}
                     customInputWidth={customInputWidth}
                     customMaxWidth={customMaxWidth}
                     customWidthInput={customWidthInput}

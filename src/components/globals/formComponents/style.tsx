@@ -364,6 +364,7 @@ export const CustomStyledInput = styled.input<any>`
   font-weight: bold;
   cursor: pointer;
 
+
   ::placeholder,
   ::-webkit-input-placeholder {
     transition: 0.3s ease;
@@ -437,6 +438,7 @@ export const CustomStyledInput = styled.input<any>`
       `}
   ${({customHeight}) => customHeight && `
     height:${customHeight};
+    min-height:${customHeight};
       `}
   ${({customMaxWidth}) => customMaxWidth && `
      max-width:${customMaxWidth};

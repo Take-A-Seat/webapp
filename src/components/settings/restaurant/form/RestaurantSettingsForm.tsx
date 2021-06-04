@@ -154,8 +154,8 @@ export const RestaurantFormSettings = ({
                                 Take a Seat uses your social links in emails to guests.
                                 Paste the URLs of your profile pages here.
                             </TextSection>
-                            <Field name={"description"} type={"text"} customMaxWidth={"220px"} alignRight
-                                   customHeight={"30px"} component={TextField} labelText={"description"}/>
+                            <Field name={"description"}   textArea={true} customMaxWidth={"350px"}  customWidthInput={"100%"} alignRight
+                                   customHeight={"100px"} component={TextField} labelText={"description"}/>
                             <Field name={"facebook"} type={"text"} customMaxWidth={"220px"} alignRight
                                    customHeight={"30px"} component={TextField} labelText={"facebook"}/>
                             <Field name={"instagram"} type={"text"} customMaxWidth={"220px"} alignRight
@@ -182,4 +182,3 @@ export const RestaurantFormSettings = ({
 
     </Formik>)
 }
-
