@@ -24,6 +24,7 @@ interface SelectorFieldProps extends FieldProps {
     selectorStyles?: any;
     hasFullWidth?: boolean;
     noBorder?: boolean;
+    customPadding?:any;
 }
 
 const selectorStyles = {
@@ -105,6 +106,7 @@ const SelectorField = ({
                            onChange,
                            noBorder,
                            disabled,
+                           customPadding,
                            required,
                            hasFullWidth
                        }: SelectorFieldProps) => {
@@ -133,6 +135,7 @@ const SelectorField = ({
             fitContentWidth={fitContentWidth}
             customWidth={customWidth}
             alignCenter
+            customPadding={customPadding}
             noBorder={noBorder}
             withoutMarginBottom={withoutMarginBottom}
             error={error}

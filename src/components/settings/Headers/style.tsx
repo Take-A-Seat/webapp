@@ -2,13 +2,18 @@ import styled from "styled-components";
 import {DARK_GREY2_COLOR, WHITE_COLOR} from "../../../constants/styleConstants";
 
 
-export const SectionTableSettings = styled.div`
+export const SectionTableSettings = styled.div<any>`
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
   padding-left: 15%;
   padding-right: 15%;
+  ${({reservations})=> reservations && `
+  padding-left:5%;
+   padding-right:0;
+  
+  `}
 `
 
 export const TitleHeader = styled.div`

@@ -6,4 +6,5 @@ export const HomePageWrapper = styled.div`
   flex-direction: column;
   min-height: calc(100vh - 70px);
   height: fit-content;
+  position: relative;
 `

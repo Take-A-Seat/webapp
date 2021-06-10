@@ -1,0 +1,31 @@
+.Collapsible__trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.Collapsible__trigger.is-open i {
+    transform: rotate(180deg);
+}
+
+.Collapsible {
+    width: 77%;
+    padding-left: 25px;
+    padding-top: 12px;
+}
+
+
+.Collapsible > span {
+    white-space: nowrap;
+    font-size: 15px;
+    color: rgba(239, 244, 255, 0.42);
+    font-weight: 700;
+}
+
+.Collapsible > span :active :hover{
+    font-weight: 700;
+    color: #fff;
+}
+
+

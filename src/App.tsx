@@ -4,6 +4,7 @@ import {LoginProvider} from "./components/auth/AuthContext";
 import AppRouter from "./router/AppRouter";
 import {SettingsProvider} from "./components/settings/SettingsContext";
 import {ToastProvider} from 'react-toast-notifications';
+import {ReservationsProvider} from "./components/reservations/ReservationsContext";
 
 function App() {
     return (
@@ -11,7 +12,9 @@ function App() {
             <ToastProvider placement={"bottom-right"} autoDismiss={true} autoDismissTimeout={3000}>
                 <SettingsProvider>
                     <LoginProvider>
-                        <AppRouter/>
+                        <ReservationsProvider>
+                            <AppRouter/>
+                        </ReservationsProvider>
                     </LoginProvider>
                 </SettingsProvider>
             </ToastProvider>

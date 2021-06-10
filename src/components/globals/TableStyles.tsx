@@ -1,12 +1,15 @@
 import styled from "styled-components"
 import {
-    BIG_FONT_SIZE, BLUE_COLOR,
-    BLUE_WHITE_COLOR,
-    DARK_GREY_COLOR,
-    LIGHT_GRAYISH_BLUE_COLOR, SETTINGS_BACKGROUND_GREY,
-    SMALL_FONT_SIZE,
-    VERY_DARK_GREY_COLOR,
-    WHITE_COLOR
+  ACTIVE_RESERVATION_STATUS,
+  BIG_FONT_SIZE,
+  BLUE_COLOR,
+  DARK_GREY_COLOR, DECLINED_RESERVATION_STATUS, FINISHED_RESERVATION_STATUS,
+  PENDING_RESERVATION_STATUS,
+  SETTINGS_BACKGROUND_GREY,
+  SMALL_FONT_SIZE,
+  VERY_DARK_GREY_COLOR,
+  WAIT_CLIENT_RESERVATION_STATUS,
+  WHITE_COLOR
 } from "../../constants/styleConstants";
 
 export const Table = styled.div<any>`
@@ -32,7 +35,7 @@ export const TableHead = styled.div<any>`
         padding:0;
         
   `}
-  
+
 `
 
 
@@ -40,7 +43,7 @@ export const TableRow = styled.div<any>`
   width: 100%;
   display: flex;
   cursor: pointer;
- flex-wrap: wrap;
+  flex-wrap: wrap;
   ${({customWidth}) => customWidth && `
         width:${customWidth};
         
@@ -56,18 +59,18 @@ export const TableRow = styled.div<any>`
         width:fit-content;
         overflow-x:auto;
   `}
-  
+
   ${({withMargin}) => withMargin && `
         margin-bottom:15px;
   `}
 
-  
+
   ${({withBorderRadius}) => withBorderRadius && `
        border-radius:10px;
        border:1px solid black;
 
   `}
-  
+
 `;
 
 export const TableColumn = styled.div<any>`
@@ -109,8 +112,8 @@ export const TableText = styled.p <any>`
         & i {
             font-size:18px;
         }
-    `} 
-    ${({bold}) => bold && `
+    `}
+  ${({bold}) => bold && `
         font-weight:bold;
     `} ${({firstLetterUpperCase}) => firstLetterUpperCase && `
         ::first-letter {
@@ -138,12 +141,44 @@ export const TableText = styled.p <any>`
   ${({noMargin}) => noMargin && `
         margin:0;
     `}
-  ${({whiteTextBold})=>whiteTextBold && `
+
+  ${({statusReservation}) => statusReservation && `
+        padding:6px 10px;
+        width:90px;
+        border-radius:6px;
+    `}
+  ${({whiteTextBold}) => whiteTextBold && `
     color:${WHITE_COLOR};
-            font-weight:bold;
+    font-weight:bold;
+  `}
+
+  ${({pending}) => pending && `
+    color:${WHITE_COLOR};
+    background-color:${PENDING_RESERVATION_STATUS};
+  `}
+
+  ${({waitClient}) => waitClient && `
+    color:${WHITE_COLOR};
+    background-color:${WAIT_CLIENT_RESERVATION_STATUS};
+  `}
+
+  ${({active}) => active && `
+    color:${WHITE_COLOR};
+    background-color:${ACTIVE_RESERVATION_STATUS};
+  `}
+
+  ${({finished}) => finished && `
+    color:${WHITE_COLOR};
+    background-color:${FINISHED_RESERVATION_STATUS};
+  `}
+
+
+  ${({declined}) => declined && `
+    color:${WHITE_COLOR};
+    background-color:${DECLINED_RESERVATION_STATUS};
 
   `}
-  
+
 `;
 
 export const TextContainer = styled.div`

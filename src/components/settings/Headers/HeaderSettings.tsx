@@ -24,7 +24,7 @@ const HeaderSettings = ({history}: { history: History }) => {
             link: "/settings/email"
         }]
     return (
-        <HeaderWrapper settings>
+        <HeaderWrapper settings displayNone>
             <HeaderLinks>
                 {linkElements.map((item, index) => {
                     return <HeaderElementSettings to={item.link} key={index}  >

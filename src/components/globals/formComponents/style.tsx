@@ -2,20 +2,21 @@ import styled from 'styled-components'
 
 import {Button} from 'reactstrap';
 import {
-    BIG_FONT_SIZE,
-    BLUE_COLOR,
-    BORDER_INPUT,
-    BORDER_SWITCH,
-    COLOR_INPUT_BACKGROUND,
-    DARK_GREY_COLOR,
-    INPUT_PLACEHOLDER,
-    LIGHT_GRAY,
-    NORMAL_FONT_SIZE,
-    ORANGE_COLOR,
-    RED_COLOR,
-    TEXT_COLOR_INPUT,
-    VERY_DARK_GREY_COLOR,
-    WHITE_COLOR
+  BIG_FONT_SIZE,
+  BLUE_COLOR,
+  BORDER_INPUT,
+  BORDER_SWITCH,
+  COLOR_INPUT_BACKGROUND, DARK_GREY2_COLOR,
+  DARK_GREY_COLOR,
+  INPUT_PLACEHOLDER,
+  LIGHT_GRAY,
+  NORMAL_FONT_SIZE,
+  ORANGE_COLOR,
+  RED_COLOR,
+  SETTINGS_BACKGROUND_GREY,
+  TEXT_COLOR_INPUT,
+  VERY_DARK_GREY_COLOR,
+  WHITE_COLOR
 } from "../../../constants/styleConstants";
 
 export const SectionSettings = styled.div<any>`
@@ -101,6 +102,9 @@ export const FormWrapper = styled.form<any>`
   ${({customMaxWidth}) => customMaxWidth && `
         max-width:${customMaxWidth};
     `}
+  ${({customPadding}) => customPadding && `
+        padding:${customPadding};
+    `}
 `;
 
 export const FieldsWrapper = styled.div`
@@ -181,6 +185,12 @@ export const FieldWrapper = styled.div<any>`
     `}
   ${({noBorder}) => noBorder && `
        border-bottom:none;
+    `}}
+  ${({customPadding}) => customPadding && `
+      padding:${customPadding};
+    `}
+  ${({customMarginRight}) => customMarginRight && `
+      margin-right:${customMarginRight};
     `}
 `;
 
@@ -221,6 +231,11 @@ export const FieldText = styled.div<any>`
     flex-direction: column;
     align-items: flex-start;
   }
+
+  ${({column}) => column && `
+      flex-direction:column;
+      align-items:flex-start;
+    `}
 `
 
 export const FieldTextTitleSection = styled.div<any>`
@@ -275,6 +290,9 @@ export const FieldLabel = styled.span<any>`
      color:${DARK_GREY_COLOR};
      
   `}
+  ${({customPaddingRight})=>customPaddingRight && `
+    padding-right:${customPaddingRight}
+  `}
 
 `;
 
@@ -284,8 +302,18 @@ export const FieldError = styled.p<any>`
   color: red;
   font-weight: bold;
   align-self: flex-end;
+  display: flex;
   ${({alignLeft}) => alignLeft && `
         align-self:flex-start;
+    `}
+  ${({alignedLeft}) => alignedLeft && `
+        align-self:flex-start;
+        margin-right:auto;
+    `}
+  
+  ${({alignedCenter}) => alignedCenter && `
+        justify-content:center;
+        align-items:center;
     `}
 `;
 
@@ -506,7 +534,7 @@ export const StyledInput = styled(CustomStyledInput)`
   text-align: left;
   height: 44px;
   width: calc(60% - 46px);
-  border: 1px solid ${BORDER_INPUT};
+  border: 1px solid ${DARK_GREY2_COLOR};
   border-right: none;
   border-radius: 4px;
   border-top-right-radius: 0;
@@ -543,9 +571,17 @@ export const FieldLabelCheckbox = styled.p<any>`
 `;
 
 export const DatePickerWrapper = styled.div<any>`
-  width: 60%;
+  min-width: 135px;
+  max-width: 190px;
   height: fit-content;
-
+  border:1px solid ${DARK_GREY2_COLOR};
+  border-radius: 5px;
+  :focus {
+    border:1px solid transparent;
+  }
+  :hover{
+    border:1px solid ${BLUE_COLOR};
+  }
   ${({big}) => big && `
         width:100%;
     `}
@@ -559,16 +595,25 @@ export const DatePickerWrapper = styled.div<any>`
 
   .DateInput {
     width: 100% !important;
+    background-color: ${SETTINGS_BACKGROUND_GREY};
+    :focus {
+      border:1px solid transparent;
+    }
+    :hover{
+      border:1px solid ${BLUE_COLOR};
+    }
+
   }
 
   .DateInput_input {
-    color: ${VERY_DARK_GREY_COLOR} !important;
+    color: ${WHITE_COLOR} !important;
     font-size: 14px;
     line-height: 1.6;
     text-align: left;
     height: 44px;
     width: 100%;
-    border: 1px solid ${BORDER_INPUT};
+      //border: 1px solid ${BORDER_INPUT};
+     background-color: transparent;
     border-radius: 4px;
     padding: 15px;
     margin-left: auto;
@@ -581,6 +626,9 @@ export const DatePickerWrapper = styled.div<any>`
 
     :-ms-input-placeholder {
       color: ${BORDER_INPUT};
+    }
+    :focus {
+      border: 1px solid transparent;
     }
 
     transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);

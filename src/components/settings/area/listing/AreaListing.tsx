@@ -47,9 +47,9 @@ const AreaListing = () => {
     }
 
 
-    return  <PageWrapper noPadding centerPage>
+    return <PageWrapper noPadding centerPage>
         <HeaderAreas restaurant={restaurant} listAreas={listAreas}/>
-        { !loading ? <Table customWidth={"68%"}>
+        {!loading ? <Table customWidth={"68%"}>
             <TableHead>
                 <TableRow>
                     <TableColumn customWidth={"20%"}>
@@ -130,9 +130,9 @@ const AreaListing = () => {
                         </TableColumn>
 
                     </TableRow>)
-                })}
+                })}.
             </TableBody>
-        </Table>: <LoaderComponent/>}
+        </Table> : <LoaderComponent/>}
 
         <Popup
             show={editNamePreview}

@@ -1,6 +1,6 @@
 import React, {lazy, Suspense, useEffect} from "react";
 import {Route, Switch, withRouter} from 'react-router-dom'
-
+import "./style.css"
 import {History} from 'history'
 import Header from "../globals/header/Header";
 import {HomePageWrapper} from "./style";
@@ -11,6 +11,7 @@ import _ from "lodash";
 import CreateRestaurant from "../settings/restaurant/add/CreateRestaurant";
 
 const SettingsRouter = lazy(() => import("../settings/SettingsRouter"))
+const ReservationsRouter = lazy(() => import("../reservations/ReservationsRouter"))
 
 const HomeRouter = ({history}: { history: History }) => {
         const restaurantState = useSettingsState();
@@ -20,17 +21,20 @@ const HomeRouter = ({history}: { history: History }) => {
         const {loggedUser} = logInState;
 
         useEffect(() => {
-            if (!_.isEmpty(loggedUser) && loggedUser.UserId!="") {
+            if (!_.isEmpty(loggedUser) && loggedUser.UserId != "") {
                 checkIfManagerHasRestaurant({dispatch: restaurantDispatch, managerId: loggedUser.UserId})
             }
         }, [loggedUser])
 
+
         return (
             <Suspense fallback={<div/>}>
                 <HomePageWrapper>
+
                     <Header/>
                     {shouldCreateRestaurant ? <CreateRestaurant/> : <Switch>
                         <Route component={SettingsRouter} path={"/settings"}/>
+                        <Route component={ReservationsRouter} path={"/reservations"}/>
                     </Switch>}
 
                 </HomePageWrapper>

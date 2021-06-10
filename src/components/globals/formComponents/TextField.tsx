@@ -22,6 +22,7 @@ interface TextFieldProps extends FieldProps {
     customWidthInput?: string;
     noMarginTitle?: string;
     textArea?: boolean;
+    column?:boolean;
 }
 
 const TextField = ({
@@ -47,6 +48,7 @@ const TextField = ({
                        customWidthInput,
                        noMarginTitle,
                        textArea,
+                       column,
                        ...props
                    }:
                        TextFieldProps
@@ -60,7 +62,7 @@ const TextField = ({
             noBorder={noBorder}
             smallFields={smallFields}
         >
-            <FieldText>
+            <FieldText column={column}>
                 {!noDescription &&
                 <FieldTextTitleSection customPaddingRight={customPaddingRight ? customPaddingRight : "auto"}>
                     <FieldLabel
