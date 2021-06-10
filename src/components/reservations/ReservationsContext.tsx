@@ -13,6 +13,7 @@ import {
 
 type State = {
     loading: boolean,
+    loadingListReservation: boolean,
     error: any,
     listReservations: Reservation[];
     selectedReservation: Reservation;
@@ -50,6 +51,7 @@ const ReservationsDispatchContext = createContext<Dispatch | undefined>(undefine
 
 const initialState: State = {
     loading: false,
+    loadingListReservation:false,
     error: {},
     listReservations: [],
     optionsDate: [],
@@ -167,7 +169,7 @@ const reservationReducer = (state: State, action: Action) => {
         case GET_RESERVATIONS_LIST: {
             return {
                 ...state,
-                loading: true,
+                loadingListReservation: true,
                 error: "",
                 listReservations: []
             }
@@ -176,7 +178,7 @@ const reservationReducer = (state: State, action: Action) => {
             addToast(action.payload.error, {appearance: 'error'});
             return {
                 ...state,
-                loading: false,
+                loadingListReservation: false,
                 error: action.payload.error
             }
         }
@@ -184,7 +186,7 @@ const reservationReducer = (state: State, action: Action) => {
             addToast('Get reservations', {appearance: 'info'});
             return {
                 ...state,
-                loading: false,
+                loadingListReservation: false,
                 listReservations: action.payload
             }
         }

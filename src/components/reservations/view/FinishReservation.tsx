@@ -5,13 +5,13 @@ import {Button, Wrapper} from "../../globals/GlobalStyles";
 import MaterialIcon from "../../globals/MaterialIcons";
 import {ArrivedText} from "./style";
 
-type ArrivedReservationProps = {
+type FinishReservationProps = {
     initialValues: any;
     onSubmit: (values: any) => void;
     cancel: () => void;
 }
 
-export const ArrivedReservation = ({onSubmit, initialValues, cancel}: ArrivedReservationProps) => {
+export const FinishReservation = ({onSubmit, initialValues, cancel}: FinishReservationProps) => {
     return (<Formik
         initialValues={initialValues}
         enableReinitialize={true}
@@ -20,7 +20,7 @@ export const ArrivedReservation = ({onSubmit, initialValues, cancel}: ArrivedRes
             ({values, handleSubmit}) => {
                 return <FormWrapper
                     onSubmit={handleSubmit}>
-                    <ArrivedText>Mr/Ms {values.firstName} {values.lastName} arrived?</ArrivedText>
+                    <ArrivedText>Confirm finish reservation!</ArrivedText>
                     <Wrapper>
                         {cancel && <Button
                             onClick={() => {

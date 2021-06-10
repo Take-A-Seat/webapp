@@ -20,6 +20,8 @@ import ContextualMenu from "../../globals/dropdown/ContextualMenu";
 import Popup from "../../globals/popup/Popup";
 import {AcceptReservation} from "./AcceptReservation";
 import {DeclineReservation} from "./DeclineReservation";
+import {ArrivedReservation} from "./ArrivedReservation";
+import {FinishReservation} from "./FinishReservation";
 
 
 const ViewReservationsList = () => {
@@ -31,6 +33,7 @@ const ViewReservationsList = () => {
         listReservations,
         loading,
         error,
+        loadingListReservation,
         optionsDate,
         listAreasWithAvailableTables,
         selectedReservation
@@ -39,10 +42,11 @@ const ViewReservationsList = () => {
     const [selectedFilter, setFilter] = useState("All")
     let [acceptReservation, setAcceptReservationPopup] = useState(false)
     let [declinedReservation, setDeclinedReservationPopup] = useState(false)
+    let [arrivedReservation, setArrivedReservationPopup] = useState(false)
+    let [finishReservation, setFinishReservationPopup] = useState(false)
     let [selectedReservationId, setSelectedReservationId] = useState("")
 
     let history = useHistory();
-    console.log("listReservations", listReservations)
     useEffect(() => {
         if (selectedReservationId != "") {
             getReservationById({dispatch: dispatch, reservationId: selectedReservationId})
@@ -96,7 +100,11 @@ const ViewReservationsList = () => {
 
     let initialValuesArrived = {
         ...selectedReservation,
-        status: "Arrived"
+        status: "Active"
+    }
+    let initialValuesFinish = {
+        ...selectedReservation,
+        status: "Finished"
     }
 
     return (
@@ -104,7 +112,7 @@ const ViewReservationsList = () => {
             <HeaderReservations initialValues={initialValuesHeader} date={selectedDate} filter={selectedFilter}
                                 setFilter={(value) => setFilter(value)}
                                 setDate={(value) => setSelectedDate(value)}/>
-            {!loading ? <Table customWidth={"68%"}>
+            {!loadingListReservation ? <Table customWidth={"72%"}>
                 <TableHead>
                     <TableRow>
                         <TableColumn>
@@ -165,6 +173,7 @@ const ViewReservationsList = () => {
                             dropDownElements.push({
                                 text: "Arrived Client", icon: "deck", onClick: () => {
                                     setSelectedReservationId(reservation.id)
+                                    setArrivedReservationPopup(true);
                                 }
                             }, {
                                 text: "Decline Reservation", icon: "event_busy", onClick: () => {
@@ -177,6 +186,7 @@ const ViewReservationsList = () => {
                             dropDownElements.push({
                                 text: "Finish Reservation", icon: "check_circle_outline", onClick: () => {
                                     setSelectedReservationId(reservation.id)
+                                    setFinishReservationPopup(true)
                                 }
                             })
                         }
@@ -255,9 +265,10 @@ const ViewReservationsList = () => {
                                     filter: selectedFilter,
                                     restaurantId: values.restaurantId
                                 })
+                                setAcceptReservationPopup(false)
+
                             }
                         })
-                        setAcceptReservationPopup(false)
                     }} initialValues={initialValuesAccept}/>
             </Popup>
 
@@ -269,7 +280,7 @@ const ViewReservationsList = () => {
             >
                 <DeclineReservation
                     cancel={() => {
-                        setAcceptReservationPopup(false)
+                        setDeclinedReservationPopup(false)
                     }}
                     onSubmit={(values) => {
                         updateStatusReservation({
@@ -283,10 +294,66 @@ const ViewReservationsList = () => {
                                     filter: selectedFilter,
                                     restaurantId: values.restaurantId
                                 })
+                                setDeclinedReservationPopup(false)
                             }
                         })
-                        setDeclinedReservationPopup(false)
                     }} initialValues={initialValuesDeclined}/>
+            </Popup>
+
+            <Popup
+                show={arrivedReservation}
+                iconTitle={"home"}
+                popupDetails={{title: "Arrived Client"}}
+                onClose={() => setArrivedReservationPopup(false)}
+            >
+                <ArrivedReservation
+                    cancel={() => {
+                        setArrivedReservationPopup(false)
+                    }}
+                    onSubmit={(values) => {
+                        updateStatusReservation({
+                            dispatch: dispatch,
+                            reservationId: values.id,
+                            values: values,
+                            callBack: () => {
+                                getReservationsList({
+                                    dispatch: dispatch,
+                                    date: selectedDate,
+                                    filter: selectedFilter,
+                                    restaurantId: values.restaurantId
+                                })
+                                setArrivedReservationPopup(false)
+                            }
+                        })
+                    }} initialValues={initialValuesArrived}/>
+            </Popup>
+
+            <Popup
+                show={finishReservation}
+                iconTitle={"home"}
+                popupDetails={{title: "Finish Reservation"}}
+                onClose={() => setFinishReservationPopup(false)}
+            >
+                <FinishReservation
+                    cancel={() => {
+                        setFinishReservationPopup(false)
+                    }}
+                    onSubmit={(values) => {
+                        updateStatusReservation({
+                            dispatch: dispatch,
+                            reservationId: values.id,
+                            values: values,
+                            callBack: () => {
+                                getReservationsList({
+                                    dispatch: dispatch,
+                                    date: selectedDate,
+                                    filter: selectedFilter,
+                                    restaurantId: values.restaurantId
+                                })
+                                setFinishReservationPopup(false)
+                            }
+                        })
+                    }} initialValues={initialValuesFinish}/>
             </Popup>
         </PageWrapper>
     )
