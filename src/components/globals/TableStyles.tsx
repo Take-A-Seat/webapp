@@ -15,7 +15,7 @@ import {
 export const Table = styled.div<any>`
   width: 100%;
   height: fit-content;
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 800px) {
     width: 95%;
   }
   ${({horizontalScroll}) => horizontalScroll && `

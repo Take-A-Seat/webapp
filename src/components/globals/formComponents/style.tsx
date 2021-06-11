@@ -638,8 +638,9 @@ export const DatePickerWrapper = styled.div<any>`
   }
 
   .CalendarDay__selected, .CalendarDay__selected:active, .CalendarDay__selected:hover {
-    background: ${ORANGE_COLOR};
-    border: 1px double ${ORANGE_COLOR};
+    background: ${BLUE_COLOR};
+    border: 1px double ${SETTINGS_BACKGROUND_GREY};
+    font-weight: 600;
     color: #fff;
   }
 

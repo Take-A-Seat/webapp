@@ -44,6 +44,8 @@ export type Reservation = {
     tableId: string[],
     messageToClient: string,
     code: string,
+    products:any[],
+    totalToPay:number,
 }
 
 const ReservationsStateContext = createContext<State | undefined>(undefined)
@@ -70,7 +72,9 @@ const initialState: State = {
         persons: 0,
         phone: "",
         tableId: [],
-        restaurantId: ""
+        restaurantId: "",
+        totalToPay:0,
+        products:[]
     },
 
 }

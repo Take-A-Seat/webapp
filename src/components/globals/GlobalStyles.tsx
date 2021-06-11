@@ -1,15 +1,15 @@
 import styled from "styled-components"
 import {
-  BIG_FONT_SIZE,
-  BLUE_COLOR,
-  DARK_GREY2_COLOR,
-  DARK_GREY_COLOR, GREEN,
-  LIGHT_GRAY,
-  LIGHT_GRAYISH_BLUE_COLOR, LIGHT_GREY_COLOR,
-  NORMAL_FONT_SIZE,
-  ORANGE_COLOR, RED, RED_DELETE, SETTINGS_BACKGROUND_GREY, THRD_BUTTON,
-  VERY_DARK_GREY_COLOR,
-  WHITE_COLOR
+    BIG_FONT_SIZE,
+    BLUE_COLOR,
+    DARK_GREY2_COLOR,
+    DARK_GREY_COLOR, GREEN,
+    LIGHT_GRAY,
+    LIGHT_GRAYISH_BLUE_COLOR, LIGHT_GREY_COLOR,
+    NORMAL_FONT_SIZE,
+    ORANGE_COLOR, RED, RED_DELETE, SETTINGS_BACKGROUND_GREY, THRD_BUTTON,
+    VERY_DARK_GREY_COLOR,
+    WHITE_COLOR
 } from "../../constants/styleConstants";
 
 export const VerticalDelimitator = styled.div`
@@ -115,12 +115,22 @@ export const Button = styled.div<any>`
   padding: 12px 24px;
   border: 1px solid ${ORANGE_COLOR};
   cursor: pointer;
+  
+  
 
   & i {
     font-size: 18px;
     margin-right: 10px;
   }
 
+  ${({noMarginIcon}) => noMarginIcon && `
+     & i {
+    margin-right: 0;
+  }
+  `}
+
+ 
+  
   ${({previewButton}) => previewButton && `
      @media only screen and (max-width: 600px) {
     margin:auto;
@@ -138,12 +148,12 @@ export const Button = styled.div<any>`
     color:${SETTINGS_BACKGROUND_GREY};
     border:1px solid ${SETTINGS_BACKGROUND_GREY};
   `}
-  
+
   ${({deleteButton}) => deleteButton && `
     background:${RED_DELETE};
     font-size:16px;
   `}
-  
+
 
   ${({customMarginRight}) => customMarginRight && `
         margin-right:${customMarginRight};
@@ -151,7 +161,7 @@ export const Button = styled.div<any>`
   ${({customMarginBottom}) => customMarginBottom && `
         margin-bottom:${customMarginBottom};
     `}
-  
+
   ${({secondaryButton}) => secondaryButton && `
         color:${WHITE_COLOR};
         background-color:${THRD_BUTTON};
@@ -218,6 +228,14 @@ export const Button = styled.div<any>`
         margin-right:0px;
         }
     `}
+
+  ${({greenBorder}) => greenBorder && `
+     border:1px solid ${GREEN};
+  `}
+  ${({customPadding}) => customPadding && `
+     padding:${customPadding};
+  `}
+
 `;
 
 export const ActionButton = styled(Button)`

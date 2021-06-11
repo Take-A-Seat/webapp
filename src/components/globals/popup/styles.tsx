@@ -19,7 +19,7 @@ export const PopupWrapper = styled.div`
   z-index: 10000;
 `;
 
-export const PopupContentWrapper = styled.div`
+export const PopupContentWrapper = styled.div<any>`
   width: 40%;
   max-width: 500px;
 
@@ -30,6 +30,19 @@ export const PopupContentWrapper = styled.div`
   @media only screen and (max-width: 600px) {
     width: 100%;
   }
+  
+  ${({customMaxWidth}) => customMaxWidth && `
+  max-width:${customMaxWidth};`}
+  
+  ${({customWidth}) => customWidth && `
+  width:${customWidth};
+  
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+    max-width:95%;
+  }
+  `}
+  
 `;
 
 export const PopupHeaderWrapper = styled.div`
@@ -66,7 +79,7 @@ export const PopupName = styled.p<any>`
 `;
 
 export const PopupText = styled.p`
-    padding-top: 6px;
+  padding-top: 6px;
   padding-left: 3px;
 `
 

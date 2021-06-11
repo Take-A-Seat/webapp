@@ -39,7 +39,7 @@ export const DeletePopup = ({
                 <DeleteIconCircle> <MaterialIcon iconName={"delete"}/></DeleteIconCircle>
                 <TitleDelete>{title}</TitleDelete>
                 <DescriptionDelete>You'll permanently lose your:</DescriptionDelete>
-                <ContainerItems>
+                <ContainerItems center={whatDelete.length==1}>
                     {whatDelete.map((item) => {
                         return <ItemLose>-{item}</ItemLose>
                     })}</ContainerItems>

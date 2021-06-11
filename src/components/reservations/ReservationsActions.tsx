@@ -143,7 +143,43 @@ export const updateStatusReservation = ({
         return response.json()
     }).then(data => {
         dispatch({type: UPDATE_STATUS_RESERVATION_SUCCESS, payload: data})
-        if(callBack){
+        if (callBack) {
+            callBack()
+        }
+    }).catch(error => {
+        console.log("err", error)
+    })
+}
+
+
+export const UPDATE_PRODUCTS_RESERVATION = "update_products_reservation";
+export const UPDATE_PRODUCTS_RESERVATION_SUCCESS = "update_products_reservation_success";
+export const UPDATE_PRODUCTS_RESERVATION_FAIL = "update_products_reservation_fail";
+
+export const updateProductsReservation = ({
+                                              dispatch,
+                                              reservationId,
+                                              values,
+                                              callBack
+                                          }: { dispatch: Dispatch, reservationId: string, values: any, callBack: () => void }) => {
+    dispatch({
+        type: UPDATE_PRODUCTS_RESERVATION,
+        payload: []
+    });
+
+    authFetch(`/bookings/id/${reservationId}/products`, {
+        method: "PUT",
+        body: JSON.stringify(values)
+    }).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: UPDATE_PRODUCTS_RESERVATION_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        dispatch({type: UPDATE_PRODUCTS_RESERVATION_SUCCESS, payload: data})
+        if (callBack) {
             callBack()
         }
     }).catch(error => {

@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {useHistory, withRouter} from "react-router-dom";
 import {useReservationsDispatch, useReservationsState} from "../ReservationsContext";
-import {useSettingsState} from "../../settings/SettingsContext";
+import {useSettingsDispatch, useSettingsState} from "../../settings/SettingsContext";
 import {
     getAvailableTables,
     getOptionDateTimeByDate,
     getReservationById,
     getReservationsList,
+    updateProductsReservation,
     updateStatusReservation
 } from "../ReservationsActions";
 import moment from "moment";
@@ -22,13 +23,13 @@ import {AcceptReservation} from "./AcceptReservation";
 import {DeclineReservation} from "./DeclineReservation";
 import {ArrivedReservation} from "./ArrivedReservation";
 import {FinishReservation} from "./FinishReservation";
-
+import ManageReservation from "./ManageReservation";
+import {getMenuByRestaurantId} from "../../settings/SettingsActions";
+import "./style.css"
 
 const ViewReservationsList = () => {
     const dispatch = useReservationsDispatch();
     const reservationState = useReservationsState();
-    const settingsState = useSettingsState();
-    const {restaurant} = settingsState;
     const {
         listReservations,
         loading,
@@ -44,15 +45,21 @@ const ViewReservationsList = () => {
     let [declinedReservation, setDeclinedReservationPopup] = useState(false)
     let [arrivedReservation, setArrivedReservationPopup] = useState(false)
     let [finishReservation, setFinishReservationPopup] = useState(false)
-    let [selectedReservationId, setSelectedReservationId] = useState("")
+    let [manageReservation, setManageReservationPopup] = useState(false)
+    let [selectedReservationId, setSelectedReservationId] = useState("");
+    const settingsDispatch = useSettingsDispatch();
+    const {menu, restaurant} = useSettingsState();
+
+    console.log("menu", menu)
 
     let history = useHistory();
     useEffect(() => {
         if (selectedReservationId != "") {
             getReservationById({dispatch: dispatch, reservationId: selectedReservationId})
-
         }
+
     }, [selectedReservationId])
+
     useEffect(() => {
         if (selectedReservation.id != undefined) {
             getAvailableTables({
@@ -80,7 +87,16 @@ const ViewReservationsList = () => {
         if (restaurant.id != undefined) {
             getOptionDateTimeByDate({dispatch: dispatch, date: selectedDate, reservationId: restaurant.id})
         }
+
+
     }, [selectedDate, restaurant])
+
+    useEffect(() => {
+        if (restaurant.id != undefined && menu) {
+            getMenuByRestaurantId({dispatch: settingsDispatch, restaurantId: restaurant.id})
+
+        }
+    }, [restaurant])
 
     let initialValuesHeader = {
         date: selectedDate,
@@ -141,6 +157,12 @@ const ViewReservationsList = () => {
 
                         <TableColumn>
                             <TableText thead>
+                                Total to pay
+                            </TableText>
+                        </TableColumn>
+
+                        <TableColumn>
+                            <TableText thead>
                                 Status
                             </TableText>
                         </TableColumn>
@@ -151,11 +173,7 @@ const ViewReservationsList = () => {
                 <TableBody noBackground>
                     {listReservations && !_.isEmpty(listReservations) && listReservations.map((reservation, index) => {
                         const lastElementId = `reservationListing-elem:${reservation.id}`;
-                        const dropDownElements: DropdownElement[] = [{
-                            text: "Edit Reservation", icon: "edit", onClick: () => {
-                                setSelectedReservationId(reservation.id)
-                            }
-                        }]
+                        const dropDownElements: DropdownElement[] = []
                         if (reservation.status == "Pending") {
                             dropDownElements.push({
                                 text: "Accept Reservation", icon: "person_add_alt", onClick: () => {
@@ -183,6 +201,13 @@ const ViewReservationsList = () => {
                             })
                         }
                         if (reservation.status == "Active") {
+                            dropDownElements.push({
+                                text: "Manage Reservation", icon: "edit", onClick: () => {
+                                    setSelectedReservationId(reservation.id)
+                                    setManageReservationPopup(true)
+                                }
+                            })
+
                             dropDownElements.push({
                                 text: "Finish Reservation", icon: "check_circle_outline", onClick: () => {
                                     setSelectedReservationId(reservation.id)
@@ -215,6 +240,12 @@ const ViewReservationsList = () => {
                             <TableColumn>
                                 <TableText thead>
                                     {reservation.phone}
+                                </TableText>
+                            </TableColumn>
+
+                            <TableColumn>
+                                <TableText thead>
+                                    {reservation.totalToPay}$
                                 </TableText>
                             </TableColumn>
 
@@ -354,6 +385,42 @@ const ViewReservationsList = () => {
                             }
                         })
                     }} initialValues={initialValuesFinish}/>
+            </Popup>
+
+            <Popup
+                show={manageReservation}
+                iconTitle={"home"}
+                customMaxWidth={"80%"}
+                customWidth={"80%"}
+                popupDetails={{title: `Manage Reservation - Client ${selectedReservation.firstName} ${selectedReservation.lastName}`}}
+                onClose={() => setManageReservationPopup(false)}
+            >
+                <ManageReservation
+                    cancel={() => {
+                        setManageReservationPopup(false)
+                    }}
+                    onSubmit={(values) => {
+                        console.log(values)
+                        updateProductsReservation({
+                            dispatch: dispatch, reservationId: values.id, values, callBack: () => {
+                                setManageReservationPopup(false);
+                                getReservationById({dispatch: dispatch, reservationId: values.id})
+                                getReservationsList({
+                                    dispatch: dispatch,
+                                    date: selectedDate,
+                                    filter: selectedFilter,
+                                    restaurantId: values.restaurantId
+                                })
+                            }
+                        })
+                        // updateStatusReservation({
+                        //     dispatch: dispatch,
+                        //     reservationId: values.id,
+                        //     values: values,
+                        //         setFinishReservationPopup(false)
+                        //     }
+                        // })
+                    }} initialValues={initialValuesFinish} menu={menu}/>
             </Popup>
         </PageWrapper>
     )

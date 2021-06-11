@@ -78,13 +78,18 @@ export const ItemLose = styled.span`
   font-size: 16px;
   margin-top: 10px;
 `
-export const ContainerItems = styled.div`
+export const ContainerItems = styled.div<any>`
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin: auto;
   padding-left: 43%;
+${({center})=>center && `
+padding-left:0;
+align-items:center;
+margin:0;
+`}
 `
 
 export const ContainerButtons = styled.div`

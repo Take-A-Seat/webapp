@@ -12,13 +12,15 @@ interface PopupProps extends ReactChildrenType {
     onClose?: () => void;
     withoutCloseIcon?: boolean;
     iconTitle?: string;
+    customMaxWidth?:string;
+    customWidth?:string;
 }
 
-const Popup = ({show, popupDetails, onClose, withoutCloseIcon, children, iconTitle}: PopupProps) => {
+const Popup = ({show, popupDetails, onClose, withoutCloseIcon, children, iconTitle,customMaxWidth,customWidth}: PopupProps) => {
     if (show) {
         return (
             <PopupWrapper>
-                <PopupContentWrapper>
+                <PopupContentWrapper customMaxWidth={customMaxWidth} customWidth={customWidth}>
                     <PopupHeaderWrapper>
                         {popupDetails &&<PopupName>
                             {iconTitle && <MaterialIcon iconName={iconTitle}/>}
