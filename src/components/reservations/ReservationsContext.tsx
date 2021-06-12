@@ -3,13 +3,28 @@ import {Action, Dispatch, ReactChildrenType} from "../../constants/globalTypes";
 
 import {useToasts} from "react-toast-notifications";
 import {
-    GET_AVAILABLE_TABLES, GET_AVAILABLE_TABLES_FAIL, GET_AVAILABLE_TABLES_SUCCESS,
-    GET_OPTIONS_DATETIME, GET_OPTIONS_DATETIME_FAIL, GET_OPTIONS_DATETIME_SUCCESS,
-    GET_RESERVATION_BY_ID, GET_RESERVATION_BY_ID_FAIL, GET_RESERVATION_BY_ID_SUCCESS,
+    GET_AVAILABLE_TABLES,
+    GET_AVAILABLE_TABLES_FAIL,
+    GET_AVAILABLE_TABLES_SUCCESS,
+    GET_OPTIONS_DATETIME,
+    GET_OPTIONS_DATETIME_FAIL,
+    GET_OPTIONS_DATETIME_SUCCESS,
+    GET_RESERVATION_BY_ID,
+    GET_RESERVATION_BY_ID_FAIL,
+    GET_RESERVATION_BY_ID_SUCCESS,
     GET_RESERVATIONS_LIST,
     GET_RESERVATIONS_LIST_FAIL,
-    GET_RESERVATIONS_LIST_SUCCESS, UPDATE_STATUS_RESERVATION, UPDATE_STATUS_RESERVATION_SUCCESS
+    GET_RESERVATIONS_LIST_SUCCESS,
+    getAvailableTables,
+    getReservationById,
+    getReservationsList,
+    SET_SELECTED_DAY,
+    SET_SELECTED_FILTER,
+    UPDATE_STATUS_RESERVATION,
+    UPDATE_STATUS_RESERVATION_SUCCESS
 } from "./ReservationsActions";
+import moment from "moment";
+import {API_WS_BOOKING} from "../../constants/globalConstants";
 
 type State = {
     loading: boolean,
@@ -19,6 +34,10 @@ type State = {
     selectedReservation: Reservation;
     optionsDate: { timeString: string, dateTime: string }[];
     listAreasWithAvailableTables: AreaWithTables[];
+    selectedDate: any;
+    selectedFilter: string,
+    recreateConnection: boolean,
+
 }
 
 export type AreaWithTables = {
@@ -44,17 +63,21 @@ export type Reservation = {
     tableId: string[],
     messageToClient: string,
     code: string,
-    products:any[],
-    totalToPay:number,
+    products: any[],
+    totalToPay: number,
 }
 
 const ReservationsStateContext = createContext<State | undefined>(undefined)
 const ReservationsDispatchContext = createContext<Dispatch | undefined>(undefined)
 
+
 const initialState: State = {
+    recreateConnection: true,
     loading: false,
-    loadingListReservation:false,
+    loadingListReservation: false,
     error: {},
+    selectedDate: moment().utc().format("YYYY-MM-DD"),
+    selectedFilter: "All",
     listReservations: [],
     optionsDate: [],
     listAreasWithAvailableTables: [],
@@ -73,39 +96,139 @@ const initialState: State = {
         phone: "",
         tableId: [],
         restaurantId: "",
-        totalToPay:0,
-        products:[]
+        totalToPay: 0,
+        products: []
     },
-
 }
+
+
+export const RECREATE_CONNECTION = "recreate_connection";
+export const SUCCESS_RECREATE_CONNECTION = "success_recreate";
+
+export function setupWebSocket(restaurantId: string, dispatch: Dispatch) {
+    let socket = new WebSocket(`${API_WS_BOOKING}/${restaurantId}`, ["Upgrade"]);
+    socket.onopen = () => {
+        dispatch({type: SUCCESS_RECREATE_CONNECTION, payload: {}})
+        console.log("Successfully Connected");
+    };
+
+    socket.onclose = (event: any) => {
+        console.log("Socket Closed Connection: ", event);
+        socket.send("Client Closed!")
+        dispatch({type: RECREATE_CONNECTION, payload: {}})
+    };
+
+    socket.onerror = (error: any) => {
+        console.log("Socket Error: ", error);
+    };
+
+    socket.onmessage = (e: { data: string; }) => {
+        // console.log("on mess",restaurant.id, selectedDate, selectedFilter)
+
+        let json = JSON.parse(e.data)
+        console.log(json)
+        switch (json.type) {
+            case GET_RESERVATIONS_LIST: {
+                // console.log("in case",restaurant.id, selectedDate, selectedFilter)
+                dispatch({type: UPDATE_LIST_RESERVATION, payload: {dispatch: dispatch, restaurantId: json.id}})
+                break;
+            }
+            case GET_AVAILABLE_TABLES: {
+                dispatch({type: UPDATE_AVAILABLE_TABLES, payload: {dispatch: dispatch}});
+                break;
+            }
+            case UPDATE_BOOKING: {
+                dispatch({type: UPDATE_BOOKING, payload: {dispatch: dispatch, id: json.id}})
+            }
+        }
+    }
+}
+
+export const UPDATE_BOOKING = "update_booking";
+export const UPDATE_LIST_RESERVATION = "update_list_reservation"
+export const UPDATE_AVAILABLE_TABLES = "update_available_tables";
+
 
 const reservationReducer = (state: State, action: Action) => {
     const {addToast} = useToasts();
 
     switch (action.type) {
-        case UPDATE_STATUS_RESERVATION:{
+        case UPDATE_BOOKING: {
+            getReservationById({dispatch: action.payload.dispatch, reservationId: action.payload.id})
+            return {
+                ...state,
+            }
+        }
+        case SUCCESS_RECREATE_CONNECTION: {
+            return {
+                ...state,
+                recreateConnection: false,
+            }
+        }
+        case RECREATE_CONNECTION: {
+            return {
+                ...state,
+                recreateConnection: true,
+            }
+        }
+        case UPDATE_AVAILABLE_TABLES: {
+            getAvailableTables({
+                dispatch: action.payload.dispatch,
+                restaurantId: state.selectedReservation.restaurantId,
+                endDate: state.selectedReservation.endReservationDate,
+                startDate: state.selectedReservation.startReservationDate
+            })
+            return {
+                ...state,
+            }
+        }
+        case UPDATE_LIST_RESERVATION: {
+            getReservationsList({
+                dispatch: action.payload.dispatch,
+                restaurantId: action.payload.restaurantId,
+                date: state.selectedDate,
+                filter: state.selectedFilter
+            })
+
+            return {
+                ...state,
+            }
+        }
+        case SET_SELECTED_FILTER: {
+            return {
+                ...state,
+                selectedFilter: action.payload
+            }
+        }
+        case SET_SELECTED_DAY: {
+            return {
+                ...state,
+                selectedDate: action.payload
+            }
+        }
+        case UPDATE_STATUS_RESERVATION: {
             return {
                 ...state,
                 loading: true,
                 error: ""
             }
         }
-        case UPDATE_STATUS_RESERVATION_SUCCESS:{
+        case UPDATE_STATUS_RESERVATION_SUCCESS: {
             return {
                 ...state,
                 loading: false,
 
             }
         }
-        case GET_AVAILABLE_TABLES:{
+        case GET_AVAILABLE_TABLES: {
             return {
                 ...state,
                 loading: true,
-                listAreasWithAvailableTables:[],
+                listAreasWithAvailableTables: [],
                 error: ""
             }
         }
-        case GET_AVAILABLE_TABLES_SUCCESS:{
+        case GET_AVAILABLE_TABLES_SUCCESS: {
             return {
                 ...state,
                 loading: false,
@@ -113,7 +236,7 @@ const reservationReducer = (state: State, action: Action) => {
                 error: ""
             }
         }
-        case GET_AVAILABLE_TABLES_FAIL:{
+        case GET_AVAILABLE_TABLES_FAIL: {
             return {
                 ...state,
                 error: action.payload.error,
@@ -121,15 +244,15 @@ const reservationReducer = (state: State, action: Action) => {
                 loading: false
             }
         }
-        case GET_OPTIONS_DATETIME:{
+        case GET_OPTIONS_DATETIME: {
             return {
                 ...state,
                 error: "",
                 loading: true,
-                optionsDate:[],
+                optionsDate: [],
             }
         }
-        case GET_OPTIONS_DATETIME_SUCCESS:{
+        case GET_OPTIONS_DATETIME_SUCCESS: {
             return {
                 ...state,
                 error: "",
@@ -137,7 +260,7 @@ const reservationReducer = (state: State, action: Action) => {
                 optionsDate: action.payload
             }
         }
-        case GET_OPTIONS_DATETIME_FAIL:{
+        case GET_OPTIONS_DATETIME_FAIL: {
             addToast(action.payload.error, {appearance: 'error'});
             return {
                 ...state,
@@ -146,28 +269,28 @@ const reservationReducer = (state: State, action: Action) => {
                 optionsDate: []
             }
         }
-        case GET_RESERVATION_BY_ID:{
+        case GET_RESERVATION_BY_ID: {
             return {
                 ...state,
                 error: "",
-                selectedReservation:{},
-                loading:true,
+                selectedReservation: {},
+                loading: true,
             }
         }
-        case GET_RESERVATION_BY_ID_SUCCESS:{
+        case GET_RESERVATION_BY_ID_SUCCESS: {
             return {
                 ...state,
                 error: "",
                 selectedReservation: action.payload,
-                loading:false
+                loading: false
             }
         }
-        case GET_RESERVATION_BY_ID_FAIL:{
+        case GET_RESERVATION_BY_ID_FAIL: {
             addToast(action.payload.error, {appearance: 'error'});
-            return{
+            return {
                 ...state,
                 error: action.payload.error,
-                loading:false
+                loading: false
             }
         }
         case GET_RESERVATIONS_LIST: {

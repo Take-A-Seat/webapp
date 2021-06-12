@@ -88,6 +88,16 @@ export const getOptionDateTimeByDate = ({
     })
 }
 
+export const SET_SELECTED_DAY = "set_selected_day";
+export const setSelectedDay = ({value, dispatch}: { value: any, dispatch: Dispatch }) => {
+    dispatch({type: SET_SELECTED_DAY, payload: value})
+}
+
+export const SET_SELECTED_FILTER = "set_selected_filter";
+export const setSelectedFilter = ({value, dispatch}: { value: any, dispatch: Dispatch }) => {
+    dispatch({type: SET_SELECTED_FILTER, payload: value})
+}
+
 
 export const GET_AVAILABLE_TABLES = "get_available_tables";
 export const GET_AVAILABLE_TABLES_SUCCESS = "get_available_tables_success";

@@ -56,6 +56,7 @@ type State = {
     fetchListTypes: TypeRestaurant[],
     shouldCreateRestaurant: boolean,
     mark: any,
+    recreateConnection: boolean,
 }
 
 export type SpecificRestaurant = { id: string, restaurantId: string, specificRestaurantId: string }
@@ -77,13 +78,40 @@ const initialState: State = {
     fetchListSpecifics: [],
     fetchListTypes: [],
     shouldCreateRestaurant: false,
-    mark: {}
+    mark: {},
+    recreateConnection: true,
 }
+
+
+// export const myInstance = (function () {
+//     var socket: any;
+//     var restId:any;
+//     return {
+//         getInstance: function (restaurantId: string) {
+//             if (socket == null && restaurantId!=undefined && restId!=restaurantId ) {
+//                 restId=restaurantId;
+//                 socket = new WebSocket(`${API_WS_BOOKING}/${restaurantId}`, ["Upgrade"]);
+//                 socket.constructor = null;
+//             }
+//             return socket;
+//         },
+//
+//         recreateConnection : function (restaurantId: string) {
+//             if (restaurantId!=undefined) {
+//                 socket = new WebSocket(`${API_WS_BOOKING}/${restaurantId}`, ["Upgrade"]);
+//                 socket.constructor = null;
+//             }
+//             return socket;
+//         }
+//     };
+// })();
 
 const restaurantReducer = (state: State, action: Action) => {
     const {addToast} = useToasts();
 
+
     switch (action.type) {
+
         case GET_ALL_TYPES_BY_RESTAURANT_ID_FAIL: {
             addToast(action.payload.error, {appearance: 'error'});
             return {
@@ -398,6 +426,7 @@ const restaurantReducer = (state: State, action: Action) => {
 
 const SettingsProvider = ({children}: ReactChildrenType) => {
     const [state, dispatch] = useReducer(restaurantReducer, initialState)
+
     return (
         <SettingsStateContext.Provider value={state}>
             <SettingsDispatchContext.Provider value={dispatch}>

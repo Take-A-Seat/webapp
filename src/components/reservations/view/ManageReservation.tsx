@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {MenuFieldsValues} from "../../settings/menu/form/MenuForm";
 import {
     ContainerListProducts,
@@ -20,6 +20,7 @@ import {Button, Wrapper} from "../../globals/GlobalStyles";
 import {ColumnContainer} from "../../globals/formComponents/style";
 import {ProductFormValuesTypes} from "../../settings/menu/form/ProductsFieldArray";
 import {DeletePopup} from "../../globals/deletePopup/DeletePopUp";
+import {setupWebSocket, useReservationsDispatch} from "../ReservationsContext";
 
 type ManageReservationProps = {
     cancel: () => void;
@@ -33,6 +34,7 @@ const ManageReservation = ({cancel, onSubmit, initialValues, menu}: ManageReserv
     const [, updateState] = useState({});
     const forceUpdate = useCallback(() => updateState({}), []);
     const [showPopupDelete, setShowPopup] = useState({show: false, index: -1, name: ""});
+
 
     function addProduct(product: ProductFormValuesTypes) {
         if (initialValues.products == undefined) {

@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from "react";
 import {useHistory, withRouter} from "react-router-dom";
-import {useReservationsDispatch, useReservationsState} from "../ReservationsContext";
+import {setupWebSocket, useReservationsDispatch, useReservationsState} from "../ReservationsContext";
 import {useSettingsDispatch, useSettingsState} from "../../settings/SettingsContext";
 import {
     getAvailableTables,
     getOptionDateTimeByDate,
     getReservationById,
     getReservationsList,
+    setSelectedDay,
+    setSelectedFilter,
     updateProductsReservation,
     updateStatusReservation
 } from "../ReservationsActions";
-import moment from "moment";
 import HeaderReservations from "../../settings/Headers/HeaderReservations";
 import {PageWrapper} from "../../globals/GlobalStyles";
 import {LoaderComponent} from "../../globals/Loading/Loader";
@@ -37,10 +38,11 @@ const ViewReservationsList = () => {
         loadingListReservation,
         optionsDate,
         listAreasWithAvailableTables,
-        selectedReservation
+        selectedReservation,
+        selectedDate,
+        selectedFilter,
+        recreateConnection
     } = reservationState;
-    const [selectedDate, setSelectedDate] = useState(moment().format("YYYY-MM-DD"))
-    const [selectedFilter, setFilter] = useState("All")
     let [acceptReservation, setAcceptReservationPopup] = useState(false)
     let [declinedReservation, setDeclinedReservationPopup] = useState(false)
     let [arrivedReservation, setArrivedReservationPopup] = useState(false)
@@ -50,7 +52,20 @@ const ViewReservationsList = () => {
     const settingsDispatch = useSettingsDispatch();
     const {menu, restaurant} = useSettingsState();
 
-    console.log("menu", menu)
+    useEffect(() => {
+        if (restaurant.id != undefined && recreateConnection) {
+            setupWebSocket(restaurant.id, dispatch)
+        }
+        return () => console.log('unmounting...');
+    }, [restaurant, recreateConnection])
+
+    useEffect(() => {
+        if (selectedReservation.id != "" && recreateConnection) {
+            setupWebSocket(selectedReservation.id, dispatch)
+        }
+        return () => console.log('unmounting manageReservation...');
+    }, [selectedReservation, recreateConnection])
+
 
     let history = useHistory();
     useEffect(() => {
@@ -94,7 +109,6 @@ const ViewReservationsList = () => {
     useEffect(() => {
         if (restaurant.id != undefined && menu) {
             getMenuByRestaurantId({dispatch: settingsDispatch, restaurantId: restaurant.id})
-
         }
     }, [restaurant])
 
@@ -126,8 +140,8 @@ const ViewReservationsList = () => {
     return (
         <PageWrapper noPadding centerPage>
             <HeaderReservations initialValues={initialValuesHeader} date={selectedDate} filter={selectedFilter}
-                                setFilter={(value) => setFilter(value)}
-                                setDate={(value) => setSelectedDate(value)}/>
+                                setFilter={(value) => setSelectedFilter(value)}
+                                setDate={(value) => setSelectedDay({dispatch: dispatch, value: value})}/>
             {!loadingListReservation ? <Table customWidth={"72%"}>
                 <TableHead>
                     <TableRow>
@@ -290,12 +304,12 @@ const ViewReservationsList = () => {
                             reservationId: values.id,
                             values: values,
                             callBack: () => {
-                                getReservationsList({
-                                    dispatch: dispatch,
-                                    date: selectedDate,
-                                    filter: selectedFilter,
-                                    restaurantId: values.restaurantId
-                                })
+                                // getReservationsList({
+                                //     dispatch: dispatch,
+                                //     date: selectedDate,
+                                //     filter: selectedFilter,
+                                //     restaurantId: values.restaurantId
+                                // })
                                 setAcceptReservationPopup(false)
 
                             }
@@ -319,12 +333,12 @@ const ViewReservationsList = () => {
                             reservationId: values.id,
                             values: values,
                             callBack: () => {
-                                getReservationsList({
-                                    dispatch: dispatch,
-                                    date: selectedDate,
-                                    filter: selectedFilter,
-                                    restaurantId: values.restaurantId
-                                })
+                                // getReservationsList({
+                                //     dispatch: dispatch,
+                                //     date: selectedDate,
+                                //     filter: selectedFilter,
+                                //     restaurantId: values.restaurantId
+                                // })
                                 setDeclinedReservationPopup(false)
                             }
                         })
@@ -347,12 +361,12 @@ const ViewReservationsList = () => {
                             reservationId: values.id,
                             values: values,
                             callBack: () => {
-                                getReservationsList({
-                                    dispatch: dispatch,
-                                    date: selectedDate,
-                                    filter: selectedFilter,
-                                    restaurantId: values.restaurantId
-                                })
+                                // getReservationsList({
+                                //     dispatch: dispatch,
+                                //     date: selectedDate,
+                                //     filter: selectedFilter,
+                                //     restaurantId: values.restaurantId
+                                // })
                                 setArrivedReservationPopup(false)
                             }
                         })
@@ -375,12 +389,12 @@ const ViewReservationsList = () => {
                             reservationId: values.id,
                             values: values,
                             callBack: () => {
-                                getReservationsList({
-                                    dispatch: dispatch,
-                                    date: selectedDate,
-                                    filter: selectedFilter,
-                                    restaurantId: values.restaurantId
-                                })
+                                // getReservationsList({
+                                //     dispatch: dispatch,
+                                //     date: selectedDate,
+                                //     filter: selectedFilter,
+                                //     restaurantId: values.restaurantId
+                                // })
                                 setFinishReservationPopup(false)
                             }
                         })
@@ -405,21 +419,8 @@ const ViewReservationsList = () => {
                             dispatch: dispatch, reservationId: values.id, values, callBack: () => {
                                 setManageReservationPopup(false);
                                 getReservationById({dispatch: dispatch, reservationId: values.id})
-                                getReservationsList({
-                                    dispatch: dispatch,
-                                    date: selectedDate,
-                                    filter: selectedFilter,
-                                    restaurantId: values.restaurantId
-                                })
                             }
                         })
-                        // updateStatusReservation({
-                        //     dispatch: dispatch,
-                        //     reservationId: values.id,
-                        //     values: values,
-                        //         setFinishReservationPopup(false)
-                        //     }
-                        // })
                     }} initialValues={initialValuesFinish} menu={menu}/>
             </Popup>
         </PageWrapper>
