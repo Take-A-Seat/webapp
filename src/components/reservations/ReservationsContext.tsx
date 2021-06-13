@@ -101,20 +101,22 @@ const initialState: State = {
     },
 }
 
+const autoReconnectDelay = 5000
 
 export const RECREATE_CONNECTION = "recreate_connection";
 export const SUCCESS_RECREATE_CONNECTION = "success_recreate";
 
-export function setupWebSocket(restaurantId: string, dispatch: Dispatch) {
+export const setupWebSocket=(restaurantId: string, dispatch: Dispatch)=> {
     let socket = new WebSocket(`${API_WS_BOOKING}/${restaurantId}`, ["Upgrade"]);
     socket.onopen = () => {
         dispatch({type: SUCCESS_RECREATE_CONNECTION, payload: {}})
         console.log("Successfully Connected");
     };
 
+
     socket.onclose = (event: any) => {
         console.log("Socket Closed Connection: ", event);
-        socket.send("Client Closed!")
+        socket.close();
         dispatch({type: RECREATE_CONNECTION, payload: {}})
     };
 
@@ -123,13 +125,10 @@ export function setupWebSocket(restaurantId: string, dispatch: Dispatch) {
     };
 
     socket.onmessage = (e: { data: string; }) => {
-        // console.log("on mess",restaurant.id, selectedDate, selectedFilter)
-
         let json = JSON.parse(e.data)
         console.log(json)
         switch (json.type) {
             case GET_RESERVATIONS_LIST: {
-                // console.log("in case",restaurant.id, selectedDate, selectedFilter)
                 dispatch({type: UPDATE_LIST_RESERVATION, payload: {dispatch: dispatch, restaurantId: json.id}})
                 break;
             }
@@ -142,6 +141,8 @@ export function setupWebSocket(restaurantId: string, dispatch: Dispatch) {
             }
         }
     }
+
+    return socket;
 }
 
 export const UPDATE_BOOKING = "update_booking";

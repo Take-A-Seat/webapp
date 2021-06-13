@@ -53,18 +53,38 @@ const ViewReservationsList = () => {
     const {menu, restaurant} = useSettingsState();
 
     useEffect(() => {
-        if (restaurant.id != undefined && recreateConnection) {
-            setupWebSocket(restaurant.id, dispatch)
-        }
-        return () => console.log('unmounting...');
-    }, [restaurant, recreateConnection])
+            let wsRestaurant: WebSocket | undefined;
+            let wsReservation: WebSocket | undefined;
+            if (restaurant.id != undefined && recreateConnection) {
+                wsRestaurant = setupWebSocket(restaurant.id, dispatch)
+            }
+            if (selectedReservation.id != "" && recreateConnection) {
+                wsReservation = setupWebSocket(selectedReservation.id, dispatch)
+            }
+            return () => {
+                setTimeout(() => {
+                    if (wsRestaurant) {
+                        wsRestaurant.close();
+                    }
+                }, 10000)
+                setTimeout(() => {
+                    if (wsReservation) {
+                        wsReservation.close();
+                    }
+                }, 10000)
+                console.log('unmounting...')
 
-    useEffect(() => {
-        if (selectedReservation.id != "" && recreateConnection) {
-            setupWebSocket(selectedReservation.id, dispatch)
-        }
-        return () => console.log('unmounting manageReservation...');
-    }, [selectedReservation, recreateConnection])
+            }
+
+
+
+        }, [restaurant, recreateConnection]
+    )
+
+// useEffect(() => {
+
+//     return () => console.log('unmounting manageReservation...');
+// }, [selectedReservation, recreateConnection])
 
 
     let history = useHistory();

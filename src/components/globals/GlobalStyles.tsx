@@ -1,15 +1,20 @@
 import styled from "styled-components"
 import {
-    BIG_FONT_SIZE,
-    BLUE_COLOR,
-    DARK_GREY2_COLOR,
-    DARK_GREY_COLOR, GREEN,
-    LIGHT_GRAY,
-    LIGHT_GRAYISH_BLUE_COLOR, LIGHT_GREY_COLOR,
-    NORMAL_FONT_SIZE,
-    ORANGE_COLOR, RED, RED_DELETE, SETTINGS_BACKGROUND_GREY, THRD_BUTTON,
-    VERY_DARK_GREY_COLOR,
-    WHITE_COLOR
+  BIG_FONT_SIZE,
+  BLUE_COLOR,
+  DARK_GREY2_COLOR,
+  DARK_GREY_COLOR,
+  GREEN,
+  LIGHT_GRAY,
+  LIGHT_GRAYISH_BLUE_COLOR,
+  NORMAL_FONT_SIZE,
+  ORANGE_COLOR,
+  RED,
+  RED_DELETE,
+  SETTINGS_BACKGROUND_GREY,
+  THRD_BUTTON,
+  VERY_DARK_GREY_COLOR,
+  WHITE_COLOR
 } from "../../constants/styleConstants";
 
 export const VerticalDelimitator = styled.div`
@@ -99,6 +104,15 @@ export const Wrapper = styled.div<any>`
   ${({wrap}) => wrap && `
   flex-wrap: wrap;
     `}
+  ${({reverseColumn}) => reverseColumn && `
+  @media only screen and (max-width: 1050px) {
+        flex-direction: column-reverse;
+  }
+  
+   @media only screen and (max-width: 600px) {
+        flex-direction: row;
+  }
+  `}
 `;
 
 export const Button = styled.div<any>`
@@ -115,8 +129,7 @@ export const Button = styled.div<any>`
   padding: 12px 24px;
   border: 1px solid ${ORANGE_COLOR};
   cursor: pointer;
-  
-  
+
 
   & i {
     font-size: 18px;
@@ -129,8 +142,7 @@ export const Button = styled.div<any>`
   }
   `}
 
- 
-  
+
   ${({previewButton}) => previewButton && `
      @media only screen and (max-width: 600px) {
     margin:auto;

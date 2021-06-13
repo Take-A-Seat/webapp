@@ -56,7 +56,7 @@ export const AcceptReservation = ({onSubmit, initialValues, listAvailableTables,
                     <Field name={"messageToClient"} column={true} textArea={true} customMaxWidth={"100%"}
                            customWidthInput={"100%"} alignRight
                            customHeight={"100px"} component={TextField} labelText={"Message"}/>
-                    <Wrapper>
+                    <Wrapper wrap reverseColumn>
                         {cancel && <Button
                             onClick={() => {
                                 cancel()
