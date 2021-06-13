@@ -83,29 +83,6 @@ const initialState: State = {
 }
 
 
-// export const myInstance = (function () {
-//     var socket: any;
-//     var restId:any;
-//     return {
-//         getInstance: function (restaurantId: string) {
-//             if (socket == null && restaurantId!=undefined && restId!=restaurantId ) {
-//                 restId=restaurantId;
-//                 socket = new WebSocket(`${API_WS_BOOKING}/${restaurantId}`, ["Upgrade"]);
-//                 socket.constructor = null;
-//             }
-//             return socket;
-//         },
-//
-//         recreateConnection : function (restaurantId: string) {
-//             if (restaurantId!=undefined) {
-//                 socket = new WebSocket(`${API_WS_BOOKING}/${restaurantId}`, ["Upgrade"]);
-//                 socket.constructor = null;
-//             }
-//             return socket;
-//         }
-//     };
-// })();
-
 const restaurantReducer = (state: State, action: Action) => {
     const {addToast} = useToasts();
 

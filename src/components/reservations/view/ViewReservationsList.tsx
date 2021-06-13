@@ -9,6 +9,7 @@ import {
     getReservationsList,
     setSelectedDay,
     setSelectedFilter,
+    updateAssistanceReservation,
     updateProductsReservation,
     updateStatusReservation
 } from "../ReservationsActions";
@@ -27,6 +28,10 @@ import {FinishReservation} from "./FinishReservation";
 import ManageReservation from "./ManageReservation";
 import {getMenuByRestaurantId} from "../../settings/SettingsActions";
 import "./style.css"
+import MaterialIcon from "../../globals/MaterialIcons";
+import {AssistanceSign, ContainerSigns} from "./style";
+import {Tooltip} from '@material-ui/core';
+
 
 const ViewReservationsList = () => {
     const dispatch = useReservationsDispatch();
@@ -52,6 +57,8 @@ const ViewReservationsList = () => {
     const settingsDispatch = useSettingsDispatch();
     const {menu, restaurant} = useSettingsState();
 
+    const autoReconnectDelay = 8000
+
     useEffect(() => {
             let wsRestaurant: WebSocket | undefined;
             let wsReservation: WebSocket | undefined;
@@ -61,31 +68,24 @@ const ViewReservationsList = () => {
             if (selectedReservation.id != "" && recreateConnection) {
                 wsReservation = setupWebSocket(selectedReservation.id, dispatch)
             }
+
             return () => {
                 setTimeout(() => {
                     if (wsRestaurant) {
                         wsRestaurant.close();
                     }
-                }, 10000)
+                }, autoReconnectDelay)
                 setTimeout(() => {
                     if (wsReservation) {
                         wsReservation.close();
                     }
-                }, 10000)
+                }, autoReconnectDelay)
                 console.log('unmounting...')
-
             }
-
 
 
         }, [restaurant, recreateConnection]
     )
-
-// useEffect(() => {
-
-//     return () => console.log('unmounting manageReservation...');
-// }, [selectedReservation, recreateConnection])
-
 
     let history = useHistory();
     useEffect(() => {
@@ -152,15 +152,12 @@ const ViewReservationsList = () => {
         ...selectedReservation,
         status: "Active"
     }
-    let initialValuesFinish = {
-        ...selectedReservation,
-        status: "Finished"
-    }
+
 
     return (
         <PageWrapper noPadding centerPage>
             <HeaderReservations initialValues={initialValuesHeader} date={selectedDate} filter={selectedFilter}
-                                setFilter={(value) => setSelectedFilter(value)}
+                                setFilter={(value) => setSelectedFilter({value: value, dispatch: dispatch})}
                                 setDate={(value) => setSelectedDay({dispatch: dispatch, value: value})}/>
             {!loadingListReservation ? <Table customWidth={"72%"}>
                 <TableHead>
@@ -173,7 +170,7 @@ const ViewReservationsList = () => {
 
                         <TableColumn>
                             <TableText thead>
-                                Party size
+                                Persons
                             </TableText>
                         </TableColumn>
 
@@ -197,6 +194,12 @@ const ViewReservationsList = () => {
 
                         <TableColumn>
                             <TableText thead>
+                                Signs
+                            </TableText>
+                        </TableColumn>
+
+                        <TableColumn>
+                            <TableText thead>
                                 Status
                             </TableText>
                         </TableColumn>
@@ -207,7 +210,20 @@ const ViewReservationsList = () => {
                 <TableBody noBackground>
                     {listReservations && !_.isEmpty(listReservations) && listReservations.map((reservation, index) => {
                         const lastElementId = `reservationListing-elem:${reservation.id}`;
-                        const dropDownElements: DropdownElement[] = []
+                        const dropDownElements: DropdownElement[] = [];
+                        if (reservation.needAssistance) {
+                            dropDownElements.push({
+                                text: "Check solved assistance", icon: "done_all", onClick: () => {
+                                    updateAssistanceReservation({
+                                        dispatch: dispatch,
+                                        reservationId: reservation.id,
+                                        values: {...reservation, needAssistance: false},
+                                        callBack: () => {
+                                        }
+                                    })
+                                }
+                            })
+                        }
                         if (reservation.status == "Pending") {
                             dropDownElements.push({
                                 text: "Accept Reservation", icon: "person_add_alt", onClick: () => {
@@ -250,8 +266,13 @@ const ViewReservationsList = () => {
                             })
                         }
 
+
                         let startReservationString = optionsDate.find(date => date.dateTime == reservation.startReservationDate)
                         let endReservationString = optionsDate.find(date => date.dateTime == reservation.endReservationDate)
+
+                        let hasNewProduct = _.findIndex(reservation.products, (product) => product.status == "New")
+                        let hasUndeliveredProduct = _.findIndex(reservation.products, (product) => product.status == "Read")
+
                         return (<TableRow key={index} withMargin withBorderRadius tableBody>
                             <TableColumn>
                                 <TableText bold customFontSize={"15px"} noPadding noMargin whiteTextBold>
@@ -284,6 +305,28 @@ const ViewReservationsList = () => {
                             </TableColumn>
 
                             <TableColumn>
+                                <TableText thead>
+                                    <ContainerSigns>
+                                        <Tooltip title="Need assistance" placement="left">
+                                            <AssistanceSign red>{reservation.needAssistance &&
+                                            <MaterialIcon iconName={"help_center"}/>}</AssistanceSign>
+                                        </Tooltip>
+
+                                        <Tooltip title="New products was added" placement="bottom">
+                                            <AssistanceSign>{hasNewProduct != -1 &&
+                                            <MaterialIcon iconName={"library_add"}/>}</AssistanceSign>
+                                        </Tooltip>
+                                        <Tooltip title="Has undelivered products" placement="right">
+                                            <AssistanceSign>{hasUndeliveredProduct != -1 &&
+                                            <MaterialIcon iconName={"production_quantity_limits"}/>}</AssistanceSign>
+                                        </Tooltip>
+
+                                    </ContainerSigns>
+                                </TableText>
+                            </TableColumn>
+
+
+                            <TableColumn>
                                 <TableText thead statusReservation
                                            pending={reservation.status == "Pending"}
                                            waitClient={reservation.status == "Wait Client"}
@@ -293,7 +336,7 @@ const ViewReservationsList = () => {
                                     {reservation.status}
                                 </TableText>
                             </TableColumn>
-                            '
+
                             <TableColumn verySmall>
                                 <ContextualMenu
                                     icon={"more_vert"}
@@ -324,12 +367,6 @@ const ViewReservationsList = () => {
                             reservationId: values.id,
                             values: values,
                             callBack: () => {
-                                // getReservationsList({
-                                //     dispatch: dispatch,
-                                //     date: selectedDate,
-                                //     filter: selectedFilter,
-                                //     restaurantId: values.restaurantId
-                                // })
                                 setAcceptReservationPopup(false)
 
                             }
@@ -353,12 +390,6 @@ const ViewReservationsList = () => {
                             reservationId: values.id,
                             values: values,
                             callBack: () => {
-                                // getReservationsList({
-                                //     dispatch: dispatch,
-                                //     date: selectedDate,
-                                //     filter: selectedFilter,
-                                //     restaurantId: values.restaurantId
-                                // })
                                 setDeclinedReservationPopup(false)
                             }
                         })
@@ -381,12 +412,6 @@ const ViewReservationsList = () => {
                             reservationId: values.id,
                             values: values,
                             callBack: () => {
-                                // getReservationsList({
-                                //     dispatch: dispatch,
-                                //     date: selectedDate,
-                                //     filter: selectedFilter,
-                                //     restaurantId: values.restaurantId
-                                // })
                                 setArrivedReservationPopup(false)
                             }
                         })
@@ -409,16 +434,13 @@ const ViewReservationsList = () => {
                             reservationId: values.id,
                             values: values,
                             callBack: () => {
-                                // getReservationsList({
-                                //     dispatch: dispatch,
-                                //     date: selectedDate,
-                                //     filter: selectedFilter,
-                                //     restaurantId: values.restaurantId
-                                // })
                                 setFinishReservationPopup(false)
                             }
                         })
-                    }} initialValues={initialValuesFinish}/>
+                    }} initialValues={{
+                    ...selectedReservation,
+                    status: "Finished"
+                }}/>
             </Popup>
 
             <Popup
@@ -441,7 +463,7 @@ const ViewReservationsList = () => {
                                 getReservationById({dispatch: dispatch, reservationId: values.id})
                             }
                         })
-                    }} initialValues={initialValuesFinish} menu={menu}/>
+                    }} initialValues={selectedReservation} menu={menu}/>
             </Popup>
         </PageWrapper>
     )

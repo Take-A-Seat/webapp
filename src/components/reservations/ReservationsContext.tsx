@@ -65,6 +65,7 @@ export type Reservation = {
     code: string,
     products: any[],
     totalToPay: number,
+    needAssistance:boolean,
 }
 
 const ReservationsStateContext = createContext<State | undefined>(undefined)
@@ -96,18 +97,18 @@ const initialState: State = {
         phone: "",
         tableId: [],
         restaurantId: "",
+        needAssistance:false,
         totalToPay: 0,
         products: []
     },
 }
 
-const autoReconnectDelay = 5000
 
 export const RECREATE_CONNECTION = "recreate_connection";
 export const SUCCESS_RECREATE_CONNECTION = "success_recreate";
 
-export const setupWebSocket=(restaurantId: string, dispatch: Dispatch)=> {
-    let socket = new WebSocket(`${API_WS_BOOKING}/${restaurantId}`, ["Upgrade"]);
+export const setupWebSocket=(channel: string, dispatch: Dispatch)=> {
+    let socket = new WebSocket(`${API_WS_BOOKING}/${channel}`, ["Upgrade"]);
     socket.onopen = () => {
         dispatch({type: SUCCESS_RECREATE_CONNECTION, payload: {}})
         console.log("Successfully Connected");

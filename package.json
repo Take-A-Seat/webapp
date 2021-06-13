@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "'": "file:material-ui/core/Tooltip'",
+    "@material-ui/core": "^4.11.4",
     "@react-google-maps/api": "^2.2.0",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",

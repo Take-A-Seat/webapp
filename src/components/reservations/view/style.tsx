@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import {
     DARK_GREY2_COLOR,
-    HEADER_SETTINGS_BACKGROUND, LIGHT_GREY_COLOR,
+    HEADER_SETTINGS_BACKGROUND, LIGHT_GREY_COLOR, RED_COLOR,
     SETTINGS_BACKGROUND_GREY, VERY_DARK_GREY_COLOR,
-    WHITE_COLOR
+    WHITE_COLOR, YELLOW
 } from "../../../constants/styleConstants";
 
 export const ArrivedText = styled.div`
@@ -110,7 +110,7 @@ export const RowContainerNoJustify = styled.div<any>`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  ${({marginTop})=>marginTop && `
+  ${({marginTop}) => marginTop && `
   margin-top:${marginTop};
   `}
 `
@@ -130,10 +130,31 @@ export const ProductContainerListing = styled.div`
   padding: 10px 0;
 `
 
-export const ContainerTotal =styled.div`
-margin-left: auto;
+export const ContainerTotal = styled.div`
+  margin-left: auto;
   font-size: 16px;
   padding-right: 10px;
   font-weight: 600;
   color: ${LIGHT_GREY_COLOR};
+`
+
+export const ContainerSigns = styled.div<any>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const AssistanceSign = styled.div<any>`
+
+  & i {
+    font-size: 25px;
+    color: ${YELLOW};
+  }
+
+  ${({red}) => red && `
+     & i {
+    font-size: 25px;
+    color:${RED_COLOR};
+   }
+  `}
 `
