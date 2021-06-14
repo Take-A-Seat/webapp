@@ -29,6 +29,8 @@ import {
     GET_MENU_BY_RESTAURANT_ID,
     GET_MENU_BY_RESTAURANT_ID_FAIL,
     GET_MENU_BY_RESTAURANT_ID_SUCCESS,
+    GET_STATISTICS_BY_RESTAURANT_ID, GET_STATISTICS_BY_RESTAURANT_ID_FAIL,
+    GET_STATISTICS_BY_RESTAURANT_ID_SUCCESS,
     GET_TABLES_BY_AREA_ID,
     GET_TABLES_BY_AREA_ID_FAIL,
     GET_TABLES_BY_AREA_ID_SUCCESS,
@@ -40,6 +42,8 @@ import {
     UPDATE_RESTAURANT_SUCCESS
 } from "./SettingsActions";
 import {useToasts} from "react-toast-notifications";
+import {ChartFull} from "../dashboard/ChartFull";
+import {ChartOneValue} from "../dashboard/ChartOneValue";
 
 type State = {
     loading: boolean,
@@ -57,7 +61,19 @@ type State = {
     shouldCreateRestaurant: boolean,
     mark: any,
     recreateConnection: boolean,
+    statistics: {
+        persons: ChartFull[],
+        totalPay: ChartFull[],
+        totalMoneyReceived: ChartOneValue[],
+        numberReservations: ChartOneValue[],
+        numberPeopleReturned: ChartOneValue[],
+        declined: ChartOneValue[],
+        finished: ChartOneValue[],
+    }
+    loaderStatistics: boolean,
 }
+
+
 
 export type SpecificRestaurant = { id: string, restaurantId: string, specificRestaurantId: string }
 export type TypeRestaurant = { id: string, restaurantId: string, typeRestaurantId: string }
@@ -66,6 +82,7 @@ const SettingsDispatchContext = createContext<Dispatch | undefined>(undefined)
 
 const initialState: State = {
     loading: false,
+    loaderStatistics: false,
     error: {},
     restaurant: {},
     listAreas: [],
@@ -80,6 +97,15 @@ const initialState: State = {
     shouldCreateRestaurant: false,
     mark: {},
     recreateConnection: true,
+    statistics: {
+        declined: [],
+        finished: [],
+        numberPeopleReturned: [],
+        numberReservations: [],
+        persons: [],
+        totalMoneyReceived: [],
+        totalPay: []
+    }
 }
 
 
@@ -88,6 +114,46 @@ const restaurantReducer = (state: State, action: Action) => {
 
 
     switch (action.type) {
+        case GET_STATISTICS_BY_RESTAURANT_ID: {
+            return {
+                ...state,
+                statistics: {
+                    persons: [],
+                    totalPay: [],
+                    totalMoneyReceived: [],
+                    numberReservations: [],
+                    numberPeopleReturned: [],
+                    finished: [],
+                    declined: []
+                },
+                loaderStatistics: true
+            }
+        }
+        case GET_STATISTICS_BY_RESTAURANT_ID_SUCCESS: {
+            addToast('Get statistics successfully', {appearance: 'info'});
+            return {
+                ...state,
+                statistics: action.payload,
+                loaderStatistics: false
+            }
+        }
+        case GET_STATISTICS_BY_RESTAURANT_ID_FAIL:{
+            addToast(action.payload.error, {appearance: 'error'});
+
+            return {
+                ...state,
+                error:action.payload.error,
+                statistics: {
+                    persons: [],
+                    totalPay: [],
+                    totalMoneyReceived: [],
+                    numberReservations: [],
+                    numberPeopleReturned: [],
+                    finished: [],
+                    declined: []
+                }
+            }
+        }
 
         case GET_ALL_TYPES_BY_RESTAURANT_ID_FAIL: {
             addToast(action.payload.error, {appearance: 'error'});

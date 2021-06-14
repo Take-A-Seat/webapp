@@ -97,11 +97,22 @@ export const PageMenu = styled.div`
 
 `
 
-export const RowContainer = styled.div`
+export const RowContainer = styled.div<any>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  ${({withWrap})=>withWrap && `
+  flex-wrap:wrap;
+  `}
+  
+  ${({spaceAround})=>spaceAround && `
+    justify-content: space-around;
+  `}
+  
+  ${({customMarginTop})=>customMarginTop && `
+   margin-top: ${customMarginTop};
+  `}
 `
 
 export const RowContainerNoJustify = styled.div<any>`

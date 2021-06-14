@@ -101,7 +101,7 @@ const CreateRestaurant = () => {
         addRestaurant({
             file: file, values: values, dispatch: dispatch, callBack: () => {
                 checkIfManagerHasRestaurant({dispatch: dispatch, managerId: loggedUser.UserId})
-                history.push("/");
+                history.push("/dashboard");
             }
         })
     }

@@ -9,6 +9,7 @@ import MaterialIcon from "../../globals/MaterialIcons";
 import * as Yup from "yup";
 import {ColumnContainer} from "../form/style";
 import {LoaderComponent} from "../../globals/Loading/Loader";
+import _ from "lodash";
 
 type AcceptReservationProps = {
     initialValues: any;
@@ -48,7 +49,7 @@ export const AcceptReservation = ({onSubmit, initialValues, listAvailableTables,
                             clickTable={(id) => {
                                 clickTable(id)
                             }}
-                            listTables={listAvailableTables}/> {values.tableId.length == 0 ?
+                            listTables={listAvailableTables}/> {!_.isEmpty(values.tableId)&& values.tableId.length == 0 ?
                         <FieldError alignedLeft alignedCenter>Select a table</FieldError> : null}</> :
                         <ColumnContainer customHeight={"200px"}><LoaderComponent/></ColumnContainer>}
 

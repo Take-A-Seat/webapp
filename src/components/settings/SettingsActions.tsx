@@ -554,6 +554,26 @@ export const getAreasByRestaurantId = ({dispatch, restaurantId}: { dispatch: Dis
         console.log("error", error)
     })
 }
+export const GET_STATISTICS_BY_RESTAURANT_ID = "get_statistics_by_restaurant_id";
+export const GET_STATISTICS_BY_RESTAURANT_ID_SUCCESS = "get_statistics_by_restaurant_id_success";
+export const GET_STATISTICS_BY_RESTAURANT_ID_FAIL = "get_statistics_by_restaurant_id_fail";
+
+
+export const getStatisticsByRestaurantId = ({dispatch, restaurantId}: { dispatch: Dispatch, restaurantId: string }) => {
+    dispatch({type: GET_STATISTICS_BY_RESTAURANT_ID, payload: {}});
+    authFetch(`/bookings/restaurant/${restaurantId}/statistics`, {method: "GET"}).then(response => {
+        if (!response.ok) {
+            return response.text().then(error => {
+                dispatch({type: GET_STATISTICS_BY_RESTAURANT_ID_FAIL, payload: JSON.parse(error)})
+            })
+        }
+        return response.json()
+    }).then(data => {
+        dispatch({type: GET_STATISTICS_BY_RESTAURANT_ID_SUCCESS, payload: data})
+    }).catch(error => {
+        console.log("error", error)
+    })
+}
 
 
 export const GET_MENU_BY_RESTAURANT_ID = "get_menu_by_restaurant_id";

@@ -280,11 +280,21 @@ const reservationReducer = (state: State, action: Action) => {
             }
         }
         case GET_RESERVATION_BY_ID_SUCCESS: {
-            return {
-                ...state,
-                error: "",
-                selectedReservation: action.payload,
-                loading: false
+            if(action.payload.tableId){
+                return {
+                    ...state,
+                    error: "",
+                    selectedReservation: action.payload,
+                    loading: false
+                }
+            }
+           else{
+                return {
+                    ...state,
+                    error: "",
+                    selectedReservation: {...action.payload,tableId:[]},
+                    loading: false
+                }
             }
         }
         case GET_RESERVATION_BY_ID_FAIL: {

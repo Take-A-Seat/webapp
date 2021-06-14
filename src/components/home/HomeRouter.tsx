@@ -12,6 +12,7 @@ import CreateRestaurant from "../settings/restaurant/add/CreateRestaurant";
 
 const SettingsRouter = lazy(() => import("../settings/SettingsRouter"))
 const ReservationsRouter = lazy(() => import("../reservations/ReservationsRouter"))
+const DashBoardRouter = lazy(() => import("../dashboard/DashBoardRouter"))
 
 const HomeRouter = ({history}: { history: History }) => {
         const restaurantState = useSettingsState();
@@ -35,6 +36,7 @@ const HomeRouter = ({history}: { history: History }) => {
                     {shouldCreateRestaurant ? <CreateRestaurant/> : <Switch>
                         <Route component={SettingsRouter} path={"/settings"}/>
                         <Route component={ReservationsRouter} path={"/reservations"}/>
+                        <Route component={DashBoardRouter} path={"/dashboard"}/>
                     </Switch>}
 
                 </HomePageWrapper>
