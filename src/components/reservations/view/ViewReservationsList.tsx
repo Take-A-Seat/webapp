@@ -132,31 +132,12 @@ const ViewReservationsList = () => {
         }
     }, [restaurant])
 
-    let initialValuesHeader = {
-        date: selectedDate,
-        filter: selectedFilter,
-    }
-
-    let initialValuesAccept = {
-        ...selectedReservation,
-        tableId: [],
-        status: "Wait Client"
-    }
-
-    let initialValuesDeclined = {
-        ...selectedReservation,
-        status: "Declined"
-    }
-
-    let initialValuesArrived = {
-        ...selectedReservation,
-        status: "Active"
-    }
-
-
     return (
         <PageWrapper noPadding centerPage>
-            <HeaderReservations initialValues={initialValuesHeader} date={selectedDate} filter={selectedFilter}
+            <HeaderReservations initialValues={{
+                date: selectedDate,
+                filter: selectedFilter
+            }} date={selectedDate} filter={selectedFilter}
                                 setFilter={(value) => setSelectedFilter({value: value, dispatch: dispatch})}
                                 setDate={(value) => setSelectedDay({dispatch: dispatch, value: value})}/>
             {!loadingListReservation ? <Table customWidth={"72%"}>
@@ -371,7 +352,10 @@ const ViewReservationsList = () => {
 
                             }
                         })
-                    }} initialValues={initialValuesAccept}/>
+                    }} initialValues={{
+                    ...selectedReservation,
+                    status: "Wait Client"
+                }}/>
             </Popup>
 
             <Popup
@@ -393,7 +377,10 @@ const ViewReservationsList = () => {
                                 setDeclinedReservationPopup(false)
                             }
                         })
-                    }} initialValues={initialValuesDeclined}/>
+                    }} initialValues={{
+                    ...selectedReservation,
+                    status: "Declined"
+                }}/>
             </Popup>
 
             <Popup
@@ -415,7 +402,10 @@ const ViewReservationsList = () => {
                                 setArrivedReservationPopup(false)
                             }
                         })
-                    }} initialValues={initialValuesArrived}/>
+                    }} initialValues={{
+                    ...selectedReservation,
+                    status: "Active"
+                }}/>
             </Popup>
 
             <Popup
@@ -456,7 +446,6 @@ const ViewReservationsList = () => {
                         setManageReservationPopup(false)
                     }}
                     onSubmit={(values) => {
-                        console.log(values)
                         updateProductsReservation({
                             dispatch: dispatch, reservationId: values.id, values, callBack: () => {
                                 setManageReservationPopup(false);

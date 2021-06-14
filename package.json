@@ -78,6 +78,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/react-select": "^4.0.15",
     "@types/styled-components": "^5.1.9",
+    "terser-brunch": "^4.0.0",
     "tslint": "^5.12.1",
     "typescript": "^3.9.9"
   }

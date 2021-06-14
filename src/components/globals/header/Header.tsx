@@ -49,12 +49,6 @@ const Header = ({history}: { history: History }) => {
         name: "DashBoard",
         link: "/dashboard"
     }, {
-        name: "Activity",
-        link: "/activity"
-    }, {
-        name: "Overview",
-        link: "/overview"
-    }, {
         name: "Reservations",
         link: "/reservations"
     }, {
@@ -73,11 +67,8 @@ const Header = ({history}: { history: History }) => {
             }, {
                 name: "Specific and Type",
                 link: "/settings/specific&type"
-            },
-            {
-                name: "Email",
-                link: "/settings/email"
-            }]
+            }
+        ]
     },]
 
     return <>
