@@ -36,7 +36,7 @@ const HomeRouter = ({history}: { history: History }) => {
                     {shouldCreateRestaurant ? <CreateRestaurant/> : <Switch>
                         <Route component={SettingsRouter} path={"/settings"}/>
                         <Route component={ReservationsRouter} path={"/reservations"}/>
-                        <Route component={DashBoardRouter} path={"/dashboard"}/>
+                        <Route component={DashBoardRouter} path={"/"}/>
                     </Switch>}
 
                 </HomePageWrapper>

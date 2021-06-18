@@ -9,6 +9,7 @@ import {
     Tooltip,
     Legend
 } from "recharts";
+import {ContainerHoverChart, TextChart} from "./style";
 
 type ChartFullProps={
     data :ChartOneValue[]
@@ -21,12 +22,12 @@ export type ChartOneValue = {
 
 function CustomTooltip({ payload, label, active } :any) {
     console.log(payload)
-    if (active) {
+    if (active && payload) {
         return (
-            <div className="custom-tooltip">
-                <p className="label">{`${payload[0].payload.name}`}</p>
-                <p className="label">{`number: ${payload[0].value}`}</p>
-            </div>
+            <ContainerHoverChart>
+                <TextChart>{`${payload[0].payload.name}`}</TextChart>
+                <TextChart>{`value: ${payload[0].payload.value}`}</TextChart>
+            </ContainerHoverChart>
         );
     }
 
@@ -58,6 +59,7 @@ export const ChartOneValue= ({data}:ChartFullProps) =>{
         <YAxis />
         <Tooltip wrapperStyle={{ width: 100, backgroundColor: '#ccc' }} content={CustomTooltip} />
         <Bar dataKey="value" barSize={20} fill="#413ea0" />
-        <Line type="monotone" dataKey="value" stroke="#ff7300" />
+        <Line type="monotone" dataKey="value" stroke="#ff7300"             strokeWidth={"2px"}
+        />
     </ComposedChart>
 }

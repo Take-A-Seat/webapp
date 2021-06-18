@@ -21,10 +21,10 @@ const ViewDashBoard = () => {
 
     return <>
         <ColumnContainer>
-            <RowContainer withWrap spaceAround customMarginTop={"15px"}>
+            <RowContainer withWrap spaceAround customMarginTop={"15px"} columnSmall>
                 <ColumnContainer>
                     <ChartFull data={statistics.persons}/>
-                    <TextLegend>Persons</TextLegend>
+                    <TextLegend>Number of people reservation</TextLegend>
                 </ColumnContainer>
                 <ColumnContainer>
                     <ChartOneValue data={statistics.numberPeopleReturned}/>
@@ -32,30 +32,26 @@ const ViewDashBoard = () => {
                 </ColumnContainer>
             </RowContainer>
 
-            <RowContainer withWrap spaceAround  customMarginTop={"15px"}>
+            <RowContainer withWrap spaceAround  customMarginTop={"15px"} columnSmall>
                 <ColumnContainer>
                     <ChartFull data={statistics.totalPay}/>
                     <TextLegend>Reservations payment</TextLegend>
-
                 </ColumnContainer>
                 <ColumnContainer>
                     <ChartOneValue data={statistics.totalMoneyReceived}/>
-                    <TextLegend>Total pay</TextLegend>
-
+                    <TextLegend>Total money earned</TextLegend>
                 </ColumnContainer>
             </RowContainer>
 
-            <RowContainer withWrap spaceAround  customMarginTop={"15px"}>
+            <RowContainer withWrap spaceAround  customMarginTop={"15px"} columnSmall>
                 <ColumnContainer>
                     <ChartOneValue data={statistics.declined}/>
                     <TextLegend>Reservations declined</TextLegend>
-
                 </ColumnContainer>
 
                 <ColumnContainer>
                     <ChartOneValue data={statistics.finished}/>
                     <TextLegend>Reservations finished</TextLegend>
-
                 </ColumnContainer>
             </RowContainer>
         </ColumnContainer>

@@ -47,7 +47,7 @@ const Header = ({history}: { history: History }) => {
     }];
     const linkElements = [{
         name: "DashBoard",
-        link: "/dashboard"
+        link: "/"
     }, {
         name: "Reservations",
         link: "/reservations"
@@ -74,7 +74,7 @@ const Header = ({history}: { history: History }) => {
     return <>
         <HeaderWrapper displayNone>
             <LogoWrapper onClick={() => {
-                history.push("/dashboard")
+                history.push("/")
             }}>
                 <img src={Logo} alt={"Logo"}/>
             </LogoWrapper>
@@ -105,7 +105,7 @@ const Header = ({history}: { history: History }) => {
         <StickyContainerHeader>
             <Menu width={"auto"}>
                 <LogoWrapper onClick={() => {
-                    history.push("/dashboard")
+                    history.push("/")
                 }}>
                     <img src={Logo} alt={"Logo"}/>
                 </LogoWrapper>

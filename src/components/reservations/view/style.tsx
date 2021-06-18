@@ -113,6 +113,15 @@ export const RowContainer = styled.div<any>`
   ${({customMarginTop})=>customMarginTop && `
    margin-top: ${customMarginTop};
   `}
+
+
+  ${({columnSmall})=>columnSmall && `
+   @media only screen and (max-width: 1100px) {
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+  }
+  `}
 `
 
 export const RowContainerNoJustify = styled.div<any>`

@@ -68,7 +68,7 @@ export const logInAction = (
 
             login(authObject);
 
-            history.push("/dashboard");
+            history.push("/");
 
         })
         .catch((error: any) => {

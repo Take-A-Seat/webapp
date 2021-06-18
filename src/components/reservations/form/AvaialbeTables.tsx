@@ -15,7 +15,7 @@ export const AvailableTables = ({selectedTable, clickTable, listTables}: Availab
         return <ColumnContainer>
             <NameArea>{area.name}</NameArea>
             <FlexContainerTables>
-                {area.tables && !_.isEmpty(area.tables) && area.tables.map((table, indexTable) => {
+                {area.tables && !_.isEmpty(area.tables)&&selectedTable && area.tables.map((table, indexTable) => {
                     let findInList: false | number =-1;
                     findInList = selectedTable.findIndex((tableFind) => tableFind == table.id)
                     return <TableContainer selected={findInList != -1} onClick={() => {

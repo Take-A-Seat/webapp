@@ -1,8 +1,10 @@
 import React, {useCallback, useState} from "react";
-import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from "recharts";
+import {CartesianGrid, Line, LineChart, Tooltip, YAxis} from "recharts";
+import {ContainerHoverChart, TextChart} from "./style";
+import "./style.css";
 
-type ChartFullProps={
-    data :ChartFull[]
+type ChartFullProps = {
+    data: ChartFull[]
 }
 
 export type ChartFull = {
@@ -12,16 +14,16 @@ export type ChartFull = {
     name: string
 }
 
-function CustomTooltip({ payload, label, active } :any) {
+function CustomTooltip({payload, label, active}: any) {
     console.log(payload)
-    if (active) {
+    if (active && payload) {
         return (
-            <div className="custom-tooltip">
-                <p className="label">{`${payload[0].payload.name}`}</p>
-                <p className="label">{`min: ${payload[0].payload.min}`}</p>
-                <p className="label">{`max: ${payload[0].payload.max}`}</p>
-                <p className="label">{`avg: ${payload[0].payload.avg}`}</p>
-            </div>
+            <ContainerHoverChart>
+                <TextChart>{`${payload[0].payload.name}`}</TextChart>
+                <TextChart>{`min: ${payload[0].payload.min}`}</TextChart>
+                <TextChart>{`avg: ${payload[0].payload.avg}`}</TextChart>
+                <TextChart>{`max: ${payload[0].payload.max}`}</TextChart>
+            </ContainerHoverChart>
         );
     }
 
@@ -29,7 +31,7 @@ function CustomTooltip({ payload, label, active } :any) {
 }
 
 
-export const ChartFull = ({data}:ChartFullProps) =>{
+export const ChartFull = ({data}: ChartFullProps) => {
     const [opacity, setOpacity] = useState({
         uv: 1,
         pv: 1
@@ -37,17 +39,17 @@ export const ChartFull = ({data}:ChartFullProps) =>{
 
     const handleMouseEnter = useCallback(
         (o) => {
-            const { dataKey } = o;
+            const {dataKey} = o;
 
-            setOpacity({ ...opacity, [dataKey]: 0.5 });
+            setOpacity({...opacity, [dataKey]: 0.5});
         },
         [opacity, setOpacity]
     );
 
     const handleMouseLeave = useCallback(
         (o) => {
-            const { dataKey } = o;
-            setOpacity({ ...opacity, [dataKey]: 1 });
+            const {dataKey} = o;
+            setOpacity({...opacity, [dataKey]: 1});
         },
         [opacity, setOpacity]
     );
@@ -62,28 +64,34 @@ export const ChartFull = ({data}:ChartFullProps) =>{
             bottom: 5
         }}
     >
-        <CartesianGrid strokeDasharray="3 3" />
+        <CartesianGrid strokeDasharray="3 3"/>
         {/*<XAxis dataKey="name" />*/}
-        <YAxis />
-        <Tooltip wrapperStyle={{ width: 100, backgroundColor: '#ccc' }} content={CustomTooltip} />
+        <YAxis/>
+        <Tooltip wrapperStyle={{width: 100, backgroundColor: '#ccc'}} content={CustomTooltip}/>
         <Line
             type="monotone"
             dataKey="min"
             strokeOpacity={opacity.pv}
             stroke="#f58231"
-            activeDot={{ r: 8 }}
+            activeDot={{r: 8}}
+            strokeWidth={"2px"}
+
         />
         <Line
             type="monotone"
             dataKey="max"
             strokeOpacity={opacity.uv}
             stroke="#4363d8"
+            strokeWidth={"2px"}
+
         />
         <Line
             type="monotone"
             dataKey="avg"
             strokeOpacity={opacity.uv}
             stroke="#ffe119"
+            strokeWidth={"2px"}
+
         />
     </LineChart>
 }

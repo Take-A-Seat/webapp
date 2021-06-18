@@ -219,6 +219,10 @@ const reservationReducer = (state: State, action: Action) => {
             return {
                 ...state,
                 loading: false,
+                selectedReservation:{
+                    ...state.selectedReservation,
+                    tableId:[]
+                }
 
             }
         }
